@@ -621,7 +621,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <style>
   .how-it-works {
-    background-color: #ffffff;
+    background-color: #faf9f5;
     padding: 80px 20px;
     text-align: center;
   }
@@ -836,6 +836,694 @@ document.addEventListener('DOMContentLoaded', function() {
   
   .how-it-works h2 {
     font-size: 24px;
+  }
+}
+</style>
+
+
+<section class="who-we-serve">
+  <div class="container">
+    <!-- Row 1: Title -->
+    <div class="row title-row">
+      <h2>Who We Serve</h2>
+    </div>
+
+    <!-- Row 2: 3 Columns -->
+    <div class="row cards-row">
+      <!-- Card 1 -->
+      <div class="serve-card">
+        <div class="card-image">
+          <img src="images/gl.jpg" alt="Insurance Companies & Adjusters">
+          <div class="card-overlay">
+            <p>We work closely with insurance adjusters and agents to ensure fast, reliable housing placements for policyholders.</p>
+          </div>
+        </div>
+        <h3>Insurance Companies & Adjusters</h3>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="serve-card">
+        <div class="card-image">
+          <img src="images/gl.jpg" alt="Families Displaced by Natural Disasters">
+          <div class="card-overlay">
+            <p>Whether it’s a wildfire, hurricane, or flood, we provide safe, comfortable housing for families needing temporary relocation.</p>
+          </div>
+        </div>
+        <h3>Families Displaced by Natural Disasters</h3>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="serve-card">
+        <div class="card-image">
+          <img src="images/gl.jpg" alt="Corporate Insurance Relocation">
+          <div class="card-overlay">
+            <p>Businesses affected by property damage or disasters can rely on us to house their displaced employees and contractors.</p>
+          </div>
+        </div>
+        <h3>Corporate Insurance Relocation</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Section Styling */
+.who-we-serve {
+  display: flex;               /* make it flex */
+  flex-direction: column;      /* stack content vertically */
+  justify-content: center;     /* vertical center */
+  align-items: center;         /* horizontal center */
+  padding: 80px 20px;
+  background-color: #e6e3d8;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  min-height: 500px;           /* optional: set section height */
+}
+
+.who-we-serve .title-row h2 {
+  font-size: 42px;
+  color: #2b376a;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  text-align: center;  /* centers the title */
+  width: 100%;         /* ensures centering works */
+  transform: translateX(0px);
+}
+
+
+
+/* Cards Row */
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.serve-card {
+  position: relative;
+  width: 350px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.card-image {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  width: 100%;
+  aspect-ratio: 1/1; /* keep square */
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(43, 55, 106, 0.85);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: bottom 0.5s ease;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.serve-card:hover .card-overlay {
+  bottom: 0;
+}
+
+.serve-card:hover img {
+  transform: scale(1.1);
+}
+
+.serve-card h3 {
+  margin-top: 15px;
+  font-size: 22px;
+  color: #2b376a;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .serve-card {
+    width: 48%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .serve-card {
+    width: 100%;
+  }
+
+  .who-we-serve .title-row h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .card-overlay {
+    font-size: 14px;
+    padding: 15px;
+  }
+
+  .serve-card h3 {
+    font-size: 18px;
+  }
+}
+</style><section class="testimonials">
+  <div class="container">
+    <h2>What Our Clients Say</h2>
+    <div class="testimonial-slider">
+      <div class="testimonial-track">
+        <div class="testimonial active">
+          <p>"Streamlined Stay Solutions found us a beautiful home within 24 hours of our house fire. The process was stress-free, and the home was more than we expected."</p>
+          <h4>Soraya Anne Price</h4>
+          <span>Insurance Claimant</span>
+        </div>
+        <div class="testimonial">
+          <p>"The team helped our family relocate quickly after the flood. Every step was seamless, and we felt taken care of."</p>
+          <h4>John Doe</h4>
+          <span>Homeowner</span>
+        </div>
+        <div class="testimonial">
+          <p>"Fast, professional, and caring service. Highly recommend Streamlined Stay Solutions for anyone in need."</p>
+          <h4>Mary Smith</h4>
+          <span>Corporate Client</span>
+        </div>
+      </div>
+      <div class="slider-nav">
+        <button class="nav-btn prev-btn" aria-label="Previous testimonial">‹</button>
+        <div class="dots">
+          <span class="dot active" data-index="0"></span>
+          <span class="dot" data-index="1"></span>
+          <span class="dot" data-index="2"></span>
+        </div>
+        <button class="nav-btn next-btn" aria-label="Next testimonial">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.testimonials {
+  background-color: #faf9f5;
+  padding: 80px 20px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+}
+
+.testimonials h2 {
+  font-size: 42px;
+  color: #2b376a;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  text-align: center;  /* centers the title */
+  width: 100%;         /* ensures centering works */
+  transform: translateX(0px);
+  font-weight: 700;
+}
+
+.testimonial-slider {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.testimonial-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 300%; /* 3 testimonials = 300% */
+}
+
+.testimonial {
+  flex: 0 0 33.333%; /* Each testimonial takes 1/3 of the track */
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  opacity: 0.5;
+  transform: scale(0.9);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.testimonial.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.testimonial p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+  font-style: italic;
+}
+
+.testimonial h4 {
+  font-size: 20px;
+  color: #2b376a;
+  margin: 0;
+}
+
+.testimonial span {
+  font-size: 16px;
+  color: #556799;
+}
+
+.slider-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.nav-btn {
+background: transparent;
+  color: #2b376a;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+
+
+.dots {
+  display: flex;
+  gap: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #2b376a;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .testimonials {
+    padding: 60px 15px;
+  }
+  
+  .testimonials h2 {
+    font-size: 28px;
+  }
+
+  .testimonial {
+    padding: 0 10px;
+  }
+
+  .testimonial p {
+    font-size: 16px;
+  }
+
+  .testimonial h4 {
+    font-size: 18px;
+  }
+
+  .testimonial span {
+    font-size: 14px;
+  }
+  
+  .slider-nav {
+    gap: 15px;
+  }
+  
+  .nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const track = document.querySelector('.testimonial-track');
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  
+  let currentIndex = 0;
+  let autoSlideInterval;
+  let startX = 0;
+  let endX = 0;
+  const swipeThreshold = 50; // Minimum swipe distance
+  
+  // Initialize slider
+  function initSlider() {
+    updateSlider();
+    startAutoSlide();
+    
+    // Add touch events for swipe
+    track.addEventListener('touchstart', handleTouchStart, { passive: true });
+    track.addEventListener('touchend', handleTouchEnd, { passive: true });
+    
+    // Add mouse events for desktop swipe simulation
+    track.addEventListener('mousedown', handleMouseDown);
+    track.addEventListener('mouseup', handleMouseUp);
+  }
+  
+  // Handle touch start
+  function handleTouchStart(e) {
+    startX = e.touches[0].clientX;
+    clearInterval(autoSlideInterval); // Pause auto-slide during interaction
+  }
+  
+  // Handle touch end
+  function handleTouchEnd(e) {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+    startAutoSlide(); // Resume auto-slide
+  }
+  
+  // Handle mouse down (for desktop)
+  function handleMouseDown(e) {
+    startX = e.clientX;
+    clearInterval(autoSlideInterval);
+    
+    // Prevent text selection during drag
+    e.preventDefault();
+  }
+  
+  // Handle mouse up (for desktop)
+  function handleMouseUp(e) {
+    endX = e.clientX;
+    handleSwipe();
+    startAutoSlide();
+  }
+  
+  // Process swipe gesture
+  function handleSwipe() {
+    const diffX = startX - endX;
+    
+    if (Math.abs(diffX) > swipeThreshold) {
+      if (diffX > 0) {
+        // Swipe left - next slide
+        nextSlide();
+      } else {
+        // Swipe right - previous slide
+        prevSlide();
+      }
+    }
+  }
+  
+  // Go to next slide
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    updateSlider();
+  }
+  
+  // Go to previous slide
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+    updateSlider();
+  }
+  
+  // Update slider position and active states
+  function updateSlider() {
+    // Update track position
+    track.style.transform = `translateX(-${currentIndex * (100 / testimonials.length)}%)`;
+    
+    // Update active testimonial
+    testimonials.forEach((testimonial, index) => {
+      testimonial.classList.toggle('active', index === currentIndex);
+    });
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  }
+  
+  // Start auto-slide
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+  }
+  
+  // Event listeners for navigation buttons
+  prevBtn.addEventListener('click', prevSlide);
+  nextBtn.addEventListener('click', nextSlide);
+  
+  // Event listeners for dots
+  dots.forEach(dot => {
+    dot.addEventListener('click', function() {
+      currentIndex = parseInt(this.getAttribute('data-index'));
+      updateSlider();
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    });
+  });
+  
+  // Pause auto-slide on hover
+  track.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+  track.addEventListener('mouseleave', startAutoSlide);
+  
+  // Initialize the slider
+  initSlider();
+});
+</script>
+<section class="contact-us">
+  <div class="container">
+    <h2>Contact Us</h2>
+<p class="subtitle">
+  Have an urgent request? Our team is ready to assist you 24/7.<br>
+  Fill out the form below or call us directly at 
+  <a href="tel:+18137336115"><strong>(813) 733 – 6115</strong></a>.
+</p>
+
+
+    <form class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name *</label>
+          <input type="text" id="first-name" name="first-name" placeholder="First">
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name *</label>
+          <input type="text" id="last-name" name="last-name" placeholder="Last">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="Phone">
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="Email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Message"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit a Request</button>
+    </form>
+  </div>
+</section>
+
+<style>
+.contact-us {
+  background-color: #faf9f5;
+  padding: 80px 20px;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.contact-us h2 {
+  font-size: 42px;
+  color: #2b376a;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  text-align: center;  /* centers the title */
+  width: 100%;         /* ensures centering works */
+  transform: translateX(0px);
+  font-weight: 700;
+}
+
+.contact-us .subtitle {
+  font-size: 18px;
+  color: #556799;
+  margin-bottom: 40px;
+}
+
+.contact-form {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  color: #2b376a;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #2b376a;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: #2b376a;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: var(--light);
+  color: #2b376a;
+  border: 1px solid #2b376a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
+</style>
+<section class="list-properties">
+  <div class="container">
+    <h2>List Your Properties with Ease</h2>
+    <p class="subtitle">
+      Ready to connect with tenants? Simply fill out the form with the details of your available accommodations, 
+      and we’ll help match you with the right renters. Whether you’re listing one property or several, we make it 
+      simple for you to reach potential tenants quickly and efficiently. Click the button to get started!
+    </p>
+    <div class="cta-button">
+      <a href="#" class="submit-property-btn">Submit a Property</a>
+    </div>
+  </div>
+</section>
+
+<style>
+.list-properties {
+  background-color: #f5f4f0;
+  padding: 80px 20px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.list-properties h2 {
+  font-size: 42px;
+  color: #2b376a;
+  text-transform: uppercase;
+  margin-bottom: 60px;
+  text-align: center;  /* centers the title */
+  width: 100%;         /* ensures centering works */
+  transform: translateX(0px);
+  font-weight: 700;
+}
+.list-properties .subtitle {
+  font-size: 20px;
+  color: #556799;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  line-height: 1.6;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px; /* adds space inside the box */
+  text-align: center; /* centers the text nicely */
+}
+
+
+.cta-button {
+  text-align: center;
+}
+
+.submit-property-btn {
+  display: inline-block;
+  background-color: #2b376a;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 15px 35px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.submit-property-btn:hover {
+  background-color: transparent;
+  color: #2b376a;
+  border: 1px solid #2b376a;
+  transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .list-properties h2 {
+    font-size: 28px;
+  }
+
+  .list-properties .subtitle {
+    font-size: 16px;
+  }
+
+  .submit-property-btn {
+    font-size: 16px;
+    padding: 12px 25px;
   }
 }
 </style>
