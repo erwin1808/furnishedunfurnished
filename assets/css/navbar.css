@@ -1,0 +1,10 @@
+.custom-link {
+    font-family: 'Roboto', sans-serif; /* Set font to Roboto */
+    font-weight: bold; /* Ensure the font is bold */
+    
+}
+.nav-item .custom-link{
+    font-size: 22px;
+    color: #44104E; /* Set text color */
+    
+}

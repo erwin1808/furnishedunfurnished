@@ -1,0 +1,220 @@
+/**header-pic**/
+
+.carousel-item {
+    position: relative; 
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Black overlay with opacity */
+    z-index: 1; 
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 45%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    color: white; 
+    text-align: center; 
+    z-index: 2; 
+}
+
+.carousel-caption h5 {
+    margin: 0; 
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; 
+    font-size: 40px; 
+}
+.p-3.mb-2.bg-white.bg-opacity-25{
+    margin-top: 40%;
+    border-radius: 10px;
+    width: 70%;
+    position: relative; /* Allows for positioning context */
+    top: 50%; /* Moves the element down by 50% of the parent's height */
+    transform: translateY(-50%); /* Centers the element vertically */
+    text-align: center; 
+}
+/** end header-pic**/
+
+
+/**
+.header-caption{
+    position: absolute;
+    top: 20%;
+    margin-left: 34%;
+}
+.header-caption h5{
+    margin: 0; 
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; 
+    font-size: 40px; 
+    color: white ;
+    text-align: center;
+}
+**/
+
+.partner-logo {
+    width: 60%; 
+    height: auto; 
+    object-fit: contain; 
+    padding: 10px; 
+    align-items: center;
+    justify-content: center;
+}
+/**featured projects**/
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow for cards */
+    transition: transform 0.2s; /* Smooth scaling effect on hover */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Scale up the card on hover */
+}
+
+.card img {
+    width: 200px; 
+    height: 250px; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure the image covers the space without distortion */
+}
+.card-body {
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+}
+.card-body h5{
+    font-weight: 700;
+    font-size: 25px;
+}
+.card-body h6{
+    font-weight: 600;
+    font-size: 20px;
+}
+.card-body p{
+    font-size: 20px;
+}
+
+
+
+/*button see more*/
+
+.custom-btn {
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+    font-weight: 500; /* Set font-weight to 400 */
+    background-color: #99CCCC; /* Your custom background color */
+    color: black; /* Text color */
+    border: none; /* Remove border */
+    padding: 8px 16px; /* Add padding */
+    max-width: 120px;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.custom-btn:hover {
+    background-color: #88bbbb; /* Slightly darker color on hover */
+}
+
+
+.custom-btn:hover {
+    background-color: #88BBBB; 
+    border-color: #88BBBB;
+}
+
+/**for fonts**/
+.container-fluid .mb-4, h3{
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; 
+}
+
+.container-fluid p{
+    font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+    font-weight: 400; /* Set font-weight to 400 */
+    font-size: 20px;
+}
+
+
+/**featured clients**/
+.custom-carousel-content {
+    background-color: #f8f9fa; /* Background color for the carousel */
+}
+.custom-carousel-item-clients{
+    font-size: 25px;
+    max-width: 900px; /* Set a max width for the paragraph */
+    margin: 0 auto; /* Center the content */
+    text-align: center; /* Center text within the div */
+}
+
+
+.custom-carousel-item {
+    background-color: #ffffff; /* Background for individual text blocks */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-carousel-item h5 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Darker text color */
+}
+
+.custom-carousel-item p {
+    font-size: 16px;
+    color: #555; /* Slightly lighter text color */
+}
+
+
+/**search bar**/
+.overlay .container-fluid .nav-tabs .nav-link {
+    color: black; /* Default text color */
+    background-color: white; /* Default background */
+}
+
+.overlay .container-fluid .nav-tabs .nav-link.active {
+    color: black; /* Text color for active link */
+    background-color: white; /* Background color for active link */
+}
+
+.overlay .container-fluid .nav-tabs .nav-link:hover {
+    background-color: lightgray; /* Optional: Change background on hover */
+}
+
+
+.input-group-text {
+    background-color: white; /* White background for the icon */
+    border: none; /* Remove border */
+}
+
+.input-group-text img {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+
+
+/* For Responsive Design */
+@media (max-width: 1200px) {
+    .carousel-caption h5 {
+        font-size: 25px;
+    }
+}
+
+@media (max-width: 992px) {
+    .carousel-caption h5 {
+        font-size: 18px; 
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-caption h5 {
+        font-size: 15px; 
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-caption h5 {
+        font-size: 13px; 
+    }
+}
