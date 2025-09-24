@@ -1091,6 +1091,7 @@
         </div>
     </div>
 <?php include 'navbar.php'; ?>
+<?php include 'nav-mobile.php'; ?>
 <!-- Hero Section -->
 <section class="hero d-flex align-items-center" id="home">
     <div class="hero-overlay"></div>
@@ -1139,6 +1140,26 @@
     <div class="overlay-text">Business Travel</div>
   </div>
 </section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlays = document.querySelectorAll(".overlay-text");
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // run only once
+        }
+      });
+    },
+    { threshold: 0.3 } // trigger when 30% visible
+  );
+
+  overlays.forEach(overlay => observer.observe(overlay));
+});
+</script>
+
 <style>
 .image-grid {
   display: grid;
@@ -1178,8 +1199,18 @@
   transform: scale(1.1);
 }
 
+/* Animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px); /* start lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0); /* final position */
+  }
+}
 
-/* Overlay text at middle bottom */
 .overlay-text {
   position: absolute;
   bottom: 10px;
@@ -1192,7 +1223,24 @@
   background: rgba(0,0,0,0.5);
   padding: 8px 16px;
   border-radius: 100px;
+
+  /* hidden by default */
+  opacity: 0;
 }
+
+/* Animate only when "show" class is added */
+.overlay-text.show {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Stagger delays */
+.grid-item:nth-child(1) .overlay-text.show { animation-delay: 0.2s; }
+.grid-item:nth-child(2) .overlay-text.show { animation-delay: 0.4s; }
+.grid-item:nth-child(3) .overlay-text.show { animation-delay: 0.6s; }
+.grid-item:nth-child(4) .overlay-text.show { animation-delay: 0.8s; }
+.grid-item:nth-child(5) .overlay-text.show { animation-delay: 1s; }
+.grid-item:nth-child(6) .overlay-text.show { animation-delay: 1.2s; }
+
 
 /* Responsive (mobile: 1 column) */
 @media (max-width: 768px) {

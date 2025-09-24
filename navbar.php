@@ -113,7 +113,7 @@
 
   <!-- Hamburger for mobile -->
   <div class="hamburger" id="hamburgerMenu">
-    <i class="fas fa-bars"></i>
+    
   </div>
 
   <!-- Nav Links -->

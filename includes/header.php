@@ -346,7 +346,7 @@ body {
 
 
         <button class="mobile-menu-btn" id="mobileMenuBtn">
-            <i class="fas fa-bars"></i>
+            
         </button>
         
         <nav class="nav-links" id="navLinks">
@@ -496,7 +496,7 @@ body {
         navLinks.classList.toggle('active');
         mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
             ? '<i class="fas fa-times"></i>'
-            : '<i class="fas fa-bars"></i>';
+            : '';
     }
 
     // Show logout confirmation modal
