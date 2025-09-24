@@ -57,7 +57,7 @@
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -20px;
   background: #2b376a;
   padding: 10px 0;
   min-width: 180px;
@@ -159,16 +159,9 @@
 
   <!-- Nav Links -->
   <div class="nav-links" id="navLinks">
-    <div class="nav-item" onclick="window.location.href='index.php'">Home</div>
-
-    <!-- About Us Dropdown -->
-    <div class="nav-item dropdown">
-      About Us
-      <div class="dropdown-menu">
-        <div class="dropdown-item" onclick="window.location.href='about-us.php'">About Us</div>
-        <div class="dropdown-item" onclick="window.location.href='meet-the-team.php'">Meet the Team</div>
-      </div>
-    </div>
+  
+ <div class="nav-item" onclick="window.location.href='services.php'">Services</div>
+ 
 
     <!-- Properties Dropdown -->
     <div class="nav-item dropdown">
@@ -188,16 +181,24 @@
         <div class="dropdown-item" onclick="window.location.href='usace.php'">USACE</div>
       </div>
     </div>
-
-    <div class="nav-item" onclick="window.location.href='services.php'">Services</div>
+   <!-- About Us Dropdown -->
+    <div class="nav-item dropdown">
+      About Us
+      <div class="dropdown-menu">
+        <div class="dropdown-item" onclick="window.location.href='about-us.php'">About Us</div>
+        <div class="dropdown-item" onclick="window.location.href='meet-the-team.php'">Meet the Team</div>
+      </div>
+    </div>
+   
     <div class="nav-item" onclick="window.location.href='contact.php'">Contact</div>
   </div>
 
   <!-- Social Icons -->
   <div class="social-icons">
-    <a href="#"><i class="fab fa-facebook-f"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+ 
+<a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://www.linkedin.com/company/streamlined-stay-solutions/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+
   </div>
 </div>
 

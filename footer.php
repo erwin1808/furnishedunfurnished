@@ -9,34 +9,49 @@
 <div class="footer-col">
     <h3>Streamlined Stays</h3>
     <ul>
-        <li><i class="fas fa-phone-alt"></i> +1 704-486-5521</li>
-        <li><i class="fas fa-phone"></i> 888-9935-Streamlined Stays (7292)</li>
-        <li><i class="fas fa-envelope"></i> <a href="mailto:info@streamlinedstays.com/">info@streamlinedstays.com</a></li>
+        <li><i class="fas fa-phone"></i> <a href="tel:+18778732699" style="text-decoration: none; transform:translateY(4px)">+(877) 873-2699</a></li>
+
+        <li><i class="fas fa-envelope"></i> <a href="mailto:housing@streamlinedstays.com/" style="text-decoration: none; transform:translateY(4px)">housing@streamlinedstays.com</a></li>
     </ul>
 </div>
 
 
+<!-- Logos Section -->
+<div class="footer-logos">
+    <img src="images/corporate_housing_providers_association_RGB.png" alt="Logo 1" class="footer-logo">
+    <img src="images/Service-Disabled-Veteran-Owned-Certified-2-1.png" alt="Logo 2" class="footer-logo">
+</div>
 
-<div id="map"></div>
 
 <style>
-  #map {
-    height: 250px;
-    width: 450px;
-    border-radius: 6px;
-    margin-top: -50px;
-    margin-left: 180px;
-  }
+.footer-logos {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    gap: 30px; /* space between logos */
+    margin-top: -50px; /* adjust vertical alignment */
+}
 
-  /* Center map on mobile */
-  @media (max-width: 768px) {
-    #map {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-      width: 350px;
+.footer-logo {
+    width: 300px; /* exact logo width */
+    height: 200px; /* exact logo height */
+    object-fit: contain; /* maintain aspect ratio without distortion */
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+    .footer-logos {
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 0;
     }
-  }
+
+    .footer-logo {
+        width: 150px; /* slightly smaller on mobile */
+        height: 100px;
+    }
+}
+
 </style>
 
 
@@ -86,11 +101,8 @@
         <p style="font-family: 'Montserrat', sans-serif;">&copy; 2025 Streamlined Stays Group. All Rights Reserved.</p>
     </div>
   <div class="social-links">
-    <a href="https://www.facebook.com/Streamlined Stays/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://x.com/Streamlined Stays" target="_blank"><i class="fab fa-twitter"></i></a>
-    <a href="https://www.linkedin.com/in/Streamlined Stays/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://www.instagram.com/Streamlined Stays/" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.youtube.com/channel/UC_MUOdusn1yYq1PFOWrnxLQ" target="_blank"><i class="fab fa-youtube"></i></a>
+<a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://www.linkedin.com/company/streamlined-stay-solutions/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
 </div>
 
 </div>
