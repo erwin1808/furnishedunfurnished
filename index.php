@@ -438,6 +438,18 @@ document.addEventListener("DOMContentLoaded", () => {
   /* hidden by default */
   opacity: 0;
 }
+/* ===== Overlay Text for Mobile Devices ===== */
+@media (max-width: 991px) {
+    .overlay-text {
+        bottom: 5px; /* a little closer to the bottom on mobile */
+        font-size: 1rem; /* slightly smaller text */
+        padding: 6px 12px; /* smaller padding for smaller screens */
+        border-radius: 50px; /* keep pill shape */
+        opacity: 1; /* optionally show by default on mobile */
+        width: 250px;
+        text-align: center;
+    }
+}
 
 /* Animate only when "show" class is added */
 .overlay-text.show {
