@@ -160,146 +160,149 @@
             line-height: 1.7;
             font-family: 'Montserrat', sans-serif;
         }
-.hero {
-    position: relative;
-    background: url('images/dsc_3531.jpg') no-repeat center center/cover;
-    min-height: 100vh;       /* use only min-height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+
+        .hero {
+  position: relative;
+  background: url('images/dsc_3531.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 /* Overlay */
 .hero-overlay {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.16);
-    z-index: 1;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.16);
+  z-index: 1;
 }
-
 
 /* Hero content */
 .hero-content {
-     transform: translateX(-50px) !important;
-    position: relative;
-    z-index: 2;
-    max-width: 700px;
-    padding: 20px;
-    text-align: center;
-    color: var(--light);
-    animation: fadeInUp 1s ease forwards;
-    left: 0%;
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+  text-align: left;
+  color: var(--light);
+  animation: fadeInUp 1s ease forwards;
 
-    /* Center content vertically */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* Headings */
-.hero-content h1 {
-    width: 700px;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    margin-top: -20px;
-}
+.hero-content h1,
 .hero-title {
-  
+  text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  line-height: 1.2;
-  text-transform: uppercase;
-  margin-top: 0;
+  line-height: 1.3;
   margin-bottom: 15px;
-  font-size: 3rem !important;  /* default (mobile) */
-  width: 700px !important;
-  white-space: nowrap; /* forces single line */
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
+/* Mobile-first style */
+.hero-title {
+  font-size: 2rem;  /* smaller for phones */
+  width: 100%;      /* no fixed width */
+  white-space: normal; /* allow wrapping */
+}
 
+/* Tablets */
 @media (min-width: 768px) {
+    .hero{
+        height: 30vh;
+    }
   .hero-title {
-    font-size: 3rem; /* tablet and up */
+    font-size: 2.5rem;
   }
+
 }
 
+/* Large desktops */
 @media (min-width: 1200px) {
   .hero-title {
-    font-size: 3.5rem; /* large desktops */
+    font-size: 3.5rem;
   }
 }
 
-.hero-content h2 {
- 
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    line-height: 1.3;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
 /* Paragraphs */
 .hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 25px;
-    font-weight: 500;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
 }
 
 /* Buttons wrapper */
 .hero-btns {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px; /* reduced margin from 100px to 20px */
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 /* Buttons */
 .btn-solid, .btn-outline {
-    padding: 12px 35px;
-    font-weight: 600;
-    border-radius: 50px;
-    font-family: 'Montserrat', sans-serif;
-    transition: 0.3s ease;
-    text-decoration: none;
+  padding: 10px 28px;
+  font-weight: 600;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  transition: 0.3s ease;
+  text-decoration: none;
 }
 
 .btn-solid {
-    background: #168a49;
-    color: #fff;
+  background: #168a49;
+  color: #fff;
 }
 
 .btn-solid:hover {
-    background: white;
-    color: #168a49;
-    transform: translateY(-3px);
-    outline: 3px solid #168a49;
+  background: white;
+  color: #168a49;
+  transform: translateY(-3px);
+  outline: 3px solid #168a49;
 }
 
 .btn-outline {
-    background-color: var(--secondary);
-    border: 2px solid var(--primary);
-    color: #fff;
+  background-color: var(--secondary);
+  border: 2px solid var(--primary);
+  color: #fff;
 }
 
 .btn-outline:hover {
-    background: #fff;
-    color: var(--secondary);
-    transform: translateY(-3px);
+  background: #fff;
+  color: var(--secondary);
+  transform: translateY(-3px);
 }
-
 
     </style>
 </head>
 <body>
-<?php include 'navbar.php'; ?>
-<?php include 'nav-mobile.php'; ?>
+<!-- Always include both -->
+<div class="nav-desktop">
+  <?php include 'navbar.php'; ?>
+</div>
+
+<div class="nav-mobile">
+  <?php include 'nav-mobile.php'; ?>
+</div>
+
+<style>
+/* Hide one based on screen size */
+.nav-mobile { display: none; }
+@media (max-width: 991px) {
+  .nav-desktop { display: none; }
+  .nav-mobile { display: block; }
+}
+</style>
+
 <!-- Hero Section -->
 <section class="hero d-flex align-items-center" id="home">
     <div class="hero-overlay"></div>
@@ -309,16 +312,16 @@
             <div class="col-12 col-md-10 col-lg-6">
 
         <!-- Hero Section -->
-<div class="hero-content text-start px-3 px-md-0">
-    <h2 class="fs-1 fs-md-1">Welcome to</h2>
-<h1 class="hero-title">Streamlined Stay Solutions</h1>
+        <div class="hero-content text-start px-3 px-md-0">
+            <h2 class="fs-1 fs-md-1">Welcome to</h2>
+        <h1 class="hero-title">Streamlined Stay Solutions</h1>
 
 
-    <p class="fs-6 fs-md-5">We provide expert solutions to safeguard what matters most.</p>
-    <div class="d-flex justify-content-start gap-2 gap-md-3 hero-btns flex-wrap">
-        <a href="#" class="btn btn-solid mb-2 mb-md-0">Learn More</a>
-        <a href="#" class="btn btn-outline">Contact Us</a>
-    </div>
+        <p class="fs-6 fs-md-5">We provide expert solutions to safeguard what matters most.</p>
+        <div class="d-flex justify-content-start gap-2 gap-md-3 hero-btns flex-wrap">
+            <a href="#" class="btn btn-solid mb-2 mb-md-0">Learn More</a>
+            <a href="#" class="btn btn-outline">Contact Us</a>
+        </div>
 </div>
 <!-- End Hero Section -->
 
@@ -424,11 +427,11 @@ document.addEventListener("DOMContentLoaded", () => {
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  color: #fff;
+  color: var(--light);
   font-size: 1.2rem;
   font-weight: 600;
   text-transform: uppercase;
-  background: rgba(0,0,0,0.5);
+  background: #716e65;
   padding: 8px 16px;
   border-radius: 100px;
 

@@ -29,7 +29,7 @@
 .navbar .logo img {
   max-height: 100px;
   cursor: pointer;
-  filter: brightness(0) invert(1); /* makes it white for dark bg */
+  filter: brightness(0) invert(1);
 }
 
 /* Nav Links */
@@ -48,29 +48,59 @@
   transition: color 0.3s ease;
 }
 
-/* Default (top of page, transparent background) */
-.navbar:not(.scrolled) .nav-links .nav-item:hover {
+/* Dropdown Menu */
+.navbar .nav-item.dropdown {
+  position: relative;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #2b376a;
+  padding: 10px 0;
+  min-width: 180px;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 999;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item {
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.3s ease;
+}
+
+.navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
+  background: #c9a86d;
   color: #2b376a;
 }
 
-/* When scrolled */
+.navbar .nav-item.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+/* Hover Colors */
+.navbar:not(.scrolled) .nav-links .nav-item:hover {
+  color: #2b376a;
+}
 .navbar.scrolled .nav-links .nav-item:hover {
   color: #c9a86d;
 }
-
 
 /* Social Icons */
 .navbar .social-icons {
   display: flex;
   gap: 15px;
 }
-
 .navbar .social-icons a {
   color: #fff;
   font-size: 18px;
   transition: color 0.3s ease;
 }
-
 .navbar .social-icons a:hover {
   color: #c9a86d;
 }
@@ -93,6 +123,17 @@
     background: #2b376a;
     padding: 15px 0;
   }
+  .nav-item.dropdown .dropdown-menu {
+    position: static;
+    box-shadow: none;
+    background: #2b376a;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+  .nav-item.dropdown.active .dropdown-menu {
+    display: flex;
+  }
   .hamburger {
     display: block;
     cursor: pointer;
@@ -113,16 +154,42 @@
 
   <!-- Hamburger for mobile -->
   <div class="hamburger" id="hamburgerMenu">
-    
+    <i class="fas fa-bars"></i>
   </div>
 
   <!-- Nav Links -->
   <div class="nav-links" id="navLinks">
     <div class="nav-item" onclick="window.location.href='index.php'">Home</div>
-    <div class="nav-item" onclick="window.location.href='about-us.php'">About Us</div>
-    <div class="nav-item" onclick="window.location.href='properties.php'">Properties</div>
+
+    <!-- About Us Dropdown -->
+    <div class="nav-item dropdown">
+      About Us
+      <div class="dropdown-menu">
+        <div class="dropdown-item" onclick="window.location.href='about-us.php'">About Us</div>
+        <div class="dropdown-item" onclick="window.location.href='meet-the-team.php'">Meet the Team</div>
+      </div>
+    </div>
+
+    <!-- Properties Dropdown -->
+    <div class="nav-item dropdown">
+      Properties
+      <div class="dropdown-menu">
+        <div class="dropdown-item" onclick="window.location.href='properties-us.php'">United States</div>
+        <div class="dropdown-item" onclick="window.location.href='properties-international.php'">International</div>
+      </div>
+    </div>
+
+    <!-- Submit Property Dropdown -->
+    <div class="nav-item dropdown">
+      Submit Property
+      <div class="dropdown-menu">
+        <div class="dropdown-item" onclick="window.location.href='submit-property.php'">Submit Property</div>
+        <div class="dropdown-item" onclick="window.location.href='fema.php'">FEMA</div>
+        <div class="dropdown-item" onclick="window.location.href='usace.php'">USACE</div>
+      </div>
+    </div>
+
     <div class="nav-item" onclick="window.location.href='services.php'">Services</div>
-    <div class="nav-item" onclick="window.location.href='submit-property.php'">Submit Property</div>
     <div class="nav-item" onclick="window.location.href='contact.php'">Contact</div>
   </div>
 
@@ -154,5 +221,15 @@
     const icon = hamburger.querySelector('i');
     icon.classList.toggle('fa-bars');
     icon.classList.toggle('fa-times');
+  });
+
+  // Mobile dropdown toggle
+  const dropdowns = document.querySelectorAll('.nav-item.dropdown');
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('click', () => {
+      if (window.innerWidth <= 991) {
+        dropdown.classList.toggle('active');
+      }
+    });
   });
 </script>
