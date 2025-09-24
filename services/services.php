@@ -1,567 +1,625 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Services | Ohio Dental Repair</title>
-    <?php include "../includes/icon.php"; ?>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
-  
-  <style>
-    :root {
-      --primary: #2a5c8d;
-      --secondary: #4a90e2;
-      --light: #f8f9fa;
-      --dark: #343a40;
-      --shadow-light: rgba(0,0,0,0.1);
-      --shadow-strong: rgba(0,0,0,0.15);
-      --border-radius: 8px;
-      --transition-speed: 0.3s;
-      --font-heading: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      --font-body: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3S</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-    /* Reset & base */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet" />
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <style>
+        /* Updated Color Scheme for Construction/Engineering */
+        :root {
+            --primary: #1873ba;  /* Vibrant blue */
+            --primary-dark: #115283ff;
+            --secondary: #0B47A8; /* Amber */
+            --secondary-dark: #0B47A8;
+            --dark: #111827;     /* Deep gray */
+            --darker: #0d1321;
+            --light: #faf9f5;    /* Off-white */
+            --gray: #6b7280;
+            --light-gray: #e5e7eb;
+            --success: #9ccc65;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: all 0.3s ease;
+        }
+        
+        /* Make map tiles black and white while keeping markers/popups colored */
+        .leaflet-tile-container img {
+            filter: grayscale(100%) contrast(110%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Commuters Sans Font */
+        @font-face {
+            font-family: "Commuters Sans";
+            src: url("assets/fonts/Demo_Fonts/Fontspring-DEMO-commuterssans-regular.otf") format("opentype");
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        /* Add other font-face declarations as needed */
+        
+        body {
+            font-family: "Commuters Sans", sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            scroll-behavior: smooth;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .content-container {
+            max-width: 1400px;
+            margin: 200px auto 0;
+            padding: 0 30px;
+        }
+        
+        /* Modern buttons */
+        .btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-secondary-custom {
+            background: var(--secondary);
+        }
+        
+        .btn-secondary-custom:hover {
+            background: var(--secondary-dark);
+        }
+        
+        .btn-custom i {
+            margin-right: 8px;
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-size: 2.6rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+            color: #1b75bb;
+            font-weight: 800;
+            text-align: center;
+            text-transform: capitalize;
+            font-family: 'Commuters Sans', sans-serif;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--dark);
+            max-width: 1200px;
+            margin: -30px auto 80px;
+            text-align: center;
+            line-height: 1.7;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-    body {
-      font-family: var(--font-body);
-      line-height: 1.6;
-      color: #333;
-      background-color: var(--light);
-    }
-
-    a {
-      color: var(--secondary);
-      text-decoration: none;
-      transition: color var(--transition-speed);
-    }
-    a:hover, a:focus {
-      color: var(--primary);
-      outline: none;
-    }
-
-    /* Container */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-   
-    .cta-box {
-      background-color: #f9f9f9;
-      padding: 30px;
-      border-radius: 5px;
-      text-align: center;
-      margin-top: 40px;
-    }
-    
-    /* Button Styles */
-    .modern-button {
-      padding: 14px 40px;
-      background: linear-gradient(to right, #0ea5e9, #2563eb);
-      border: none;
-      border-radius: 30px;
-      color: white;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .modern-button::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.15);
-      transition: left 0.3s ease;
-    }
-    
-    .modern-button:hover::after {
-      left: 100%;
-    }
-    
-    .modern-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-    }
-    
-    
-
-    /* Service Section */
-    .service-section {
-      padding: 70px 0 90px;
-      background: white;
-      box-shadow: 0 10px 30px var(--shadow-light);
-      border-radius: var(--border-radius);
-      margin: 0px auto 60px; /* Pull up slightly under header */
-      position: relative;
-      z-index: 10;
-    }
-
-    .service-section h2 {
-      color: var(--primary);
-      font-weight: 700;
-      font-size: 2.25rem;
-      margin-bottom: 15px;
-      text-align: center;
-      letter-spacing: 0.02em;
-    }
-
-    .service-section p {
-      max-width: 720px;
-      margin: 0 auto 40px;
-      text-align: center;
-      font-size: 1.05rem;
-      color: #555;
-      line-height: 1.7;
-    }
-
-    h2, h4 {
-      color: var(--secondary);
-      font-weight: 600;
-      margin-top: 40px;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    
-    .cta-button {
-      display: inline-block;
-      background-color: #2d9cca;
-      color: white;
-      padding: 15px 40px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .cta-button:hover {
-      background-color: #247ba0;
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    
-    /* CTA Section */
-.cta-section {
-  padding: 80px 0;
-  background-image: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)),
-                    url('../images/handpiece-repair-bg.jpeg');
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
-  text-align: center;
+        .hero {
+  position: relative;
+  background: url('images/dsc_3531.jpg') no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-    
-    .cta-section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-    }
-    
-    .cta-section p {
-      max-width: 700px;
-      margin: 0 auto 30px;
-      font-size: 1.1rem;
-    }
-    
-    /* Pricing table */
-    .pricing-table {
-      width: 100%;
-      max-width: 900px;
-      margin: 20px auto 0;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-      box-shadow: 0 4px 20px var(--shadow-strong);
-      border-radius: var(--border-radius);
-      overflow: hidden;
-    }
 
-    .pricing-table thead tr {
-      background-color: var(--primary);
-      color: white;
-      font-weight: 700;
-      font-size: 1.1rem;
+/* Overlay */
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.16);
+  z-index: 1;
+}
+
+/* Hero content */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 20px;
+  text-align: left;
+  color: var(--light);
+  animation: fadeInUp 1s ease forwards;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Headings */
+.hero-content h1,
+.hero-title {
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Mobile-first style */
+.hero-title {
+  font-size: 2rem;  /* smaller for phones */
+  width: 100%;      /* no fixed width */
+  white-space: normal; /* allow wrapping */
+}
+
+/* Tablets */
+@media (min-width: 768px) {
+    .hero{
+        height: 30vh;
     }
+  .hero-title {
+    font-size: 2.5rem;
+  }
 
-    .pricing-table th, .pricing-table td {
-      padding: 18px 20px;
-      text-align: left;
-      font-weight: 500;
-    }
+}
 
-    .pricing-table tbody tr {
-      background-color: #fafafa;
-      border-radius: var(--border-radius);
-      box-shadow: 0 2px 8px var(--shadow-light);
-      transition: background-color var(--transition-speed);
-      cursor: default;
-    }
-    .pricing-table tbody tr:hover {
-      background-color: #f0f8ff;
-      box-shadow: 0 4px 14px rgba(42,92,141,0.3);
-    }
+/* Large desktops */
+@media (min-width: 1200px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+}
 
-    .pricing-table tbody tr td {
-      border: none;
-      border-radius: var(--border-radius);
-    }
+/* Paragraphs */
+.hero-content p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
 
-    /* Tabs */
-    .service-tabs {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 40px;
-      box-shadow: 0 3px 10px var(--shadow-light);
-      background-color: #f7f9fc;
-      border-radius: var(--border-radius);
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      overflow: hidden;
-    }
+/* Buttons wrapper */
+.hero-btns {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
 
-    .service-tab {
-      flex: 1;
-      padding: 14px 24px;
-      background-color: transparent;
-      border: none;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--primary);
-      cursor: pointer;
-      transition: background-color var(--transition-speed), color var(--transition-speed);
-      user-select: none;
-    }
+/* Buttons */
+.btn-solid, .btn-outline {
+  padding: 10px 28px;
+  font-weight: 600;
+  border-radius: 50px;
+  font-family: 'Montserrat', sans-serif;
+  transition: 0.3s ease;
+  text-decoration: none;
+}
 
-    .service-tab:hover {
-      background-color: var(--secondary);
-      color: white;
-    }
+.btn-solid {
+  background: #168a49;
+  color: #fff;
+}
 
-    .service-tab.active {
-      background-color: var(--primary);
-      color: white;
-      box-shadow: inset 0 -4px 8px var(--secondary);
-      cursor: default;
-    }
+.btn-solid:hover {
+  background: white;
+  color: #168a49;
+  transform: translateY(-3px);
+  outline: 3px solid #168a49;
+}
 
-    /* Tab content */
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.6s ease forwards;
-    }
-    .tab-content.active {
-      display: block;
-    }
+.btn-outline {
+  background-color: var(--secondary);
+  border: 2px solid var(--primary);
+  color: #fff;
+}
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
+.btn-outline:hover {
+  background: #fff;
+  color: var(--secondary);
+  transform: translateY(-3px);
+}
 
-    /* Responsive */
-    @media (max-width: 900px) {
-      .pricing-table {
-        max-width: 100%;
-        font-size: 0.9rem;
-      }
-
-      .service-header h1 {
-        font-size: 2.2rem;
-      }
-
-      .service-tabs {
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .service-tab {
-        font-size: 1rem;
-        padding: 12px 16px;
-      }
-
-      .service-section p {
-        font-size: 1rem;
-        padding: 0 10px;
-      }
-
-      .pricing-table th, .pricing-table td {
-        padding: 12px 10px;
-      }
-    }
-
-    /* Footer styles moved here to ensure they take precedence */
-    footer {
-      background-color: #1a252f;
-      color: white;
-      padding: 50px 0 20px;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
-
-    .footer-section {
-      flex: 1;
-      min-width: 250px;
-      margin-bottom: 20px;
-      padding: 0 15px;
-    }
-
-    .footer-section h2 {
-      margin-bottom: 20px;
-      font-size: 1.2rem;
-      color: #e67e22;
-    }
-
-    .footer-section p, .footer-section a {
-      color: #ecf0f1;
-      margin-bottom: 10px;
-      display: block;
-      text-decoration: none;
-    }
-
-    .footer-section a:hover {
-      color: #e67e22;
-    }
-
-    .social-links a {
-      display: inline-block;
-      margin-right: 15px;
-      color: #ecf0f1;
-      font-size: 1.2rem;
-      transition: color 0.3s;
-    }
-
-    .social-links a:hover {
-      color: #e67e22;
-    }
-
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #34495e;
-      font-size: 0.9rem;
-      color: #bdc3c7;
-    }
-
-    #map {
-      height: 250px;
-      width: 40%;
-    }
-
-    @media (max-width: 768px) {
-      #map {
-        height: 150px;
-        width: 100%;
-      }
-    }
-
-    .leaflet-control-attribution {
-      font-size: 11px;
-    }
-  </style>
+    </style>
 </head>
 <body>
-
-<!-- Header -->
-<?php include "../includes/header.php" ?>
-
-<!-- Service Tabs -->
-<section class="service-section" data-aos="fade-up" data-aos-delay="200">
-  <div class="container">
-    <div class="service-tabs" role="tablist" aria-label="Service Categories">
-      <button role="tab" aria-selected="true" aria-controls="high-speed" id="tab-high-speed" class="service-tab active" onclick="openTab(event, 'high-speed')">High-Speed Repair</button>
-      <button role="tab" aria-selected="false" aria-controls="low-speed" id="tab-low-speed" class="service-tab" onclick="openTab(event, 'low-speed')">Low-Speed Repair</button>
-    </div>
-    
-<div id="high-speed" role="tabpanel" aria-labelledby="tab-high-speed" class="tab-content active">
-  <h2>High-Speed Dental Handpiece Repair</h2>
-  <p>At Ohio Dental Repair, we understand the critical role high-speed dental handpieces play in the efficiency and success of your dental practice. These precision instruments are essential for various dental procedures, from routine cleaning to complex restorative work. However, like any mechanical device, they require regular maintenance and occasional repair to ensure optimal performance.</p>
-  
-  <h2>Pricing</h2>
-  <h4>High-Speed Turbine Overhaul / New Turbine Pricing</h4>
-  
-  <table class="pricing-table" summary="Pricing details for high-speed dental handpiece repair services">
-    <thead>
-      <tr>
-        <th>Service/Make/Manufacturer</th>
-        <th>Overhaul ($)</th>
-        <th>New Turbine ($)</th>
-        <th>Warranty</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      // Connect to your DB - adjust connection parameters
-    include "../includes/db.php";
-      if ($mysqli->connect_errno) {
-          echo "<tr><td colspan='4'>Failed to connect to database: " . $mysqli->connect_error . "</td></tr>";
-      } else {
-          // Prepare statement to prevent SQL injection
-          $stmt = $mysqli->prepare("SELECT service_make_manufacturer, basic_service, complete_overhaul, warranty FROM service WHERE type = ? AND is_deleted = 0");
-          $type = "Highspeed Handpiece";
-          $stmt->bind_param("s", $type);
-          $stmt->execute();
-          $result = $stmt->get_result();
-
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . htmlspecialchars($row['service_make_manufacturer']) . "</td>";
-                  echo "<td>$" . number_format($row['basic_service'], 2) . "</td>";
-                  echo "<td>$" . number_format($row['complete_overhaul'], 2) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['warranty']) . "</td>";
-                  echo "</tr>";
-              }
-          } else {
-            echo "<tr><td colspan='4' style='text-align:center;'>No pricing information available.</td></tr>";
-
-          }
-
-          $stmt->close();
-          $mysqli->close();
-      }
-      ?>
-    </tbody>
-  </table>
+<!-- Always include both -->
+<div class="nav-desktop">
+  <?php include '../navbar.php'; ?>
 </div>
 
-    
-    <!-- Low-Speed Tab Content -->
-    <div id="low-speed" role="tabpanel" aria-labelledby="tab-low-speed" class="tab-content">
-      <h2>Low-Speed Dental Handpiece Repair</h2>
-      <p>Our low-speed handpiece repair services ensure your equipment runs smoothly for procedures requiring precision and control. We service all major brands and models, providing comprehensive maintenance and repair to extend the life of your instruments.</p>
-      
-      <h2>Pricing</h2>
-      <h4>Low-Speed Motor Repair Pricing</h4>
-      
-      <table class="pricing-table" summary="Pricing details for low-speed dental handpiece repair services">
-       <thead>
-      <tr>
-        <th>Service/Make/Manufacturer</th>
-        <th>Overhaul ($)</th>
-        <th>New Turbine ($)</th>
-        <th>Warranty</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-      // Connect to your DB - adjust connection parameters
-    include "../includes/db.php";
-      if ($mysqli->connect_errno) {
-          echo "<tr><td colspan='4'>Failed to connect to database: " . $mysqli->connect_error . "</td></tr>";
-      } else {
-          // Prepare statement to prevent SQL injection
-          $stmt = $mysqli->prepare("SELECT service_make_manufacturer, basic_service, complete_overhaul, warranty FROM service WHERE type = ? AND is_deleted = 0");
-          $type = "Lowspeed Handpiece";
-          $stmt->bind_param("s", $type);
-          $stmt->execute();
-          $result = $stmt->get_result();
+<div class="nav-mobile">
+  <?php include '../nav-mobile.php'; ?>
+</div>
 
-          if ($result->num_rows > 0) {
-              while ($row = $result->fetch_assoc()) {
-                  echo "<tr>";
-                  echo "<td>" . htmlspecialchars($row['service_make_manufacturer']) . "</td>";
-                  echo "<td>$" . number_format($row['basic_service'], 2) . "</td>";
-                  echo "<td>$" . number_format($row['complete_overhaul'], 2) . "</td>";
-                  echo "<td>" . htmlspecialchars($row['warranty']) . "</td>";
-                  echo "</tr>";
-              }
-          } else {
-           echo "<tr><td colspan='4' style='text-align:center;'>No pricing information available.</td></tr>";
+<style>
+/* Hide one based on screen size */
+.nav-mobile { display: none; }
+@media (max-width: 991px) {
+  .nav-desktop { display: none; }
+  .nav-mobile { display: block; }
+}
+</style>
 
-          }
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center" id="home">
+    <div class="hero-overlay"></div>
 
-          $stmt->close();
-          $mysqli->close();
-      }
-      ?>
-    </tbody>
-      </table>
-    </div>
+    <div class="container">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-10 col-lg-6">
 
-  </div>
-      <div class="cta-box" data-aos="fade-up">
-      <p>Need immediate assistance or not sure what you need? Email or call us — we're here to help!</p>
-      <!--p><strong>Email:</strong> ohiodentalrepair@gmail.com</p-->
-      <!--p><strong>Phone:</strong> (614) 306-9986</p-->
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ohiodentalrepair@gmail.com" target="_blank" class="modern-button" style="display: inline-block; margin-top: 15px;">
-        Email Us Now
-      </a>
+        <!-- Hero Section -->
+        <div class="hero-content text-start px-3 px-md-0">
+            <h2 class="fs-1 fs-md-1">Welcome to</h2>
+        <h1 class="hero-title">Streamlined Stay Solutions</h1>
+
+
+        <p class="fs-6 fs-md-5">We provide expert solutions to safeguard what matters most.</p>
+        <div class="d-flex justify-content-start gap-2 gap-md-3 hero-btns flex-wrap">
+            <a href="#" class="btn btn-solid mb-2 mb-md-0">Learn More</a>
+            <a href="#" class="btn btn-outline">Contact Us</a>
+        </div>
+</div>
+<!-- End Hero Section -->
+
+
+            </div>
+        </div>
     </div>
 </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <h2>Need On-Site Dental Equipment Repair?</h2>
-            <p>Don't let equipment failures disrupt your practice. Contact us today for fast, reliable dental equipment repair services.</p>
-            <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start(); // Ensure session is started
+<section class="image-grid">
+  <div class="grid-item" style="background-image: url('images/ir.jpg');">
+    <div class="overlay-text">Insurance Relocation</div>
+  </div>
+  <div class="grid-item" style="background-image: url('images/mr.jpg');">
+    <div class="overlay-text">Midterm Rentals</div>
+  </div>
+  <div class="grid-item" style="background-image: url('images/ch.jpg');">
+    <div class="overlay-text">Corporate Housing</div>
+  </div>
+  <div class="grid-item" style="background-image: url('images/gl.jpg');">
+    <div class="overlay-text">Goverment Lodging</div>
+  </div>
+  <div class="grid-item" style="background-image: url('images/el2.jpg');">
+    <div class="overlay-text">Emergency Lodging</div>
+  </div>
+  <div class="grid-item" style="background-image: url('images/bt.jpg');">
+    <div class="overlay-text">Business Travel</div>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const overlays = document.querySelectorAll(".overlay-text");
+
+  const observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+          observer.unobserve(entry.target); // run only once
+        }
+      });
+    },
+    { threshold: 0.3 } // trigger when 30% visible
+  );
+
+  overlays.forEach(overlay => observer.observe(overlay));
+});
+</script>
+
+<style>
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 300px); /* 2 rows, each 300px tall */
+  gap: 15px;
+  padding: 40px;
 }
 
+.grid-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-$onsite_link = isset($_SESSION['userid']) ? '../onsite/onsite_user.php' : '../onsite/onsite.php';
-?>
+/* Background image via pseudo-element */
+.grid-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+  z-index: 0;
+}
 
-<a href="<?php echo $onsite_link; ?>" class="cta-button">Schedule Service</a>
+/* Allow inline background to pass to ::before */
+.grid-item[style]::before {
+  background-image: inherit;
+}
 
-        </div>
-    </section>
-<!-- Footer -->
-<?php include "../includes/foot.php"; ?>
+/* Zoom effect only on picture */
+.grid-item:hover::before {
+  transform: scale(1.1);
+}
 
-<!-- AOS Animation -->
-<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script>
-  AOS.init({ duration: 900, once: true });
-
-  function openTab(event, tabName) {
-    // Hide all tab contents
-    var tabContents = document.getElementsByClassName("tab-content");
-    for (var i = 0; i < tabContents.length; i++) {
-      tabContents[i].classList.remove("active");
-    }
-
-    // Remove active class from all tabs & update aria-selected
-    var tabs = document.getElementsByClassName("service-tab");
-    for (var i = 0; i < tabs.length; i++) {
-      tabs[i].classList.remove("active");
-      tabs[i].setAttribute("aria-selected", "false");
-    }
-
-    // Show the selected tab content and mark tab as active
-    document.getElementById(tabName).classList.add("active");
-    event.currentTarget.classList.add("active");
-    event.currentTarget.setAttribute("aria-selected", "true");
+/* Animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px); /* start lower */
   }
-</script>
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0); /* final position */
+  }
+}
+
+.overlay-text {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--light);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #716e65;
+  padding: 8px 16px;
+  border-radius: 100px;
+
+  /* hidden by default */
+  opacity: 0;
+}
+/* ===== Overlay Text for Mobile Devices ===== */
+@media (max-width: 991px) {
+    .overlay-text {
+        bottom: 5px; /* a little closer to the bottom on mobile */
+        font-size: 1rem; /* slightly smaller text */
+        padding: 6px 12px; /* smaller padding for smaller screens */
+        border-radius: 50px; /* keep pill shape */
+        opacity: 1; /* optionally show by default on mobile */
+        width: 250px;
+        text-align: center;
+    }
+}
+
+/* Animate only when "show" class is added */
+.overlay-text.show {
+  animation: fadeUp 0.8s ease forwards;
+}
+
+/* Stagger delays */
+.grid-item:nth-child(1) .overlay-text.show { animation-delay: 0.2s; }
+.grid-item:nth-child(2) .overlay-text.show { animation-delay: 0.4s; }
+.grid-item:nth-child(3) .overlay-text.show { animation-delay: 0.6s; }
+.grid-item:nth-child(4) .overlay-text.show { animation-delay: 0.8s; }
+.grid-item:nth-child(5) .overlay-text.show { animation-delay: 1s; }
+.grid-item:nth-child(6) .overlay-text.show { animation-delay: 1.2s; }
+
+
+/* Responsive (mobile: 1 column) */
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .grid-item {
+    height: 250px;
+  }
+}
+
+</style>
+
+<section class="offer-section">
+  <div class="offer-container">
+    
+    <!-- Left column -->
+    <div class="offer-left">
+      <h2 class="offer-title">What Can 3S Offer You</h2>
+      <p class="offer-description">
+        3S specializes in delivering seamless and fully furnished housing solutions for insurance relocations, 
+        travel nurses, corporate personnel, and beyond. Experience comfort and convenience like never before.
+      </p>
+    </div>
+
+    <!-- Right column -->
+    <div class="offer-right">
+      <div class="feature">
+        <i class="fas fa-calendar-alt"></i>
+        <h4>Flexible Cancellation</h4>
+        <p>We understand plans change, your apartment rental needs to be the least of your worries!</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-couch"></i>
+        <h4>Fully Furnished Units</h4>
+        <p>Relax and unwind in your tastefully decorated unit with all the comforts of home.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-star"></i>
+        <h4>5 Star Accommodations</h4>
+        <p>Between our fully furnished units and variety of on-site amenities you will not want to leave!</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-key"></i>
+        <h4>Contactless Check-In</h4>
+        <p>We know travel days are hectic, make your life a little easier with contactless check-in.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-wifi"></i>
+        <h4>Ultra Fast Wi-Fi</h4>
+        <p>Away from the office? No problem! Our ultra fast Wi-Fi will ensure you never miss a thing.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-headset"></i>
+        <h4>24/7 Customer Service</h4>
+        <p>Our friendly staff is here and ready to help with whatever you need day or night!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>/* Section Layout */
+.offer-section {
+  padding: 80px 40px;
+  background: var(--light); /* subtle background */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.offer-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 50px;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Left Column */
+.offer-left {
+  max-width: 500px;
+}
+.offer-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2b376a;
+  line-height: 1.2;
+  text-align: right;
+}
+.offer-description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+    text-align: right;
+}
+
+/* Right Column (features) */
+.offer-right {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  gap: 25px;
+}
+.feature {
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+}
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.feature i {
+  font-size: 2rem;
+  color: #2b376a;
+  margin-bottom: 15px;
+}
+.feature h4 {
+    text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2b376a;
+  margin-bottom: 10px;
+}
+.feature p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .offer-container {
+    grid-template-columns: 1fr;
+  }
+  .offer-right {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+    <!-- Footer -->
+    <?php include '../footer.php';?>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
 
 </body>
 </html>

@@ -90,6 +90,45 @@
 .navbar.scrolled .nav-links .nav-item:hover {
   color: #c9a86d;
 }
+.navbar .nav-item.dropdown-services {
+  position: relative;
+}
+
+/* Initial hidden state */
+.navbar .nav-item.dropdown-services .dropdown-menu {
+  display: none; /* hidden by default */
+  position: absolute;
+  top: 100%;
+  left: -20px;
+  background: #2b376a;
+  padding: 10px;
+  min-width: 360px; /* wide enough for 2 columns */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 999;
+
+  /* Grid only applied on hover */
+}
+
+/* Hover state */
+.navbar .nav-item.dropdown-services:hover .dropdown-menu {
+  display: grid; /* show as grid */
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  grid-template-rows: repeat(3, auto); /* 3 rows */
+  gap: 0; /* space between items */
+}
+
+.navbar .nav-item.dropdown-services .dropdown-menu .dropdown-item {
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background 0.3s ease;
+}
+
+.navbar .nav-item.dropdown-services .dropdown-menu .dropdown-item:hover {
+  background: #c9a86d;
+  color: #2b376a;
+}
 
 /* Social Icons */
 .navbar .social-icons {
@@ -159,8 +198,18 @@
 
   <!-- Nav Links -->
   <div class="nav-links" id="navLinks">
-  
- <div class="nav-item" onclick="window.location.href='services.php'">Services</div>
+<div class="nav-item dropdown-services">
+  Services
+  <div class="dropdown-menu">
+    <div class="dropdown-item" onclick="window.location.href='insurance-relocation.php'">Insurance Relocation</div>
+    <div class="dropdown-item" onclick="window.location.href='midterm-rentals.php'">Midterm Rentals</div>
+    <div class="dropdown-item" onclick="window.location.href='corporate-housing.php'">Corporate Housing</div>
+    <div class="dropdown-item" onclick="window.location.href='government-lodging.php'">Government Lodging</div>
+    <div class="dropdown-item" onclick="window.location.href='emergency-lodging.php'">Emergency Lodging</div>
+    <div class="dropdown-item" onclick="window.location.href='business-travel.php'">Business Travel</div>
+  </div>
+</div>
+
  
 
     <!-- Properties Dropdown -->
