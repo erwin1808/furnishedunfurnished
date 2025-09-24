@@ -286,6 +286,40 @@
 .footer-bottom .social-links a:hover {
     color: #0B47A8;
 }
+
+/* Fixed footer only on mobile */
+@media (max-width: 768px) {
+  footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    padding: 15px 10px; /* tighter spacing for small screens */
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr; /* stack columns on mobile */
+    gap: 20px;
+    margin-top: -175    px;
+  }
+
+  #map {
+    width: 100% !important; /* Make map fit screen */
+    margin: 0 auto;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .social-links {
+    justify-content: center;
+  }
+}
+
 </style>
 
 
@@ -297,6 +331,19 @@
     <div class="back-to-top">
         <i class="fas fa-arrow-up"></i>
     </div>
+<script>
+document.addEventListener("scroll", function () {
+    const footer = document.querySelector("footer");
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+
+    if (scrollPosition >= pageHeight - 10) {
+        footer.classList.add("show-footer");
+    } else {
+        footer.classList.remove("show-footer");
+    }
+});
+</script>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
