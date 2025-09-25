@@ -59,7 +59,7 @@
   position: absolute;
   top: 100%;
   left: -20px;
-  background: #2b376a;
+  background: #998d4a; /* base color */
   padding: 10px 0;
   min-width: 180px;
   flex-direction: column;
@@ -72,12 +72,12 @@
   padding: 10px 20px;
   font-size: 14px;
   white-space: nowrap;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .navbar .nav-item.dropdown .dropdown-menu .dropdown-item:hover {
-  background: #c9a86d;
-  color: #2b376a;
+  background: #947d1e; /* hover background */
+  color: #fff; /* hover text */
 }
 
 .navbar .nav-item.dropdown:hover .dropdown-menu {
@@ -86,10 +86,10 @@
 
 /* Hover Colors */
 .navbar:not(.scrolled) .nav-links .nav-item:hover {
-  color: #2b376a;
+  color: #947d1e;
 }
 .navbar.scrolled .nav-links .nav-item:hover {
-  color: #c9a86d;
+  color: #947d1e;
 }
 .navbar .nav-item.dropdown-services {
   position: relative;
@@ -97,17 +97,17 @@
 
 /* Initial hidden state */
 .navbar .nav-item.dropdown-services .dropdown-menu {
-  display: none; /* hidden by default */
+  display: none;
   position: absolute;
   top: 100%;
   left: -20px;
-  background: #2b376a;
+  background: #998d4a;
   padding: 10px;
-  min-width: 360px; /* wide enough for 2 columns */
+  min-width: 360px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   z-index: 999;
-
-  /* Grid only applied on hover */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
 }
 
 /* Hover state */
@@ -127,8 +127,8 @@
 }
 
 .navbar .nav-item.dropdown-services .dropdown-menu .dropdown-item:hover {
-  background: #c9a86d;
-  color: #2b376a;
+  background: #947d1e; /* same hover as other dropdowns */
+  color: #fff;
 }
 
 /* Social Icons */
@@ -142,7 +142,7 @@
   transition: color 0.3s ease;
 }
 .navbar .social-icons a:hover {
-  color: #c9a86d;
+  color: #947d1e;
 }
 
 /* Responsive */
@@ -160,13 +160,13 @@
   }
   .nav-links.active {
     display: flex;
-    background: #2b376a;
+    background: #998d4a;
     padding: 15px 0;
   }
   .nav-item.dropdown .dropdown-menu {
     position: static;
     box-shadow: none;
-    background: #2b376a;
+    background: #998d4a;
     display: none;
     flex-direction: column;
     width: 100%;
@@ -277,8 +277,8 @@
 }
 
 .btn-list-property:hover {
-  background-color: transparent;
-  
+  background-color: #947d1e; /* accent hover */
+  color: #fff;
 }
 
 .dropdown {
@@ -326,7 +326,8 @@
 }
 
 .dropdown-content a:hover {
-  background-color: #f8f9fa;
+  background-color: #0B47A8; /* make hover match site colors */
+  color: #fff;
 }
 
 .dropdown:hover .dropdown-content {
