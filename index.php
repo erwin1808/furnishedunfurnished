@@ -316,12 +316,6 @@
             <h2 class="fs-1 fs-md-1">Welcome to</h2>
         <h1 class="hero-title">Streamlined Stay Solutions</h1>
 
-
-        <p class="fs-6 fs-md-5">We provide expert solutions to safeguard what matters most.</p>
-        <div class="d-flex justify-content-start gap-2 gap-md-3 hero-btns flex-wrap">
-            <a href="#" class="btn btn-solid mb-2 mb-md-0">Learn More</a>
-            <a href="#" class="btn btn-outline">Contact Us</a>
-        </div>
 </div>
 <!-- End Hero Section -->
 
@@ -332,7 +326,7 @@
 </section>
 
 <section class="image-grid">
-  <div class="grid-item" style="background-image: url('images/ir.jpg');">
+  <div class="grid-item" style="background-image: url('images/ir.jpg');" onclick="window.location.href='insurance-relocation.php';">
     <div class="overlay-text">Insurance Relocation</div>
   </div>
   <div class="grid-item" style="background-image: url('images/mr.jpg');">
@@ -378,6 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
   grid-template-rows: repeat(2, 300px); /* 2 rows, each 300px tall */
   gap: 15px;
   padding: 40px;
+  cursor: pointer;
 }
 
 .grid-item {

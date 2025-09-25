@@ -19,7 +19,7 @@
 <!-- Logos Section -->
 <div class="footer-logos">
     <img src="images/corporate_housing_providers_association_RGB.png" alt="Logo 1" class="footer-logo">
-    <img src="images/Service-Disabled-Veteran-Owned-Certified-2-1.png" alt="Logo 2" class="footer-logo">
+    <img src="images/209-2092966_transparent-sdvosb-logo-png-service-disabled-veteran-owned.png" alt="Logo 2" class="footer-logo">
 </div>
 
 
@@ -28,12 +28,12 @@
     display: flex;
     justify-content: center; /* center horizontally */
     gap: 30px; /* space between logos */
-    margin-top: -50px; /* adjust vertical alignment */
+    margin-top: 0px; /* adjust vertical alignment */
 }
 
 .footer-logo {
-    width: 300px; /* exact logo width */
-    height: 200px; /* exact logo height */
+    width: 200px; /* exact logo width */
+    height: 150px; /* exact logo height */
     object-fit: contain; /* maintain aspect ratio without distortion */
 }
 
@@ -98,7 +98,7 @@
         <!-- Copyright -->
   <div class="footer-bottom">
     <div class="copyright">
-        <p style="font-family: 'Montserrat', sans-serif;">&copy; 2025 Streamlined Stays Group. All Rights Reserved.</p>
+        <p style="font-family: 'Montserrat', sans-serif;">&copy; 2025 Streamlined Stay Solutions. All Rights Reserved.</p>
     </div>
   <div class="social-links">
 <a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -113,20 +113,20 @@
         footer {
             background:#2b376a;
             color: var(--light);
-            padding: 80px 0 30px;
+            padding: 10px 0 0px;
             position: relative;
             
         }
         
-     /* Default footer style (all pages) */
+
         /* Default footer style (all pages) */
-.footer-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    margin-bottom: 20px; /* reduced bottom space */
-    margin-top: -180px; /* default, you can tweak */
-}
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 10px; /* reduced bottom space */
+            margin-top: -180px; /* default, you can tweak */
+        }
 
 
 

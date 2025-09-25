@@ -167,7 +167,7 @@
 
 .hero {
   position: relative;
-  background: url('images/dsc_3531.jpg') no-repeat center center/cover;
+  background: url('images/IMG_1614.JPG') no-repeat center center/cover;
   min-height: 65vh;
   display: flex;
   align-items: center;
