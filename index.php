@@ -191,563 +191,700 @@
         <div class="row justify-content-start">
             <div class="col-12 col-md-10 col-lg-6">
 
-        <!-- Hero Section -->
-        <div class="hero-content text-start px-3 px-md-0">
-        <h1 class="hero-title">Furnished Unfurnished</h1>
+                <!-- Hero Section -->
+                <div class="hero-content text-start px-3 px-md-0">
+                    <h1 class="hero-title">Furnished Unfurnished</h1>
 
-        <!-- Filter Section -->
-        <div class="filter-section">
-            <div class="filter-card">
-                <div class="filter-item">
-                    <label>Where are you going?</label>
-                    <input type="text" placeholder="Enter a destination" class="filter-input">
+                    <!-- Filter Section -->
+                    <div class="filter-section">
+                        <div class="filter-card">
+                            <div class="filter-item">
+                                <label>Where are you going?</label>
+                                <input type="text" placeholder="Enter a destination" class="filter-input">
+                            </div>
+                            
+                            <div class="filter-item">
+                                <label for="move-in-date">Move in date</label>
+                                <input type="text" id="move-in-date" class="filter-input datepicker" placeholder="Select move in date">
+                            </div>
+
+                            <div class="filter-item" style="position: relative;">
+                                <label>Monthly budget</label>
+                                <input type="text" id="budget-input" placeholder="Enter budget" class="filter-input">
+
+                                <div class="popup-overlay" id="popup-overlay"></div>
+
+                                <div class="popup-card" id="budget-popup">
+                                    <div id="budget-slider"></div>
+
+                                    <div class="price-inputs">
+                                        <input type="text" id="budget-min" placeholder="Min. price">
+                                        <input type="text" id="budget-max" placeholder="No max price set">
+                                    </div>
+
+                                    <div class="buttons">
+                                        <button class="cancel" id="cancel-budget">Cancel</button>
+                                        <button id="apply-budget">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="filter-btn" style="background-color: #243065;">
+                                Search
+                            </button>
+                        </div>
+                    </div>
                 </div>
-    <!-- Flatpickr CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
-<div class="filter-item">
-    <label for="move-in-date">Move in date</label>
-    <input type="text" id="move-in-date" class="filter-input datepicker" placeholder="Select move in date">
-</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero {
+        position: relative;
+        background: url('images/27-print-3Q4A6771_11zon.jpg') no-repeat center center/cover;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(36, 48, 101, 0.30);
+        z-index: 1;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 700px;
+        padding: 20px;
+        text-align: left;
+        color: var(--light);
+        animation: fadeInUp 1s ease forwards;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .hero-title {
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        transform: translate(-250px, 500px);
+        width: 1200px;
+    }
+
+    .filter-section {
+        margin-top: 30px;
+        transform: translate(50px, -100px);
+    }
+
+    .filter-card {
+        background: var(--light);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        width: 1200px;
+    }
+
+    .filter-item {
+        margin-bottom: 20px;
+    }
+
+    .filter-item label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #243065;
+        font-size: 0.9rem;
+    }
+
+    .filter-input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .filter-input:focus {
+        outline: none;
+        border-color: #243065;
+        box-shadow: 0 0 0 3px rgba(36, 48, 101, 0.1);
+    }
+
+    .filter-btn {
+        width: 100%;
+        background-color: #243065;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .filter-btn:hover {
+        background-color: #1a2450;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(36, 48, 101, 0.3);
+    }
+
+    .popup-card {
+        display: none;
+        position: absolute;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        z-index: 100;
+        width: 400px;
+        top: 100%;
+        left: 0;
+        margin-top: 5px;
+    }
+
+    .popup-card .price-inputs {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .popup-card .price-inputs input {
+        width: 45%;
+        padding: 6px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    .popup-card .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .popup-card button {
+        flex: 1;
+        margin: 0 5px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: none;
+        background-color: #243065;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .popup-card button.cancel {
+        background-color: transparent;
+        color: #555;
+        border: 1px solid #ccc;
+    }
+
+    .noUi-target {
+        height: 6px;
+        border-radius: 3px;
+        background: #ddd;
+    }
+
+    .noUi-connect {
+        background: #243065;
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    .noUi-handle {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #243065;
+        border: none;
+        transform: translateY(-6px);
+    }
+
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background: rgba(0,0,0,0.3);
+        z-index: 50;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 767px) {
+        .hero-title {
+            width: 100%;
+            transform: none;
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        
+        .filter-section {
+            transform: none;
+            margin-top: 20px;
+        }
+        
+        .filter-card {
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .filter-input {
+            font-size: 16px; /* Prevents zoom on iOS */
+        }
+        
+        .popup-card {
+            width: 90vw;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+        
+        .popup-card .price-inputs {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .popup-card .price-inputs input {
+            width: 100%;
+        }
+        
+        .popup-card .buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .popup-card button {
+            margin: 0;
+        }
+        
+        .noUi-handle {
+            width: 24px;
+            height: 24px;
+            transform: translateY(-9px);
+        }
+    }
+
+    /* Desktop layout preserved */
+    @media (min-width: 768px) {
+        .hero {
+            height: 30vh;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .filter-card {
+     
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .filter-item {
+            margin-bottom: 0;
+        }
+        
+        .filter-btn {
+            margin-top: 0;
+            padding: 12px 25px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .hero-title {
+            font-size: 2.7rem;
+        }
+    }
+</style>
+
+<!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<!-- Include noUiSlider CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.css">
 
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Include noUiSlider JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
 
 <script>
-flatpickr(".datepicker", {
-    dateFormat: "Y-m-d",
-    minDate: "today" // disables past dates
-});
+    flatpickr(".datepicker", {
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+
+    const budgetInput = document.getElementById('budget-input');
+    const popup = document.getElementById('budget-popup');
+    const overlay = document.getElementById('popup-overlay');
+    const sliderContainer = document.getElementById('budget-slider');
+    const inputMin = document.getElementById('budget-min');
+    const inputMax = document.getElementById('budget-max');
+    const applyBtn = document.getElementById('apply-budget');
+    const cancelBtn = document.getElementById('cancel-budget');
+
+    let sliderInitialized = false;
+
+    budgetInput.addEventListener('click', () => {
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+        
+        if (!sliderInitialized) {
+            noUiSlider.create(sliderContainer, {
+                start: [0, 10000],
+                connect: true,
+                range: { 'min': 0, 'max': 10000 },
+                step: 100,
+                tooltips: [true, true],
+                format: {
+                    to: (value) => `$${Math.round(value)}`,
+                    from: (value) => Number(value.replace('$', ''))
+                }
+            });
+
+            sliderContainer.noUiSlider.on('update', function(values, handle) {
+                inputMin.value = values[0];
+                inputMax.value = values[1] === '$10000' ? '' : values[1];
+            });
+
+            inputMin.addEventListener('change', () => sliderContainer.noUiSlider.set([inputMin.value, null]));
+            inputMax.addEventListener('change', () => sliderContainer.noUiSlider.set([null, inputMax.value || 10000]));
+
+            sliderInitialized = true;
+        }
+    });
+
+    overlay.addEventListener('click', () => closePopup());
+    cancelBtn.addEventListener('click', () => closePopup());
+
+    applyBtn.addEventListener('click', () => {
+        budgetInput.value = inputMax.value ? `${inputMin.value} - ${inputMax.value}` : `${inputMin.value} - No max price set`;
+        closePopup();
+    });
+
+    function closePopup() {
+        popup.style.display = 'none';
+        overlay.style.display = 'none';
+    }
 </script>
 
-<style>
-.filter-item {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-}
 
-.filter-item label {
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: #3b1453;
-}
-
-.filter-input {
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
-.filter-input:focus {
-    outline: none;
-    border-color: #4f145c;
-    box-shadow: 0 0 5px rgba(79, 20, 92, 0.5);
-}
-</style>
-
-                <div class="filter-item">
-                    <label>Monthly budget</label>
-                    <input type="text" placeholder="Enter budget" class="filter-input">
-                </div>
-                <button class="filter-btn" style="background-color: #243065;">
-                    Search
-                </button>
+<!-- How It Works Section -->
+<section class="how-it-works py-5 bg-light">
+    <div class="container">
+        <!-- Section Title -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 text-center">
+                <h2 class="display-4 fw-bold" style="color: #243065;">How It Works</h2>
+            
+                <p class="lead text-muted max-w-800 mx-auto">
+                    Furnished Finder specializes in 30-day or longer stays, catering to corporate travelers, 
+                    relocating families, travel nurses, academics, and digital nomads—not vacationers. 
+                    We facilitate direct communication between property owners and tenants without interfering 
+                    in the transaction process.
+                </p>
             </div>
         </div>
 
-</div>
-<!-- End Hero Section -->
+        <!-- Process Steps Row -->
+        <div class="row g-4 text-center">
+            <!-- Step 1 -->
+            <div class="col-md-3">
+                <div class="position-relative border-box p-3 rounded-4">
+                    <span class="badge position-absolute top-0 start-0 m-2">CONNECT</span>
+                    <img src="images/woman-calling-on-smartphone-free-photo.webp" class="step-image mb-3 shadow-sm" alt="Connect">
+                    <div class="row align-items-center text-start">
+                        <div class="col-3">
+                            <span class="step-number">1</span>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-muted mb-0">List your property and communicate directly with tenant leads.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Step 2 -->
+            <div class="col-md-3">
+                <div class="position-relative border-box p-3 rounded-4">
+                    <span class="badge position-absolute top-0 start-0 m-2">SCREEN</span>
+                    <img src="images/S_S-BLOG-9-Reasons-to-Start-Writing4_1f8c3d7b-b3c4-4fc7-82de-acbb1580a043.webp" class="step-image mb-3 shadow-sm" alt="Screen">
+                    <div class="row align-items-center text-start">
+                        <div class="col-3">
+                            <span class="step-number">2</span>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-muted mb-0">Vet potential tenants with our screening tool before renting.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="col-md-3">
+                <div class="position-relative border-box p-3 rounded-4">
+                    <span class="badge position-absolute top-0 start-0 m-2">BOOK</span>
+                    <img src="images/happy-man-using-laptop-in-a-cafe-AHSF01664.jpg" class="step-image mb-3 shadow-sm" alt="Book">
+                    <div class="row align-items-center text-start">
+                        <div class="col-3">
+                            <span class="step-number">3</span>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-muted mb-0">Confirm bookings with tenants using custom leases and tools.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="col-md-3">
+                <div class="position-relative border-box p-3 rounded-4">
+                    <span class="badge position-absolute top-0 start-0 m-2">COLLECT RENT</span>
+                    <img src="images/64073555a29b620d9cf82315_secure-payments.jpg" class="step-image mb-3 shadow-sm" alt="Collect Rent">
+                    <div class="row align-items-center text-start">
+                        <div class="col-3">
+                            <span class="step-number">4</span>
+                        </div>
+                        <div class="col-9">
+                            <p class="text-muted mb-0">Collect payments securely via preferred online methods.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <style>
-        .hero {
-  position: relative;
-  background: url('images/27-print-3Q4A6771_11zon.jpg') no-repeat center center/cover;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+/* Border Box */
+.border-box {
+    border: 1px solid #243065;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 350px;
+    position: relative;
 }
 
-/* Overlay */
-.hero-overlay {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.16);
-  z-index: 1;
-}
-
-/* Hero content */
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 700px;
-  padding: 20px;
-  text-align: left;
-  color: var(--light);
-  animation: fadeInUp 1s ease forwards;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* Headings */
-.hero-content h1,
-.hero-title {
-  text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 15px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-  transform: translate(-250px, 500px);
-}
-
-/* Filter Section */
-.filter-section {
-    margin-top: 30px;
-    transform: translate(0, -100px);
-}
-
-.filter-card {
-    background: var(--light);
+/* Step Image */
+.step-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
     border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    width: 1200px;
 }
 
-.filter-item {
-    margin-bottom: 20px;
+/* Step Number Circle */
+.step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: #243065;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
-
-.filter-item label {
-    display: block;
+.badge {
+    background-color: #243065;
+    color: white;
+    padding: 5px 10px;
+    font-size: 0.75rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #243065;
-    font-size: 0.9rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    transform: translate(15px, 15px);
+}
+</style>
+<!-- Landlord CTA Section -->
+<section class="landlord-cta">
+    <div class="container h-100 d-flex justify-content-center align-items-center" style="max-width: 1200px;">
+        <div class="d-flex align-items-center justify-content-center w-100 gap-3 flex-wrap">
+            <h3 class=" text-white mb-0">Ready to take the next step as a landlord?</h3>
+            <a href="#" class="btn btn-lg rounded-pill px-4" style="background-color: #168a49; color: #fff; border: none;">List Your Property</a>
+        </div>
+    </div>
+</section>
+
+<style>
+.landlord-cta {
+    background-color: #243065;
+    height: 100px; /* fixed height */
 }
 
-.filter-input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+.landlord-cta h3 {
+    font-size: 1.2rem; /* smaller to fit single row */
+    margin-bottom: 0;
+}
+
+.landlord-cta .btn:hover {
+    background-color: #0f6937;
+}
+</style>
+
+
+<!-- Landlord Tools Section -->
+<section class="landlord-tools py-5 bg-light">
+    <div class="container">
+
+        <!-- Row 1: Title -->
+        <div class="row mb-3">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold" style="color: #243065;">Access to KeyCheck</h2>
+            </div>
+        </div>
+
+        <!-- Row 2: Description -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <p class="text-muted lead">
+                    KeyCheck, our sister company, provides a suite of useful landlord tools, including tenant screening, 
+                    customized rental leases, and online rent collection.
+                </p>
+            </div>
+        </div>
+
+        <!-- Row 3: 2x2 Grid Cards -->
+        <div class="row g-4 justify-content-center mb-4">
+            <!-- Card 1 -->
+            <div class="col-auto">
+                <div class="card fixed-card border-0 shadow-sm rounded-4 d-flex flex-row">
+                    <!-- Left: Image -->
+                    <div class="card-image">
+                        <img src="images/s1.jpeg" alt="Leases & Rental Documents">
+                    </div>
+                    <!-- Right: Text -->
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="fw-bold mb-2" style="color: #243065;">Leases & Rental Documents</h5>
+                        <p class="text-muted mb-0">
+                            Fully customizable leases for dates, rates, deposits, pet policies, house rules, and more. 
+                            Access state-specific templates and other legal documents for rental success.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-auto">
+                <div class="card fixed-card border-0 shadow-sm rounded-4 d-flex flex-row">
+                    <div class="card-image">
+                        <img src="images/s2.jpeg" alt="Online Rent Payments">
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="fw-bold mb-2" style="color: #243065;">Online Rent Payments</h5>
+                        <p class="text-muted mb-0">
+                            Accept rental payments online quickly and securely. Automatic reminders for landlords, 
+                            tenants earn credit card points by paying rent online.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-auto">
+                <div class="card fixed-card border-0 shadow-sm rounded-4 d-flex flex-row">
+                    <div class="card-image">
+                        <img src="images/s3.jpeg" alt="Damage Protection">
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="fw-bold mb-2" style="color: #243065;">Damage Protection</h5>
+                        <p class="text-muted mb-0">
+                            Affordable monthly plans to shield your property from tenant and pet damage. 
+                            Peace of mind knowing your property is protected.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-auto">
+                <div class="card fixed-card border-0 shadow-sm rounded-4 d-flex flex-row">
+                    <div class="card-image">
+                        <img src="images/s4.jpeg" alt="Tenant Screening">
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="fw-bold mb-2" style="color: #243065;">Tenant Screening</h5>
+                        <p class="text-muted mb-0">
+                            Comprehensive credit, criminal, and eviction checks. Make informed decisions when choosing your next tenant.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Button -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="#" class="btn btn-lg rounded-pill px-4">Learn About Our Landlord Tools</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+.landlord-tools h2 {
+    font-size: 2.5rem;
+}
+
+/* Fixed card size */
+.fixed-card {
+    width: 500px;
+    height: 350px;
+}
+
+.card-image img {
+    width: 200px; /* half of card width */
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 0.75rem;
+    border-bottom-left-radius: 0.75rem;
+}
+
+.card-body h5 {
+    font-size: 1.1rem;
+}
+
+.card-body p {
     font-size: 1rem;
-    transition: all 0.3s ease;
-}
 
-.filter-input:focus {
-    outline: none;
-    border-color: #243065;
-    box-shadow: 0 0 0 3px rgba(36, 48, 101, 0.1);
+    margin-left: 10px;   /* left margin */
+    margin-right: 20px;  /* right margin */
 }
-
-.filter-btn {
-    width: 100%;
+.btn {
     background-color: #243065;
     color: white;
     border: none;
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+    transition: background-color 0.3s ease;
 }
-
-.filter-btn:hover {
-    background-color: #1a2450;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(36, 48, 101, 0.3);
-}
-
-/* Mobile-first style */
-.hero-title {
-  width: 1200px;      /* no fixed width */
-}
-
-/* Tablets */
-@media (min-width: 768px) {
-    .hero{
-        height: 30vh;
-    }
-  .hero-title {
-    font-size: 2.5rem;
-  }
-  
-  .filter-card {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr auto;
-        gap: 15px;
-        align-items: end;
-    }
-    
-    .filter-item {
-        margin-bottom: 0;
-    }
-    
-    .filter-btn {
-        margin-top: 0;
-        padding: 12px 25px;
-    }
-}
-
-/* Large desktops */
-@media (min-width: 1200px) {
-  .hero-title {
-    font-size:2.7rem;
-  }
-}
-
-/* Paragraphs */
-.hero-content p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  font-weight: 500;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* Buttons wrapper */
-.hero-btns {
-  display: flex;
-  justify-content: flex-start;
-  gap: 15px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-/* Buttons */
-.btn-solid, .btn-outline {
-  padding: 10px 28px;
-  font-weight: 600;
-  border-radius: 50px;
-  font-family: 'Montserrat', sans-serif;
-  transition: 0.3s ease;
-  text-decoration: none;
-}
-
-.btn-solid {
-  background: #168a49;
-  color: #fff;
-}
-
-.btn-solid:hover {
-  background: white;
-  color: #168a49;
-  transform: translateY(-3px);
-  outline: 3px solid #168a49;
-}
-
-.btn-outline {
-  background-color: var(--secondary);
-  border: 2px solid var(--primary);
-  color: #fff;
-}
-
-.btn-outline:hover {
-  background: #fff;
-  color: var(--secondary);
-  transform: translateY(-3px);
-}
-</style>
-
-
-<section class="image-grid">
-  <div class="grid-item" style="background-image: url('images/ir.jpg');" onclick="window.location.href='insurance-relocation.php';">
-    <div class="overlay-text">Insurance Relocation</div>
-  </div>
-  <div class="grid-item" style="background-image: url('images/mr.jpg');">
-    <div class="overlay-text">Midterm Rentals</div>
-  </div>
-  <div class="grid-item" style="background-image: url('images/ch.jpg');">
-    <div class="overlay-text">Corporate Housing</div>
-  </div>
-  <div class="grid-item" style="background-image: url('images/gl.jpg');">
-    <div class="overlay-text">Goverment Lodging</div>
-  </div>
-  <div class="grid-item" style="background-image: url('images/el2.jpg');">
-    <div class="overlay-text">Emergency Lodging</div>
-  </div>
-  <div class="grid-item" style="background-image: url('images/bt.jpg');">
-    <div class="overlay-text">Business Travel</div>
-  </div>
-</section>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const overlays = document.querySelectorAll(".overlay-text");
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target); // run only once
-        }
-      });
-    },
-    { threshold: 0.3 } // trigger when 30% visible
-  );
-
-  overlays.forEach(overlay => observer.observe(overlay));
-});
-</script>
-
-<style>
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 300px); /* 2 rows, each 300px tall */
-  gap: 15px;
-  padding: 40px;
-  cursor: pointer;
-}
-
-.grid-item {
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-/* Background image via pseudo-element */
-.grid-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  transition: transform 0.6s ease;
-  z-index: 0;
-}
-
-/* Allow inline background to pass to ::before */
-.grid-item[style]::before {
-  background-image: inherit;
-}
-
-/* Zoom effect only on picture */
-.grid-item:hover::before {
-  transform: scale(1.1);
-}
-
-/* Animation */
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 30px); /* start lower */
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, 0); /* final position */
-  }
-}
-
-.overlay-text {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--light);
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: #716e65;
-  padding: 8px 16px;
-  border-radius: 100px;
-
-  /* hidden by default */
-  opacity: 0;
-}
-/* ===== Overlay Text for Mobile Devices ===== */
-@media (max-width: 991px) {
-    .overlay-text {
-        bottom: 5px; /* a little closer to the bottom on mobile */
-        font-size: 1rem; /* slightly smaller text */
-        padding: 6px 12px; /* smaller padding for smaller screens */
-        border-radius: 50px; /* keep pill shape */
-        opacity: 1; /* optionally show by default on mobile */
-        width: 250px;
-        text-align: center;
-    }
-}
-
-/* Animate only when "show" class is added */
-.overlay-text.show {
-  animation: fadeUp 0.8s ease forwards;
-}
-
-/* Stagger delays */
-.grid-item:nth-child(1) .overlay-text.show { animation-delay: 0.2s; }
-.grid-item:nth-child(2) .overlay-text.show { animation-delay: 0.4s; }
-.grid-item:nth-child(3) .overlay-text.show { animation-delay: 0.6s; }
-.grid-item:nth-child(4) .overlay-text.show { animation-delay: 0.8s; }
-.grid-item:nth-child(5) .overlay-text.show { animation-delay: 1s; }
-.grid-item:nth-child(6) .overlay-text.show { animation-delay: 1.2s; }
-
-
-/* Responsive (mobile: 1 column) */
-@media (max-width: 768px) {
-  .image-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-  .grid-item {
-    height: 250px;
-  }
+.btn:hover {
+    background-color: transparent;
+    color: #243065;
+    border: 1px solid #243065;
 }
 
 </style>
 
-<section class="offer-section">
-  <div class="offer-container">
-    
-    <!-- Left column -->
-    <div class="offer-left">
-      <h2 class="offer-title">What Can 3S Offer You</h2>
-      <p class="offer-description">
-        3S specializes in delivering seamless and fully furnished housing solutions for insurance relocations, 
-        travel nurses, corporate personnel, and beyond. Experience comfort and convenience like never before.
-      </p>
-    </div>
-
-    <!-- Right column -->
-    <div class="offer-right">
-      <div class="feature">
-        <i class="fas fa-calendar-alt"></i>
-        <h4>Flexible Cancellation</h4>
-        <p>We understand plans change, your apartment rental needs to be the least of your worries!</p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-couch"></i>
-        <h4>Fully Furnished Units</h4>
-        <p>Relax and unwind in your tastefully decorated unit with all the comforts of home.</p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-star"></i>
-        <h4>5 Star Accommodations</h4>
-        <p>Between our fully furnished units and variety of on-site amenities you will not want to leave!</p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-key"></i>
-        <h4>Contactless Check-In</h4>
-        <p>We know travel days are hectic, make your life a little easier with contactless check-in.</p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-wifi"></i>
-        <h4>Ultra Fast Wi-Fi</h4>
-        <p>Away from the office? No problem! Our ultra fast Wi-Fi will ensure you never miss a thing.</p>
-      </div>
-      <div class="feature">
-        <i class="fas fa-headset"></i>
-        <h4>24/7 Customer Service</h4>
-        <p>Our friendly staff is here and ready to help with whatever you need day or night!</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- Font Awesome CDN -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>/* Section Layout */
-.offer-section {
-  padding: 80px 40px;
-  background: var(--light); /* subtle background */
-  font-family: 'Montserrat', sans-serif;
-}
-
-.offer-container {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 50px;
-  align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Left Column */
-.offer-left {
-  max-width: 500px;
-}
-.offer-title {
-  font-size: 2.8rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #2b376a;
-  line-height: 1.2;
-  text-align: right;
-}
-.offer-description {
-  font-size: 1.1rem;
-  color: #555;
-  line-height: 1.7;
-    text-align: right;
-}
-
-/* Right Column (features) */
-.offer-right {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
-  gap: 25px;
-}
-.feature {
-  background: #fff;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-align: left;
-}
-.feature:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-.feature i {
-  font-size: 2rem;
-  color: #2b376a;
-  margin-bottom: 15px;
-}
-.feature h4 {
-    text-transform: uppercase;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #2b376a;
-  margin-bottom: 10px;
-}
-.feature p {
-  font-size: 0.95rem;
-  color: #666;
-  line-height: 1.6;
-}
-
-/* Responsive */
-@media (max-width: 991px) {
-  .offer-container {
-    grid-template-columns: 1fr;
-  }
-  .offer-right {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
 
     <!-- Footer -->
     <?php include 'footer.php';?>

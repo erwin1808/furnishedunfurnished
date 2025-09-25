@@ -23,103 +23,64 @@
 }
 
 .navmobile .navmobile-logo img {
-    transform: translateX(-20px);
+    transform: translateX(-30px);
     max-height: 80px;
     cursor: pointer;
     filter: brightness(0) invert(1);
 }
 
-.navmobile .navmobile-links {
+.navmobile .navmobile-left {
     display: flex;
-    gap: 25px;
-    position: relative;
-}
-
-.navmobile .navmobile-links .navmobile-item {
-    color: #fff;
-    text-transform: uppercase;
-    font-weight: 500;
-    font-size: 15px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    position: relative;
-    padding: 10px 0;
-}
-
-.navmobile:not(.scrolled) .navmobile-links .navmobile-item:hover {
-    color: #2b376a;
-}
-
-.navmobile.scrolled .navmobile-links .navmobile-item:hover {
-    color: #c9a86d;
-}
-
-.navmobile .navmobile-social {
-    display: flex;
+    align-items: center;
     gap: 15px;
 }
 
-.navmobile .navmobile-social a {
+.navmobile .btn-submit-property {
+    transform: translateX(30px);
+    padding: 10px 10px;
+    background-color: #0B47A8;
     color: #fff;
-    font-size: 18px;
-    transition: color 0.3s ease;
-}
-
-.navmobile .navmobile-social a:hover {
-    color: #c9a86d;
-}
-
-/* Dropdown */
-.navmobile-dropdown {
-    position: relative;
-}
-
-.navmobile-dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #fff;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    z-index: 1;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.navmobile-dropdown-content a {
-    color: #2b376a;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
     font-size: 14px;
-    transition: background 0.3s ease;
-    border-bottom: 1px solid #f0f0f0;
 }
 
-.navmobile-dropdown-content a:last-child {
-    border-bottom: none;
+.navmobile .btn-submit-property:hover {
+    background: transparent;
+    color: #0B47A8;
+    border: 1px solid #0B47A8;
 }
 
-.navmobile-dropdown-content a:hover {
-    background: #f5f5f5;
+/* Hamburger */
+.navmobile-hamburger {
+    transform: translateX(20px);
+    display: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+
+.navmobile-social a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navmobile-social a:hover {
     color: #c9a86d;
-}
-
-.navmobile-dropdown:hover .navmobile-dropdown-content {
-    display: block;
-}
-
-.navmobile-dropdown > .navmobile-item::after {
-    content: '\f107';
-    font-family: 'Font Awesome 5 Free';
-    font-weight: 900;
-    margin-left: 5px;
-    font-size: 12px;
 }
 
 /* Mobile Fullscreen Menu */
 .navmobile-menu {
+
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     height: 100vh;
@@ -130,7 +91,7 @@
     justify-content: center;
     gap: 25px;
     z-index: 1050;
-    padding: 40px 20px;
+    padding: 80px 20px 20px 20px;
 }
 
 .navmobile-menu.show {
@@ -172,7 +133,6 @@
 }
 
 .navmobile-menu-close {
-    position: static;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
@@ -182,6 +142,7 @@
 /* Mobile dropdown */
 .navmobile-mobile-dropdown {
     position: relative;
+    text-align: center;
 }
 
 .navmobile-mobile-dropdown-content {
@@ -214,44 +175,10 @@
     content: '\f106';
 }
 
-/* Hamburger */
-.navmobile-hamburger {
-    margin-right: 50px;
-    display: none;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transform: translateX(75px);
-}
-
-/* Overlay Text for Mobile */
+/* Responsive */
 @media (max-width: 991px) {
     .navmobile-hamburger {
         display: block;
-    }
-    .navmobile-overlay-text {
-        position: absolute;
-        bottom: 5px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: var(--light);
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        background: #716e65;
-        padding: 6px 12px;
-        border-radius: 50px;
-        opacity: 0; /* hidden by default */
-        transition: opacity 0.3s ease;
-    }
-}
-
-@media (min-width: 992px) {
-    .navmobile-menu {
-        display: none !important;
     }
 }
 </style>
@@ -259,11 +186,12 @@
 <body>
 <!-- Desktop Navbar -->
 <div class="navmobile" id="navmobile">
-    <div class="navmobile-logo">
-        <img src="images/output-onlinepngtools-3-60x40.png" alt="Logo" onclick="window.location.href='index.php';">
+    <div class="navmobile-left">
+        <div class="navmobile-logo">
+            <img src="images/output-onlinepngtools-3-60x40.png" alt="Logo" onclick="window.location.href='index.php';">
+        </div>
+        <button class="btn-submit-property" onclick="window.location.href='submit-property.php'">List Your Property</button>
     </div>
-
- 
 
     <div class="navmobile-hamburger" id="menuToggle">MENU</div>
 </div>
@@ -307,6 +235,11 @@
     </div>
 
     <a href="contact.php">Contact</a>
+
+    <div class="navmobile-social" style="margin-top: 30px; gap: 20px;">
+        <a href="#login">Log in</a>
+        <a href="#signup">Register</a>
+    </div>
 </div>
 
 <script>
