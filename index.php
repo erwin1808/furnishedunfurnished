@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3S</title>
+    <title>Furnished Unfurnished</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -161,9 +161,116 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+
+    </style>
+</head>
+<body>
+<!-- Always include both -->
+<div class="nav-desktop">
+  <?php include 'navbar.php'; ?>
+</div>
+
+<div class="nav-mobile">
+  <?php include 'nav-mobile.php'; ?>
+</div>
+
+<style>
+/* Hide one based on screen size */
+.nav-mobile { display: none; }
+@media (max-width: 991px) {
+  .nav-desktop { display: none; }
+  .nav-mobile { display: block; }
+}
+</style>
+
+<!-- Hero Section -->
+<section class="hero d-flex align-items-center" id="home">
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-10 col-lg-6">
+
+        <!-- Hero Section -->
+        <div class="hero-content text-start px-3 px-md-0">
+        <h1 class="hero-title">Furnished Unfurnished</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-card">
+                <div class="filter-item">
+                    <label>Where are you going?</label>
+                    <input type="text" placeholder="Enter a destination" class="filter-input">
+                </div>
+    <!-- Flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<div class="filter-item">
+    <label for="move-in-date">Move in date</label>
+    <input type="text" id="move-in-date" class="filter-input datepicker" placeholder="Select move in date">
+</div>
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+flatpickr(".datepicker", {
+    dateFormat: "Y-m-d",
+    minDate: "today" // disables past dates
+});
+</script>
+
+<style>
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.filter-item label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #3b1453;
+}
+
+.filter-input {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #4f145c;
+    box-shadow: 0 0 5px rgba(79, 20, 92, 0.5);
+}
+</style>
+
+                <div class="filter-item">
+                    <label>Monthly budget</label>
+                    <input type="text" placeholder="Enter budget" class="filter-input">
+                </div>
+                <button class="filter-btn" style="background-color: #243065;">
+                    Search
+                </button>
+            </div>
+        </div>
+
+</div>
+<!-- End Hero Section -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
         .hero {
   position: relative;
-  background: url('images/dsc_3531.jpg') no-repeat center center/cover;
+  background: url('images/27-print-3Q4A6771_11zon.jpg') no-repeat center center/cover;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -204,13 +311,74 @@
   line-height: 1.3;
   margin-bottom: 15px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  transform: translate(-250px, 500px);
+}
+
+/* Filter Section */
+.filter-section {
+    margin-top: 30px;
+    transform: translate(0, -100px);
+}
+
+.filter-card {
+    background: var(--light);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    width: 1200px;
+}
+
+.filter-item {
+    margin-bottom: 20px;
+}
+
+.filter-item label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #243065;
+    font-size: 0.9rem;
+}
+
+.filter-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: #243065;
+    box-shadow: 0 0 0 3px rgba(36, 48, 101, 0.1);
+}
+
+.filter-btn {
+    width: 100%;
+    background-color: #243065;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.filter-btn:hover {
+    background-color: #1a2450;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(36, 48, 101, 0.3);
 }
 
 /* Mobile-first style */
 .hero-title {
-  font-size: 2rem;  /* smaller for phones */
-  width: 100%;      /* no fixed width */
-  white-space: normal; /* allow wrapping */
+  width: 1200px;      /* no fixed width */
 }
 
 /* Tablets */
@@ -221,13 +389,28 @@
   .hero-title {
     font-size: 2.5rem;
   }
-
+  
+  .filter-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 15px;
+        align-items: end;
+    }
+    
+    .filter-item {
+        margin-bottom: 0;
+    }
+    
+    .filter-btn {
+        margin-top: 0;
+        padding: 12px 25px;
+    }
 }
 
 /* Large desktops */
 @media (min-width: 1200px) {
   .hero-title {
-    font-size: 3.5rem;
+    font-size:2.7rem;
   }
 }
 
@@ -281,49 +464,8 @@
   color: var(--secondary);
   transform: translateY(-3px);
 }
-
-    </style>
-</head>
-<body>
-<!-- Always include both -->
-<div class="nav-desktop">
-  <?php include 'navbar.php'; ?>
-</div>
-
-<div class="nav-mobile">
-  <?php include 'nav-mobile.php'; ?>
-</div>
-
-<style>
-/* Hide one based on screen size */
-.nav-mobile { display: none; }
-@media (max-width: 991px) {
-  .nav-desktop { display: none; }
-  .nav-mobile { display: block; }
-}
 </style>
 
-<!-- Hero Section -->
-<section class="hero d-flex align-items-center" id="home">
-    <div class="hero-overlay"></div>
-
-    <div class="container">
-        <div class="row justify-content-start">
-            <div class="col-12 col-md-10 col-lg-6">
-
-        <!-- Hero Section -->
-        <div class="hero-content text-start px-3 px-md-0">
-            <h2 class="fs-1 fs-md-1">Welcome to</h2>
-        <h1 class="hero-title">Streamlined Stay Solutions</h1>
-
-</div>
-<!-- End Hero Section -->
-
-
-            </div>
-        </div>
-    </div>
-</section>
 
 <section class="image-grid">
   <div class="grid-item" style="background-image: url('images/ir.jpg');" onclick="window.location.href='insurance-relocation.php';">

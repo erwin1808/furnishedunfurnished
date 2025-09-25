@@ -21,7 +21,7 @@
 }
 
 .navbar.scrolled {
-  background: #2b376a;
+  background: #243065;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
@@ -34,6 +34,7 @@
 
 /* Nav Links */
 .navbar .nav-links {
+  margin-left: 100px;
   display: flex;
   gap: 25px;
 }
@@ -198,6 +199,18 @@
 
   <!-- Nav Links -->
   <div class="nav-links" id="navLinks">
+
+
+    <!-- Properties Dropdown -->
+    <div class="nav-item dropdown">
+      Properties
+      <div class="dropdown-menu">
+        <div class="dropdown-item" onclick="window.location.href='properties-us.php'">United States</div>
+        <div class="dropdown-item" onclick="window.location.href='properties-international.php'">International</div>
+      </div>
+    </div>
+
+
 <div class="nav-item dropdown-services">
   Services
   <div class="dropdown-menu">
@@ -212,24 +225,7 @@
 
  
 
-    <!-- Properties Dropdown -->
-    <div class="nav-item dropdown">
-      Properties
-      <div class="dropdown-menu">
-        <div class="dropdown-item" onclick="window.location.href='properties-us.php'">United States</div>
-        <div class="dropdown-item" onclick="window.location.href='properties-international.php'">International</div>
-      </div>
-    </div>
 
-    <!-- Submit Property Dropdown -->
-    <div class="nav-item dropdown">
-      Submit Property
-      <div class="dropdown-menu">
-        <div class="dropdown-item" onclick="window.location.href='submit-property.php'">Submit Property</div>
-        <div class="dropdown-item" onclick="window.location.href='fema.php'">FEMA</div>
-        <div class="dropdown-item" onclick="window.location.href='usace.php'">USACE</div>
-      </div>
-    </div>
    <!-- About Us Dropdown -->
     <div class="nav-item dropdown">
       About Us
@@ -242,15 +238,104 @@
     <div class="nav-item" onclick="window.location.href='contact.php'">Contact</div>
   </div>
 
-  <!-- Social Icons -->
-  <div class="social-icons">
- 
-<a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
-<a href="https://www.linkedin.com/company/streamlined-stay-solutions/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-
+<div class="header-buttons">
+  <button class="btn-list-property" onclick="location.href='#list-property'">
+    List your property
+  </button>
+  
+  <div class="dropdown">
+    <button class="btn-login-dropdown">
+      <i class="fas fa-user-circle"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#login">Log in</a>
+      <a href="#signup">Create account</a>
+    </div>
   </div>
 </div>
+</div>
+<style>
+.header-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
 
+.btn-list-property, .btn-login-dropdown {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.btn-list-property {
+  background-color: #0B47A8;
+  color: white;
+  border-radius: 50px;
+}
+
+.btn-list-property:hover {
+  background-color: transparent;
+  
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.btn-login-dropdown {
+  background-color: #f8f9fa;
+  color: #0B47A8;
+  border: 1px solid #ddd;
+  padding: 5px  5.5px 2.5px 5.5px;
+  border-radius: 50%;
+}
+
+.btn-login-dropdown:hover {
+  background-color: #e9ecef;
+}
+
+.btn-login-dropdown i {
+  font-size: 32px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+.dropdown-content a:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+</style>
+
+<!-- Add Font Awesome for the icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <script>
   // Change background on scroll
   window.addEventListener('scroll', function() {
