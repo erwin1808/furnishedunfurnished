@@ -843,6 +843,33 @@
 </section>
 
 <style>
+  @media (max-width: 767px) {
+    .fixed-card {
+        width: 100% !important;
+        flex-direction: column !important;
+        height: auto;
+    }
+
+    .card-image img {
+        width: 100% !important;
+        height: 150px !important;
+        border-radius: 0.75rem 0.75rem 0 0;
+        margin-bottom: 10px;
+    }
+
+    .card-body h5 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .card-body p {
+        font-size: 0.9rem;
+        margin: 0 15px !important; /* override previous left/right margin */
+        text-align: center;
+        word-wrap: break-word; /* ensure long words don’t overflow */
+    }
+}
+
 .landlord-tools h2 {
     font-size: 2.5rem;
 }
