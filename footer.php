@@ -7,12 +7,12 @@
             <p><i class="fas fa-envelope"></i> <a href="mailto:housing@streamlinedstays.com">housing@FurnishedUnfurnished.com</a></p>
         </div>
 
-        <!-- Logos -->
+        <!-- Logos 
         <div class="logos">
             <img src="images/corporate_housing_providers_association_RGB.png" alt="Logo 1">
             <img src="images/209-2092966_transparent-sdvosb-logo-png-service-disabled-veteran-owned.png" alt="Logo 2">
         </div>
-
+-->
         <!-- Social Links -->
         <div class="social">
             <a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -56,6 +56,11 @@
     margin-bottom: 10px;
 }
 
+.footer-content .contact {
+   transform: translateX(-350px);
+}
+
+.footer-content .social { transform: translateX(330px);}
 .footer-content .contact p {
     margin: 0;
     display: flex;

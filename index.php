@@ -594,80 +594,76 @@
                 <h2 class="display-4 fw-bold" style="color: #243065;">How It Works</h2>
             
                 <p class="lead text-muted max-w-800 mx-auto">
-                    Furnished Finder specializes in 30-day or longer stays, catering to corporate travelers, 
-                    relocating families, travel nurses, academics, and digital nomads—not vacationers. 
-                    We facilitate direct communication between property owners and tenants without interfering 
-                    in the transaction process.
-                </p>
+                  Furnished Unfinished connects verified property owners with insurance agents, displaced families, relocating families, 
+                  contractors, and traveling professionals who need housing for 30 days or longer. Unlike vacation rental sites, 
+                  we focus on long-term stability — whether your property is furnished or unfurnished.</p>
+                    <p class="lead text-muted max-w-800 mx-auto">We provide a secure platform where agents and guests can search, compare, and connect with landlords directly. Once matched, you handle the lease and payments off-platform, giving you full control of your property and tenant relationship.
+</p>
             </div>
         </div>
 
-        <!-- Process Steps Row -->
-        <div class="row g-4 text-center">
-            <!-- Step 1 -->
-            <div class="col-md-3">
-                <div class="position-relative border-box p-3 rounded-4">
-                    <span class="badge position-absolute top-0 start-0 m-2">CONNECT</span>
-                    <img src="images/woman-calling-on-smartphone-free-photo.webp" class="step-image mb-3 shadow-sm" alt="Connect">
-                    <div class="row align-items-center text-start">
-                        <div class="col-3">
-                            <span class="step-number">1</span>
-                        </div>
-                        <div class="col-9">
-                            <p class="text-muted mb-0">List your property and communicate directly with tenant leads.</p>
-                        </div>
-                    </div>
+      <!-- Process Steps Row -->
+<div class="row g-4 justify-content-center text-center">
+    <!-- Step 1 -->
+    <div class="col-md-4 col-lg-3">
+        <div class="position-relative border-box p-3 rounded-4">
+            <span class="badge position-absolute top-0 start-0 m-2">List Your Property</span>
+            <img src="images/woman-calling-on-smartphone-free-photo.webp" class="step-image mb-3 shadow-sm" alt="Connect">
+            <div class="row align-items-center text-start">
+                <div class="col-3">
+                    <span class="step-number">1</span>
                 </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="col-md-3">
-                <div class="position-relative border-box p-3 rounded-4">
-                    <span class="badge position-absolute top-0 start-0 m-2">SCREEN</span>
-                    <img src="images/S_S-BLOG-9-Reasons-to-Start-Writing4_1f8c3d7b-b3c4-4fc7-82de-acbb1580a043.webp" class="step-image mb-3 shadow-sm" alt="Screen">
-                    <div class="row align-items-center text-start">
-                        <div class="col-3">
-                            <span class="step-number">2</span>
-                        </div>
-                        <div class="col-9">
-                            <p class="text-muted mb-0">Vet potential tenants with our screening tool before renting.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="col-md-3">
-                <div class="position-relative border-box p-3 rounded-4">
-                    <span class="badge position-absolute top-0 start-0 m-2">BOOK</span>
-                    <img src="images/happy-man-using-laptop-in-a-cafe-AHSF01664.jpg" class="step-image mb-3 shadow-sm" alt="Book">
-                    <div class="row align-items-center text-start">
-                        <div class="col-3">
-                            <span class="step-number">3</span>
-                        </div>
-                        <div class="col-9">
-                            <p class="text-muted mb-0">Confirm bookings with tenants using custom leases and tools.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="col-md-3">
-                <div class="position-relative border-box p-3 rounded-4">
-                    <span class="badge position-absolute top-0 start-0 m-2">COLLECT RENT</span>
-                    <img src="images/64073555a29b620d9cf82315_secure-payments.jpg" class="step-image mb-3 shadow-sm" alt="Collect Rent">
-                    <div class="row align-items-center text-start">
-                        <div class="col-3">
-                            <span class="step-number">4</span>
-                        </div>
-                        <div class="col-9">
-                            <p class="text-muted mb-0">Collect payments securely via preferred online methods.</p>
-                        </div>
-                    </div>
+                <div class="col-9">
+                    <p class="text-muted mb-0">
+                        Landlords and managers add their furnished or unfurnished rentals. 
+                        Our team verifies each listing to ensure quality and reliability.
+                    </p>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="col-md-4 col-lg-3">
+        <div class="position-relative border-box p-3 rounded-4">
+            <span class="badge position-absolute top-0 start-0 m-2">Search & Match</span>
+            <img src="images/S_S-BLOG-9-Reasons-to-Start-Writing4_1f8c3d7b-b3c4-4fc7-82de-acbb1580a043.webp" class="step-image mb-3 shadow-sm" alt="Screen">
+            <div class="row align-items-center text-start">
+                <div class="col-3">
+                    <span class="step-number">2</span>
+                </div>
+                <div class="col-9">
+                    <p class="text-muted mb-0">
+                        Traveling professionals, contractors, agents, relocating families, 
+                        displaced families, and corporate travelers search by location, dates, 
+                        budget, and amenities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="col-md-4 col-lg-3">
+        <div class="position-relative border-box p-3 rounded-4">
+            <span class="badge position-absolute top-0 start-0 m-2">Connect Directly</span>
+            <img src="images/happy-man-using-laptop-in-a-cafe-AHSF01664.jpg" class="step-image mb-3 shadow-sm" alt="Book">
+            <div class="row align-items-center text-start">
+                <div class="col-3">
+                    <span class="step-number">3</span>
+                </div>
+                <div class="col-9">
+                    <p class="text-muted mb-0">
+                        Once a match is found, verified guests contact landlords through the platform. 
+                        You close the lease and handle payments off-platform — keeping control of your 
+                        property and tenant relationship.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
     </div>
 </section>
 
@@ -680,7 +676,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: 350px;
+    height: 450px;
     position: relative;
 }
 
@@ -716,6 +712,8 @@
     transform: translate(15px, 15px);
 }
 </style>
+
+
 <!-- Landlord CTA Section -->
 <section class="landlord-cta">
     <div class="container h-100 d-flex justify-content-center align-items-center" style="max-width: 1200px;">
@@ -750,7 +748,7 @@
         <!-- Row 1: Title -->
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h2 class="fw-bold" style="color: #243065;">Access to KeyCheck</h2>
+                <h2 class="fw-bold" style="color: #243065;"> Other services</h2>
             </div>
         </div>
 
@@ -758,8 +756,7 @@
         <div class="row mb-5">
             <div class="col-12 text-center">
                 <p class="text-muted lead">
-                    KeyCheck, our sister company, provides a suite of useful landlord tools, including tenant screening, 
-                    customized rental leases, and online rent collection.
+                  Explore our suite of landlord tools designed to simplify property management — from tenant screening and rent collection to maintenance tracking and secure document storage.
                 </p>
             </div>
         </div>
