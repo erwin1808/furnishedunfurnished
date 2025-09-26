@@ -29,7 +29,7 @@
 <style>
 /* Compact Footer */
 .footer-compact {
-    background: #243065;
+    background: #00524e;
     color: #fff;
     font-family: 'Montserrat', sans-serif;
     padding: 15px 20px;

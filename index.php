@@ -229,7 +229,7 @@
                                 </div>
                             </div>
 
-                            <button class="filter-btn" style="background-color: #243065;">
+                            <button class="filter-btn" style="background-color: #00524e;">
                                 Search
                             </button>
                         </div>
@@ -306,7 +306,7 @@
         display: block;
         font-weight: 600;
         margin-bottom: 8px;
-        color: #243065;
+        color: #00524e;
         font-size: 0.9rem;
     }
 
@@ -321,13 +321,13 @@
 
     .filter-input:focus {
         outline: none;
-        border-color: #243065;
+        border-color: #00524e;
         box-shadow: 0 0 0 3px rgba(36, 48, 101, 0.1);
     }
 
     .filter-btn {
         width: 100%;
-        background-color: #243065;
+        background-color: #00524e;
         color: white;
         border: none;
         padding: 15px;
@@ -383,7 +383,7 @@
         padding: 8px 12px;
         border-radius: 8px;
         border: none;
-        background-color: #243065;
+        background-color: #00524e;
         color: #fff;
         cursor: pointer;
     }
@@ -401,7 +401,7 @@
     }
 
     .noUi-connect {
-        background: #243065;
+        background: #00524e;
         height: 6px;
         border-radius: 3px;
     }
@@ -410,7 +410,7 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        background: #243065;
+        background: #00524e;
         border: none;
         transform: translateY(-6px);
     }
@@ -585,19 +585,23 @@
 </script>
 
 
+
 <!-- How It Works Section -->
 <section class="how-it-works py-5 bg-light">
     <div class="container">
         <!-- Section Title -->
         <div class="row justify-content-center mb-5">
             <div class="col-12 text-center">
-                <h2 class="display-4 fw-bold" style="color: #243065;">How It Works</h2>
+                <h2 class="display-4 fw-bold" style="color: #00524e;">How It Works</h2>
             
                 <p class="lead text-muted max-w-800 mx-auto">
-                  Furnished Unfinished connects verified property owners with insurance agents, displaced families, relocating families, 
-                  contractors, and traveling professionals who need housing for 30 days or longer. Unlike vacation rental sites, 
-                  we focus on long-term stability — whether your property is furnished or unfurnished.</p>
-                    <p class="lead text-muted max-w-800 mx-auto">We provide a secure platform where agents and guests can search, compare, and connect with landlords directly. Once matched, you handle the lease and payments off-platform, giving you full control of your property and tenant relationship.
+             Furnished Unfinished connects verified property owners and agents with relocation specialists, insurance adjusters, displaced families, corporate vendors, contractors, traveling professionals, and Government agencies who need housing for 30 days or longer. 
+</p>
+                    <p class="lead text-muted max-w-800 mx-auto">Unlike vacation rental sites, we have no booking fees. Rather, we focus on speed, quality, and rental cost efficiency.
+
+</p>
+                    <p class="lead text-muted max-w-800 mx-auto">We offer a secure platform where agents and guests can search, compare, and connect directly with landlords. Once a property is selected, bookings are completed through the preferred channel of both parties. Keeping the connection simple and direct between Guests and the Landlords.
+
 </p>
             </div>
         </div>
@@ -670,7 +674,7 @@
 <style>
 /* Border Box */
 .border-box {
-    border: 1px solid #243065;
+    border: 1px solid #00524e;
     background-color: #fff;
     display: flex;
     flex-direction: column;
@@ -693,7 +697,7 @@
     display: inline-block;
     width: 40px;
     height: 40px;
-    background: #243065;
+    background: #00524e;
     color: white;
     border-radius: 50%;
     text-align: center;
@@ -702,7 +706,7 @@
     font-weight: bold;
 }
 .badge {
-    background-color: #243065;
+    background-color: #00524e;
     color: white;
     padding: 5px 10px;
     font-size: 0.75rem;
@@ -726,7 +730,7 @@
 
 <style>
 .landlord-cta {
-    background-color: #243065;
+    background-color: #00524e;
     height: 100px; /* fixed height */
 }
 
@@ -748,7 +752,7 @@
         <!-- Row 1: Title -->
         <div class="row mb-3">
             <div class="col-12 text-center">
-                <h2 class="fw-bold" style="color: #243065;"> Other services</h2>
+                <h2 class="fw-bold" style="color: #00524e;"> Other services</h2>
             </div>
         </div>
 
@@ -772,7 +776,7 @@
                     </div>
                     <!-- Right: Text -->
                     <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="fw-bold mb-2" style="color: #243065;">Leases & Rental Documents</h5>
+                        <h5 class="fw-bold mb-2" style="color: #00524e;">Leases & Rental Documents</h5>
                         <p class="text-muted mb-0">
                             Fully customizable leases for dates, rates, deposits, pet policies, house rules, and more. 
                             Access state-specific templates and other legal documents for rental success.
@@ -788,7 +792,7 @@
                         <img src="images/s2.jpeg" alt="Online Rent Payments">
                     </div>
                     <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="fw-bold mb-2" style="color: #243065;">Online Rent Payments</h5>
+                        <h5 class="fw-bold mb-2" style="color: #00524e;">Online Rent Payments</h5>
                         <p class="text-muted mb-0">
                             Accept rental payments online quickly and securely. Automatic reminders for landlords, 
                             tenants earn credit card points by paying rent online.
@@ -804,7 +808,7 @@
                         <img src="images/s3.jpeg" alt="Damage Protection">
                     </div>
                     <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="fw-bold mb-2" style="color: #243065;">Damage Protection</h5>
+                        <h5 class="fw-bold mb-2" style="color: #00524e;">Damage Protection</h5>
                         <p class="text-muted mb-0">
                             Affordable monthly plans to shield your property from tenant and pet damage. 
                             Peace of mind knowing your property is protected.
@@ -820,7 +824,7 @@
                         <img src="images/s4.jpeg" alt="Tenant Screening">
                     </div>
                     <div class="card-body d-flex flex-column justify-content-center">
-                        <h5 class="fw-bold mb-2" style="color: #243065;">Tenant Screening</h5>
+                        <h5 class="fw-bold mb-2" style="color: #00524e;">Tenant Screening</h5>
                         <p class="text-muted mb-0">
                             Comprehensive credit, criminal, and eviction checks. Make informed decisions when choosing your next tenant.
                         </p>
@@ -896,20 +900,26 @@
     margin-right: 20px;  /* right margin */
 }
 .btn {
-    background-color: #243065;
+    background-color: #00524e;
     color: white;
     border: none;
     transition: background-color 0.3s ease;
 }
 .btn:hover {
     background-color: transparent;
-    color: #243065;
-    border: 1px solid #243065;
+    color: #00524e;
+    border: 1px solid #00524e;
 }
 
 </style>
 
-
+<section class="text-white py-5 d-flex align-items-center justify-content-center text-center" style="background-color: #00524e; height: 150px;">
+  <div class="container">
+    <h2 class="display-5 font-weight-bold">No Booking Fees</h2>
+    <p class="lead">Save thousands per year vs. booking on short-term rental platforms.</p>
+  </div>
+</section>
+<section> <br> <br></section>
     <!-- Footer -->
     <?php include 'footer.php';?>
 
