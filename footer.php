@@ -7,12 +7,6 @@
             <p><i class="fas fa-envelope"></i> <a href="mailto:housing@streamlinedstays.com">housing@FurnishedUnfurnished.com</a></p>
         </div>
 
-        <!-- Logos 
-        <div class="logos">
-            <img src="images/corporate_housing_providers_association_RGB.png" alt="Logo 1">
-            <img src="images/209-2092966_transparent-sdvosb-logo-png-service-disabled-veteran-owned.png" alt="Logo 2">
-        </div>
--->
         <!-- Social Links -->
         <div class="social">
             <a href="https://www.instagram.com/streamlined.stays/" target="_blank"><i class="fab fa-instagram"></i></a>
@@ -27,7 +21,27 @@
 </footer>
 
 <style>
-/* Compact Footer */
+/* ===== FIXED FOOTER STYLES ===== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Main content wrapper - this pushes footer down */
+.main-content {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* Footer stays at bottom */
 .footer-compact {
     background: #00524e;
     color: #fff;
@@ -35,6 +49,9 @@
     padding: 15px 20px;
     text-align: center;
     font-size: 14px;
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto; /* Push to bottom */
 }
 
 .footer-compact a {
@@ -49,36 +66,19 @@
 
 .footer-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
     margin-bottom: 10px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.footer-content .contact {
-   transform: translateX(-350px);
-}
-
-.footer-content .social { transform: translateX(330px);}
 .footer-content .contact p {
     margin: 0;
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-.footer-content .logos {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer-content .logos img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
 }
 
 .footer-content .social a {
@@ -90,16 +90,36 @@
     border-top: 1px solid rgba(255,255,255,0.2);
     padding-top: 5px;
     font-size: 13px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Mobile */
-@media (max-width: 480px) {
+/* Mobile Responsive */
+@media (max-width: 768px) {
     .footer-content {
         flex-direction: column;
-        gap: 10px;
+        gap: 15px;
+        text-align: center;
     }
-    .footer-content .logos img {
-        height: 35px;
+    
+    .footer-content .contact {
+        transform: translateX(0) !important;
+    }
+    
+    .footer-content .social {
+        transform: translateX(0) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-compact {
+        padding: 15px 10px;
+    }
+    
+    .footer-content .contact p {
+        flex-direction: column;
+        gap: 2px;
     }
 }
 </style>

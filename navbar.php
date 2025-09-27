@@ -255,7 +255,7 @@
   display: none;
   position: absolute;
   background-color: #fff;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
   border-radius: 8px; /* ✅ round corners */
   overflow: hidden;   /* keeps the child <a> inside the curve */
@@ -274,6 +274,49 @@
   display: block;
 }
 
+/* Inputs inside signup */
+#signupModal .modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Button */
+#signupModal .modal-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 14px;
+  border: none;
+  background: #00524e;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#signupModal .modal-content button:hover {
+  background: #0B47A8;
+}
+/* Medium size modal */
+#signupModal .modal-content,
+#loginModal .modal-content {
+  width: 500px;        /* medium width */
+  max-width: 90%;      /* stay responsive on small screens */
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+}
+/* First + Last name on the same row */
+#signupModal .name-row {
+  display: flex;
+  gap: 10px;
+}
+
+#signupModal .name-row input {
+  flex: 1; /* equal width */
+}
 
 
 </style>
@@ -340,18 +383,226 @@
     <button class="btn-login-dropdown">
       <i class="fas fa-user-circle"></i>
     </button>
-    <div class="dropdown-content">
-      <a href="#login">Log in</a>
-      <a href="#signup">Create account</a>
-    </div>
+  <div class="dropdown-content">
+  <a href="#" onclick="openModal('loginModal')">Log in</a>
+  <a href="#" onclick="openModal('signupModal')">Create account</a>
+</div>
+
   </div>
 </div>
 </div>
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('loginModal')">&times;</span>
+    <h2>Log In</h2>
 
+    <!-- Step 1: Email -->
+    <form id="loginStep1">
+      <input type="email" id="loginEmail" placeholder="Email" required>
+      <button type="button" onclick="goToPasswordStep()">Next</button>
+    </form>
+
+    <!-- Step 2: Password (hidden by default) -->
+    <form id="loginStep2" style="display:none;">
+      <p id="showEmail" style="font-weight: 600; margin-bottom: 10px; color:#00524e;"></p>
+      <input type="hidden" id="finalEmail" name="email"> <!-- hidden field for form submission -->
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      
+      <button type="submit">Log In</button>
+      <button type="button" onclick="backToEmailStep()" style="margin-top:10px;background:#ccc;color:#000;">Back</button>
+    </form>
+
+    <p>Don’t have an account? 
+      <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up</a>
+    </p>
+  </div>
+</div>
+
+
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('signupModal')">&times;</span>
+    <h2>Create a tenant account</h2>
+
+<form>
+<style>
+  .form-group {
+    position: relative;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 12px 10px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    outline: none;
+    background: none;
+  }
+
+  .form-group label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+    transition: 0.3s ease;
+    background: #fff;
+    padding: 0 4px;
+  }
+
+  /* When input is focused or not empty */
+  .form-group input:focus + label,
+  .form-group input:not(:placeholder-shown) + label {
+    top: 7px;
+    left: 8px;
+    font-size: 12px;
+  }
+</style>
+
+<div class="name-row" style="display:flex;">
+  <div class="form-group" style="flex:1;">
+    <input type="text" placeholder=" " required>
+    <label>First Name</label>
+  </div>
+  <div class="form-group" style="flex:1;">
+    <input type="text" placeholder=" " required>
+    <label>Last Name</label>
+  </div>
+</div>
+
+<div class="form-group">
+  <input type="email" placeholder=" " required>
+  <label>Email</label>
+</div>
+
+<div class="form-group">
+  <input type="tel" placeholder=" " required>
+  <label>Phone</label>
+</div>
+
+<label style="display:flex; align-items:center; cursor:pointer; width: 100%; margin-top:20px;">
+  <input type="checkbox" style=" transform:translateX(-150px); margin-right: -350px;" required>
+  <span>
+    I have read and agree to 
+    <a href="terms.php" target="_blank" style="color:#00524e;text-decoration:underline;">
+      Terms of Use
+    </a>
+  </span>
+</label>
+
+
+
+  <button type="submit">Create Account</button>
+</form>
+
+
+    <p style="margin-top:15px;font-size:14px; transform: translateY(15px);">
+      Looking to create a landlord account?  
+      <a href="list-property.php" style="color:#00524e;font-weight:600;">List Your Property</a>
+    </p>
+
+    <p style="margin-top:10px;font-size:14px;">
+      Already have an account?  
+      <a href="#" onclick="switchModal('signupModal', 'loginModal')" style="color:#0B47A8;font-weight:600;">Log in</a>
+    </p>
+  </div>
+</div>
+
+
+<style>
+  /* Modal Background */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 2000; 
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center; align-items: center;
+}
+
+/* Modal Box */
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 350px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Inputs */
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+/* Buttons */
+.modal-content button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  border: none;
+  background: #00524e;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modal-content button:hover {
+  background: #0B47A8;
+}
+
+/* Close Button */
+.modal-content .close {
+  position: absolute;
+  right: 15px; top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.9);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+</style>
 
 <!-- Add Font Awesome for the icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <script>
+  // Open Modal
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+
+// Close Modal
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+// Switch Modal
+function switchModal(current, target) {
+  closeModal(current);
+  openModal(target);
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  document.querySelectorAll('.modal').forEach(modal => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+};
+
   // Change background on scroll
   window.addEventListener('scroll', function() {
     const navbar = document.getElementById('navbar');
@@ -392,4 +643,27 @@
   }
 });
 
+</script>
+<script>
+function goToPasswordStep() {
+  const email = document.getElementById("loginEmail").value;
+  if (email.trim() === "") {
+    alert("Please enter your email first.");
+    return;
+  }
+
+  // Show email on password step
+  document.getElementById("showEmail").textContent = email;
+  document.getElementById("finalEmail").value = email;
+
+  // Switch steps
+  document.getElementById("loginStep1").style.display = "none";
+  document.getElementById("loginStep2").style.display = "block";
+}
+
+function backToEmailStep() {
+  // Switch back
+  document.getElementById("loginStep1").style.display = "block";
+  document.getElementById("loginStep2").style.display = "none";
+}
 </script>
