@@ -25,16 +25,47 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
-/* Logo */
-.navbar .logo img {
-  max-height: 100px;
-  cursor: pointer;
-  filter: brightness(0) invert(1);
+
+/* Logo wrapper styled like a bookmark */
+.navbar .logo {
+  margin-left: 50px;
+  background: #fff;   /* bookmark color */
+  padding: 30px 15px 0 15px;
+  border-radius: 0 0 15px 15px; /* bookmark bottom curve */
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100px); /* start above */
+  margin-bottom: -25px;
+
+  /* 👇 Animation */
+  opacity: 0;
+  animation: dropDown 0.8s ease-out forwards;
 }
+
+/* Logo inside the bookmark */
+.navbar .logo img {
+  transform: translate(0, -5px);
+  max-height: 60px;
+  cursor: pointer;
+}
+
+/* Animation keyframes */
+@keyframes dropDown {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(-30px); /* your original position */
+    opacity: 1;
+  }
+}
+
 
 /* Nav Links */
 .navbar .nav-links {
-  margin-left: 100px;
   display: flex;
   gap: 25px;
 }
@@ -325,7 +356,7 @@
 <div class="navbar" id="navbar">
   <!-- Logo -->
   <div class="logo">
-    <img src="images/output-onlinepngtools-3-60x40.png" alt="Logo" onclick="window.location.href='index.php';">
+    <img src="images/full-logo.png" alt="Logo" onclick="window.location.href='index.php';">
   </div>
 
   <!-- Hamburger for mobile -->

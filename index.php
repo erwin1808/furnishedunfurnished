@@ -723,7 +723,7 @@
     <div class="container h-100 d-flex justify-content-center align-items-center" style="max-width: 1200px;">
         <div class="d-flex align-items-center justify-content-center w-100 gap-3 flex-wrap">
             <h3 class=" text-white mb-0">Ready to take the next step as a landlord?</h3>
-            <a href="#" class="btn btn-lg rounded-pill px-4" style="background-color: #168a49; color: #fff; border: none;">List Your Property</a>
+            <a href="#" class="btn btn-md rounded-pill px-4" style="background-color: #168a49; color: #fff; border: none;">List Your Property</a>
         </div>
     </div>
 </section>
@@ -731,8 +731,11 @@
 <style>
 .landlord-cta {
     background-color: #00524e;
-    height: 100px; /* fixed height */
+    min-height: 75px;
+    display: flex;
+    align-items: center;
 }
+
 
 .landlord-cta h3 {
     font-size: 1.2rem; /* smaller to fit single row */
