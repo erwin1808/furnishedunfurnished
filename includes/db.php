@@ -1,7 +1,7 @@
 <?php
 // Database connection (adjust with your credentials)
 $host = 'localhost';
-$db = 'ohiodentalrepair';
+$db = 'furnished_unfurnished';
 $user = 'root';
 $pass = '';
     

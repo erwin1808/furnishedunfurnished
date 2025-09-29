@@ -1,4 +1,7 @@
+<!--navbar.php-->
+
 <!-- Meta viewport -->
+ 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -423,41 +426,23 @@
 </div>
 </div>
 <!-- Login Modal -->
+<!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('loginModal')">&times;</span>
     <h2>Log In</h2>
 
-    <!-- Step 1: Email -->
-    <form id="loginStep1">
-      <input type="email" id="loginEmail" placeholder="Email" required>
-      <button type="button" onclick="goToPasswordStep()">Next</button>
-    </form>
-
-    <!-- Step 2: Password (hidden by default) -->
-    <form id="loginStep2" style="display:none;">
-      <p id="showEmail" style="font-weight: 600; margin-bottom: 10px; color:#00524e;"></p>
-      <input type="hidden" id="finalEmail" name="email"> <!-- hidden field for form submission -->
-      <input type="password" id="loginPassword" placeholder="Password" required>
-      
+    <form id="loginForm">
+      <input type="email" name="email" placeholder="Email" required>
       <button type="submit">Log In</button>
-      <button type="button" onclick="backToEmailStep()" style="margin-top:10px;background:#ccc;color:#000;">Back</button>
     </form>
 
-    <p>Don’t have an account? 
+    <p>Don't have an account? 
       <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up</a>
     </p>
   </div>
 </div>
 
-
-<!-- Signup Modal -->
-<div id="signupModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('signupModal')">&times;</span>
-    <h2>Create a tenant account</h2>
-
-<form>
 <style>
   .form-group {
     position: relative;
@@ -493,43 +478,46 @@
     font-size: 12px;
   }
 </style>
+<!-- Signup Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('signupModal')">&times;</span>
+    <h2>Create a tenant account</h2>
 
-<div class="name-row" style="display:flex;">
-  <div class="form-group" style="flex:1;">
-    <input type="text" placeholder=" " required>
-    <label>First Name</label>
-  </div>
-  <div class="form-group" style="flex:1;">
-    <input type="text" placeholder=" " required>
-    <label>Last Name</label>
-  </div>
-</div>
+    <form id="signupForm" method="POST">
+      <div class="name-row" style="display:flex;">
+        <div class="form-group" style="flex:1;">
+          <input type="text" name="first_name" placeholder=" " required>
+          <label>First Name</label>
+        </div>
+        <div class="form-group" style="flex:1;">
+          <input type="text" name="last_name" placeholder=" " required>
+          <label>Last Name</label>
+        </div>
+      </div>
 
-<div class="form-group">
-  <input type="email" placeholder=" " required>
-  <label>Email</label>
-</div>
+      <div class="form-group">
+        <input type="email" name="email" placeholder=" " required>
+        <label>Email</label>
+      </div>
 
-<div class="form-group">
-  <input type="tel" placeholder=" " required>
-  <label>Phone</label>
-</div>
+      <div class="form-group">
+        <input type="tel" name="phone" placeholder=" " required>
+        <label>Phone</label>
+      </div>
 
-<label style="display:flex; align-items:center; cursor:pointer; width: 100%; margin-top:20px;">
-  <input type="checkbox" style=" transform:translateX(-150px); margin-right: -350px;" required>
-  <span>
-    I have read and agree to 
-    <a href="terms.php" target="_blank" style="color:#00524e;text-decoration:underline;">
-      Terms of Use
-    </a>
-  </span>
-</label>
+      <label style="display:flex; align-items:center; cursor:pointer; width: 100%; margin-top:20px;">
+        <input type="checkbox" name="terms" style="transform:translateX(-150px); margin-right: -350px;" required>
+        <span>
+          I have read and agree to 
+          <a href="terms.php" target="_blank" style="color:#00524e;text-decoration:underline;">
+            Terms of Use
+          </a>
+        </span>
+      </label>
 
-
-
-  <button type="submit">Create Account</button>
-</form>
-
+      <button type="submit">Create Account</button>
+    </form>
 
     <p style="margin-top:15px;font-size:14px; transform: translateY(15px);">
       Looking to create a landlord account?  
@@ -697,4 +685,68 @@ function backToEmailStep() {
   document.getElementById("loginStep1").style.display = "block";
   document.getElementById("loginStep2").style.display = "none";
 }
+</script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+// SweetAlert2 Toast Config
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 2500,
+  timerProgressBar: true,
+});
+
+// Registration AJAX
+document.querySelector("#signupModal form").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  fetch("functions/register.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      Toast.fire({ icon: "success", title: data.message });
+      setTimeout(() => {
+        closeModal('signupModal');
+        openModal('loginModal'); // Redirect to login modal
+      }, 2000);
+    } else {
+      Toast.fire({ icon: "error", title: data.message });
+    }
+  });
+});
+
+// Login AJAX (without password)
+document.querySelector("#loginForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  
+  fetch("functions/login.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      Toast.fire({ icon: "success", title: data.message });
+      setTimeout(() => {
+        closeModal('loginModal');
+        window.location.href = "index.php";
+      }, 1000);
+    } else {
+      Toast.fire({ icon: "error", title: data.message });
+    }
+  })
+  .catch(error => {
+    console.error("Fetch error:", error);
+    Toast.fire({ icon: "error", title: "Network error occurred" });
+  });
+});
 </script>
