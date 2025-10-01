@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
             if ($otp_verified == 1) {
                 echo json_encode([
                     "status" => "redirect", 
-                    "redirect" => "step-1.php?account_number=" . $account_number
+                    "redirect" => "structure.php/" . $account_number
                 ]);
                 exit;
             }

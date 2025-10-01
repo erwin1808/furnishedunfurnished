@@ -1,4 +1,5 @@
 <?php
+session_start(); // Start the session at the very top
 include "../includes/db.php";
 
 // Enable error reporting for debugging (remove in production)
@@ -27,63 +28,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp']) && isset($_POS
     }
 
     try {
-        // ✅ Find user by email with account_number
+        // Find user by email with account_number
         $stmtUser = $conn->prepare("SELECT id, account_number, otp_verified FROM users WHERE email=?");
-        if (!$stmtUser) {
-            throw new Exception("Database error: " . $conn->error);
-        }
-        
         $stmtUser->bind_param("s", $email);
         $stmtUser->execute();
         $stmtUser->store_result();
-        
+
         if ($stmtUser->num_rows === 0) {
             echo json_encode(["status" => "error", "message" => "User not found"]);
             exit;
         }
-        
+
         $stmtUser->bind_result($user_id, $account_number, $otp_verified);
         $stmtUser->fetch();
         $stmtUser->close();
 
-        // ✅ Validate OTP - get the latest unused OTP for this user
+        // Validate OTP - get the latest unused OTP for this user
         $stmtOtp = $conn->prepare("SELECT id, expires_at, is_used, created_at 
                                    FROM otp_codes 
                                    WHERE user_id=? AND otp_code=? AND purpose='registration' 
                                    ORDER BY created_at DESC LIMIT 1");
-        
-        if (!$stmtOtp) {
-            throw new Exception("Database error: " . $conn->error);
-        }
-        
         $stmtOtp->bind_param("is", $user_id, $otp);
         $stmtOtp->execute();
         $resultOtp = $stmtOtp->get_result();
 
         if ($row = $resultOtp->fetch_assoc()) {
-    
-            
-            // Check if OTP is expired
             if (strtotime($row['expires_at']) < time()) {
                 echo json_encode(["status" => "error", "message" => "OTP has expired. Please request a new one"]);
                 exit;
             }
 
-            // Start transaction for atomic operation
             $conn->begin_transaction();
-
             try {
-                // ✅ Mark OTP as used
+                // Mark OTP as used
                 $stmtUpdate = $conn->prepare("UPDATE otp_codes SET is_used=1 WHERE id=?");
                 $stmtUpdate->bind_param("i", $row['id']);
                 $stmtUpdate->execute();
 
-                // ✅ Update user's otp_verified status to 1
+                // Update user's otp_verified status to 1
                 $stmtVerifyUser = $conn->prepare("UPDATE users SET otp_verified=1 WHERE id=?");
                 $stmtVerifyUser->bind_param("i", $user_id);
                 $stmtVerifyUser->execute();
 
-                // ✅ Optional: Mark other unused OTPs for this user as expired to prevent reuse
+                // Expire other unused OTPs
                 $stmtExpireOthers = $conn->prepare("UPDATE otp_codes 
                                                    SET is_used=1 
                                                    WHERE user_id=? AND purpose='registration' AND is_used=0");
@@ -92,10 +79,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp']) && isset($_POS
 
                 $conn->commit();
 
+                // ✅ Store account_number in session
+                $_SESSION['account_number'] = $account_number;
+
                 echo json_encode([
                     "status" => "success", 
                     "message" => "OTP verified successfully!", 
-                    "redirect" => "step-1.php?account_number=" . $account_number
+                    "redirect" => "become-a-landlord.php"
                 ]);
 
             } catch (Exception $e) {
@@ -118,7 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['otp']) && isset($_POS
     echo json_encode(["status" => "error", "message" => "Invalid request method or missing parameters"]);
 }
 
-// Close database connection
 if (isset($conn)) {
     $conn->close();
 }
