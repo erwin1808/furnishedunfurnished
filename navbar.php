@@ -697,7 +697,23 @@ const Toast = Swal.mixin({
   showConfirmButton: false,
   timer: 2500,
   timerProgressBar: true,
+  customClass: {
+    container: 'custom-toast' // 👈 use container instead of popup
+  }
 });
+
+
+// Override Toast z-index
+const style = document.createElement("style");
+style.innerHTML = `
+.swal2-container.custom-toast {
+  z-index: 10000 !important; /* way higher than modal overlay */
+  pointer-events: none; /* so clicks go through the toast */
+}
+
+`;
+document.head.appendChild(style);
+
 
 // Registration AJAX
 document.querySelector("#signupModal form").addEventListener("submit", function(e) {
