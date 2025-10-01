@@ -521,7 +521,7 @@
 
     <p style="margin-top:15px;font-size:14px; transform: translateY(15px);">
       Looking to create a landlord account?  
-      <a href="list-property.php" style="color:#00524e;font-weight:600;">List Your Property</a>
+      <a href="register-landlord.php" style="color:#00524e;font-weight:600;">List Your Property</a>
     </p>
 
     <p style="margin-top:10px;font-size:14px;">
@@ -709,6 +709,7 @@ style.innerHTML = `
 .swal2-container.custom-toast {
   z-index: 10000 !important; /* way higher than modal overlay */
   pointer-events: none; /* so clicks go through the toast */
+  
 }
 
 `;
