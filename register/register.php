@@ -107,20 +107,20 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port = 465;
 
-    $mail->setFrom('no-reply@ohiodentalrepair.com', 'Ohio Dental Repair');
+    $mail->setFrom('no-reply@ohiodentalrepair.com', 'Furnished Unfurnished');
     $mail->addAddress($email, $first_name . ' ' . $last_name);
 
     $mail->isHTML(true);
-    $mail->Subject = 'Welcome to Ohio Dental Repair';
+    $mail->Subject = 'Welcome to Furnished Unfurnished';
 
     $mail->Body = "
         <div style='font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f4f4f4;'>
             <div style='background-color: #ffffff; padding: 20px;'>
-                <h2 style='color: #3a1450; text-align: center;'>Ohio Dental Repair</h2>
+                <h2 style='color: #3a1450; text-align: center;'>Furnished Unfurnished</h2>
 
                 <p>Hi <strong>$first_name $last_name</strong>,</p>
                 <p>
-                    Thank you for registering with Ohio Dental Repair. Here are your account details:
+                    Thank you for registering with Furnished Unfurnished. Here are your account details:
                 </p>
                 <p style='background-color: #f0f4f8; padding: 10px; font-size: 16px; font-weight: bold;'>
                     Email: $email<br>  
@@ -133,7 +133,7 @@ try {
 
                 <h4 style='color: #3a1450;'>Contact Info</h4>
                 <p>
-                    Ohio Dental Repair<br>
+                    Furnished Unfurnished<br>
                     1967 Lockbourne Road Suite B<br>
                     Columbus, Ohio 43207
                 </p>
@@ -185,7 +185,7 @@ try {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Register | Ohio Dental Repair</title>
+<title>Register | Furnished Unfurnished</title>
 <?php include "../includes/icon.php"; ?>
 <link rel="stylesheet" href="styles.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
@@ -357,7 +357,7 @@ try {
 </head>
 <body>
 
-<div class="logo-company-name">Ohio Dental Repair</div>
+<div class="logo-company-name">Furnished Unfurnished</div>
 
 <div class="container">
     <h2 class="form-title">Create Your Account</h2>

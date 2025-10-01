@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Home | Ohio Dental Repair</title>
+  <title>Home | Furnished Unfurnished</title>
   <?php include "../includes/icon.php"; ?>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -523,7 +523,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <!-- Hero Section -->
   <section class="hero" data-aos="fade">
     <div class="container">
-      <h1>Ohio Dental Repair</h1>
+      <h1>Furnished Unfurnished</h1>
       <p>Professional dental equipment repair and maintenance services to keep your practice running smoothly. Fast, reliable, and affordable solutions for all your dental equipment needs.</p>
       <a href="../services/services.php" class="cta-button">Our Services</a>
     </div>
@@ -533,7 +533,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <section class="features" id="features">
     <div class="container">
       <div class="section-title" data-aos="fade-down">
-        <h2>Why Choose Ohio Dental Repair</h2>
+        <h2>Why Choose Furnished Unfurnished</h2>
         <p>Providing comprehensive repair services for all dental equipment with unmatched convenience and support</p>
       </div>
       <div class="features-grid">
@@ -592,7 +592,7 @@ if (session_status() === PHP_SESSION_NONE) {
       </div>
       <div class="testimonial-grid">
         <div class="testimonial-card" data-aos="fade-up">
-          <p class="testimonial-text">"Ohio Dental Repair saved our practice when our dental chair failed. Their technician arrived quickly and had us back in business the same day!"</p>
+          <p class="testimonial-text">"Furnished Unfurnished saved our practice when our dental chair failed. Their technician arrived quickly and had us back in business the same day!"</p>
           <p class="testimonial-author">- Dr. Maria Santos, DDS</p>
         </div>
         <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
@@ -611,12 +611,12 @@ if (session_status() === PHP_SESSION_NONE) {
   <section class="about" id="about">
     <div class="container">
       <div class="section-title" data-aos="fade-down">
-        <h2>About Ohio Dental Repair</h2>
+        <h2>About Furnished Unfurnished</h2>
         <p>Expert repair services for the dental industry</p>
       </div>
       <div class="about-content" data-aos="fade-up">
         <p>
-          Ohio Dental Repair provides comprehensive repair services for the dental industry, specializing in most dental equipment - not just handpieces. We've revolutionized the repair process by giving our clients complete control through our online system.
+          Furnished Unfurnished provides comprehensive repair services for the dental industry, specializing in most dental equipment - not just handpieces. We've revolutionized the repair process by giving our clients complete control through our online system.
         </p>
 
         <h2>Seamless Repair Management</h2>

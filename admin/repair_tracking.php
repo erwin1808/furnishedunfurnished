@@ -500,7 +500,7 @@ $('.print-label-btn').click(function() {
                 </div>
                 <div class="return-address" style="font-size: 11px; border-top: 1px solid #ccc; padding-top: 10px;">
                     <strong>RETURN SHIPPING LABEL</strong><br>
-                    Ohio Dental Repair<br>
+                    Furnished Unfurnished<br>
                     1967 Lockbourne Road Suite B<br>
                     Columbus, Ohio 43207
                 </div>

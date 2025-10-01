@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mail In | Ohio Dental Repair</title>
+  <title>Mail In | Furnished Unfurnished</title>
   <?php include "../includes/icon.php"; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
@@ -123,7 +123,7 @@
 
     <div class="mailing-label-section" data-aos="fade-up">
       <div class="address-box">
-        <p><strong>Ohio Dental Repair</strong></p>
+        <p><strong>Furnished Unfurnished</strong></p>
         <p>1967 Lockbourne Road Suite B</p>
         <p>Columbus, Ohio 43207</p>
       </div>

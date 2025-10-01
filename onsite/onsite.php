@@ -92,8 +92,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $trackingNumber = generateTrackingNumber($conn);
             
             // Recipients
-            $mail->setFrom('no-reply@ohiodentalrepair.com', 'Ohio Dental Repair');
-            $mail->addAddress('ohiodentalrepair@gmail.com', 'Ohio Dental Repair');
+            $mail->setFrom('no-reply@ohiodentalrepair.com', 'Furnished Unfurnished');
+            $mail->addAddress('ohiodentalrepair@gmail.com', 'Furnished Unfurnished');
             $mail->addReplyTo($email, $name);
             
             // Email content
@@ -262,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Onsite Call | Ohio Dental Repair</title>
+  <title>Onsite Call | Furnished Unfurnished</title>
     <?php include "../includes/icon.php"; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
@@ -458,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="contact" id="contact">
   <div class="container">
     <div class="section-title" data-aos="fade-down">
-      <h2>On-Site Service Call at Ohio Dental Repair</h2>
+      <h2>On-Site Service Call at Furnished Unfurnished</h2>
       <p>Need on-site assistance? Contact our team today to schedule a service visit at your location.</p>
     </div>
 
@@ -466,7 +466,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div id="onsiteCallNote" style="margin-top: 15px; background-color: #f0f8ff; padding: 20px; border-radius: 5px; margin-bottom: 30px; text-align: center;">
   <p><strong>On-site Call Repair Service Available</strong></p>
   
-  <p>Ohio Dental Repair offers on-site service calls for dental equipment repairs. Our technician will visit your location to assess and service your equipment.</p>
+  <p>Furnished Unfurnished offers on-site service calls for dental equipment repairs. Our technician will visit your location to assess and service your equipment.</p>
   
   <p style="margin-top: 10px; font-style: italic;">
     To request an on-site visit, please fill out the service request form and specify your preferred date and time. We'll contact you to confirm the appointment.

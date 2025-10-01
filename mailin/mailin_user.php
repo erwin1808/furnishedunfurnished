@@ -134,8 +134,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $trackingNumber = generateTrackingNumber($conn);
 
             // Recipients
-            $mail->setFrom('no-reply@ohiodentalrepair.com', 'Ohio Dental Repair');
-            $mail->addAddress('ohiodentalrepair@gmail.com', 'Ohio Dental Repair');
+            $mail->setFrom('no-reply@ohiodentalrepair.com', 'Furnished Unfurnished');
+            $mail->addAddress('ohiodentalrepair@gmail.com', 'Furnished Unfurnished');
             $mail->addReplyTo($email, $name);
             
             // Email content
@@ -314,7 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mail In | Ohio Dental Repair</title>
+  <title>Mail In | Furnished Unfurnished</title>
     <?php include "../includes/icon.php"; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
@@ -525,13 +525,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <section class="contact" id="contact">
   <div class="container">
   <div class="section-title" data-aos="fade-down">
-  <h2>Mail-In at Ohio Dental Repair</h2>
+  <h2>Mail-In at Furnished Unfurnished</h2>
   <p>Want to send in your equipment? Download the label and get in touch with our team today.</p>
 </div>
 
        <!-- Shipping Box Note -->
 <div id="shippingBoxNote" style="margin-top: 15px; background-color: #f9f9f9; padding: 20px; border-radius: 5px; margin-bottom: 30px; text-align: center;">
-  <p><strong>Download Ohio Dental Repair Mailing Label and attach to your shipping package:</strong></p>
+  <p><strong>Download Furnished Unfurnished Mailing Label and attach to your shipping package:</strong></p>
   
   <a href="files/shipping_label.pdf" download class="download-button" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; margin-top: 10px; font-weight: bold;">
      Download Mailing Label

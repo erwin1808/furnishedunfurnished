@@ -43,31 +43,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
             }
             
             // User exists but not verified, use existing user_id
-        } else {
-            // New user - generate account_number
-            $yearPrefix = date("Y");
-            $result = $conn->query("SELECT account_number 
-                                    FROM users 
-                                    WHERE account_number LIKE '{$yearPrefix}%' 
-                                    ORDER BY account_number DESC 
-                                    LIMIT 1");
+        }else {
+                // New user - generate account_number
+                $yearPrefix = date("Y");
+                $result = $conn->query("SELECT account_number 
+                                        FROM users 
+                                        WHERE account_number LIKE '{$yearPrefix}%' 
+                                        ORDER BY account_number DESC 
+                                        LIMIT 1");
 
-            if ($result && $result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $lastNumber = (int)substr($row['account_number'], 4);
-                $nextNumber = str_pad($lastNumber + 1, 4, "0", STR_PAD_LEFT);
-            } else {
-                $nextNumber = "0001";
+                if ($result && $result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $lastNumber = (int)substr($row['account_number'], 4);
+                    $nextNumber = str_pad($lastNumber + 1, 4, "0", STR_PAD_LEFT);
+                } else {
+                    $nextNumber = "0001";
+                }
+                $account_number = $yearPrefix . $nextNumber;
+
+                // Insert new user with user_type as "landlord"
+                $stmtInsert = $conn->prepare("INSERT INTO users (email, account_number, user_type, otp_verified) VALUES (?, ?, 'landlord', 0)");
+                $stmtInsert->bind_param("ss", $email, $account_number);
+                $stmtInsert->execute();
+                $user_id = $stmtInsert->insert_id;
+                $stmtInsert->close();
             }
-            $account_number = $yearPrefix . $nextNumber;
-
-            // Insert new user
-            $stmtInsert = $conn->prepare("INSERT INTO users (email, account_number, otp_verified) VALUES (?, ?, 0)");
-            $stmtInsert->bind_param("ss", $email, $account_number);
-            $stmtInsert->execute();
-            $user_id = $stmtInsert->insert_id;
-            $stmtInsert->close();
-        }
 
         // ✅ Insert OTP into otp_codes
         $expires_at = date("Y-m-d H:i:s", strtotime("+5 minutes"));
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
         $mail->Port       = 465;
 
         // Sender must match the authenticated Gmail account
-        $mail->setFrom('erwinnares1@gmail.com', 'Ohio Dental Repair');
+        $mail->setFrom('erwinnares1@gmail.com', 'Furnished Unfurnished');
         $mail->addAddress($email); // recipient from form
 
         $mail->isHTML(true);

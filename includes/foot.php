@@ -87,7 +87,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-section">
-                <h3>Ohio Dental Repair</h3>
+                <h3>Furnished Unfurnished</h3>
                 <p>1967 Lockbourne Road Suite B</p>
                 <p>Columbus, Ohio 43207</p>
                 <!--p><i class="fas fa-phone"></i> (614) 306-9986</p-->
@@ -103,7 +103,7 @@
         </div>
 
         <div class="copyright">
-            <p>&copy; 2014 DJD - Ohio Dental Repair. All rights reserved.</p>
+            <p>&copy; 2014 DJD - Furnished Unfurnished. All rights reserved.</p>
         </div>
     </div>
 </footer>

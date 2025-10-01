@@ -341,7 +341,7 @@ body {
     <div class="container header-container">
       <div class="store-name">
     <img src="../images/odr_logo.png" alt="ODR Logo" style="height: 34px; vertical-align: middle; margin-right: 8px;">
-    Ohio Dental Repair
+    Furnished Unfurnished
 </div>
 
 
