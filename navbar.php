@@ -409,7 +409,7 @@
   </div>
 
 <div class="header-buttons">
-  <button class="btn-list-property" onclick="location.href='#list-property'">
+  <button class="btn-list-property" onclick="location.href='register-landlord.php'">
     List your property
   </button>
   
