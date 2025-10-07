@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $files = $_FILES['property_photos'];
         $uploadSuccess = false;
 
-        // Get current max image_order
         $stmt = $conn->prepare("SELECT MAX(image_order) AS max_order FROM property_images WHERE property_code = ?");
         $stmt->bind_param("s", $propertyCode);
         $stmt->execute();
@@ -49,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // Return JSON for AJAX
         header('Content-Type: application/json');
         echo json_encode(['success' => $uploadSuccess]);
         exit;
@@ -91,6 +89,38 @@ h1 { font-weight: 600; color: #00524e; margin-top: 50px; text-align:center; }
 </style>
 </head>
 <body>
+<script>
+const accountNumber = "<?= $accountNumber ?>";
+const propertyCode = "<?= $propertyCode ?>";
+</script>
+<script>
+function initNextButton() {
+    const nextBtn = document.getElementById('nextBtn');
+    if(!nextBtn) return; // just in case
+
+    nextBtn.addEventListener('click', () => {
+        Swal.fire({
+            title: 'Are you done uploading images?',
+            text: "Proceed to next step?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, next',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if(result.isConfirmed){
+                window.location.href = `property-title.php?an=${accountNumber}&pc=${propertyCode}`;
+            }
+        });
+    });
+}
+
+// Wait until DOM is fully loaded
+if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initNextButton);
+} else {
+    initNextButton();
+}
+</script>
 
 <header class="border-bottom py-3 shadow-sm bg-white">
   <div class="container d-flex justify-content-between align-items-center">
@@ -98,7 +128,7 @@ h1 { font-weight: 600; color: #00524e; margin-top: 50px; text-align:center; }
   </div>
 </header>
 
-<main class="flex-grow-1" style="margin-bottom: 120px;">
+<main class="flex-grow-1" style="margin-bottom: 150px;">
     <div id="main-container">
         <h1>Upload Property Photos</h1>
 
@@ -136,6 +166,16 @@ h1 { font-weight: 600; color: #00524e; margin-top: 50px; text-align:center; }
         </div>
     </div>
 </main>
+
+<footer class="fixed-bottom border-top">
+    <div class="progress" style="height: 6px;">
+      <div class="progress-bar bg-secondary" style="width: 60%;"></div>
+    </div>
+<div class="d-flex justify-content-between align-items-center px-4 py-3 bg-white">
+    <button type="button" class="btn btn-link text-muted" onclick="history.back()">← Back</button>
+    <button type="button" id="nextBtn" class="btn btn-primary px-4" style="background-color:#00524e; border-color:#00524e;">Next</button>
+</div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.16.0/Sortable.min.js"></script>
@@ -184,57 +224,28 @@ function deleteExistingImage(id){
                     const el = document.querySelector(`[data-id="db_${id}"]`);
                     if(el) el.remove();
 
-                    // If deleted image was cover, promote first grid image
                     if(el && el.classList.contains('cover-image')){
                         const firstGrid = document.querySelector('#grid-container .grid-image');
                         if(firstGrid){
                             const gridId = firstGrid.getAttribute('data-id');
                             const imgSrc = firstGrid.querySelector('img').src;
-
-                            // Remove from grid
                             firstGrid.remove();
 
-                            // Set as cover
                             const coverDiv = document.createElement('div');
                             coverDiv.classList.add('cover-image');
                             coverDiv.setAttribute('data-id', gridId);
-                            coverDiv.innerHTML = `
-                                <img src="${imgSrc}" alt="Cover Image">
-                                <button type="button" class="delete-btn" onclick="deleteExistingImage('${gridId.replace('db_','')}')">×</button>
-                            `;
-                            const coverDropzone = document.getElementById('cover-dropzone');
+                            coverDiv.innerHTML = `<img src="${imgSrc}" alt="Cover Image">
+                                <button type="button" class="delete-btn" onclick="deleteExistingImage('${gridId.replace('db_','')}')">×</button>`;
                             coverDropzone.innerHTML = '';
                             coverDropzone.appendChild(coverDiv);
                         } else {
-                            // No grid images left, show empty state
-                            document.getElementById('cover-dropzone').innerHTML = '<div class="empty-state">No cover photo selected</div>';
+                            coverDropzone.innerHTML = '<div class="empty-state">No cover photo selected</div>';
                         }
                     }
 
-                    // Show toast
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Image deleted successfully!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    // If grid empty, show empty state
-                    const gridContainer = document.getElementById('grid-container');
-                    if(gridContainer.children.length === 0){
-                        gridContainer.innerHTML = '<div class="empty-state">No additional photos</div>';
-                    }
+                    Swal.fire({ toast:true, position:'top-end', icon:'success', title:'Image deleted!', showConfirmButton:false, timer:1500 });
                 } else {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Failed to delete image!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire({ toast:true, position:'top-end', icon:'error', title:'Failed to delete image!', showConfirmButton:false, timer:1500 });
                 }
             });
         }
@@ -243,6 +254,7 @@ function deleteExistingImage(id){
 
 // Initialize Sortable for grid
 new Sortable(gridContainer, { animation:150, ghostClass:'sortable-ghost', chosenClass:'sortable-chosen' });
+
 </script>
 
 </body>
