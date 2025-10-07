@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           showConfirmButton: false
         });
         setTimeout(() => {
-          window.location.href = 'place-access.php?an=" . urlencode($accountNumber) . "&pc=" . urlencode($propertyCode) . "';
+          window.location.href = 'anemities.php.php?an=" . urlencode($accountNumber) . "&pc=" . urlencode($propertyCode) . "';
         }, 1600);
       });
     </script>";

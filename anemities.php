@@ -31,26 +31,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->close();
 
     // Insert selected amenities
-    if (!empty($selectedAmenities)) {
-        $stmt = $conn->prepare("INSERT INTO property_amenities (property_code, account_number, amenity_name) VALUES (?, ?, ?)");
-        foreach ($selectedAmenities as $amenity) {
-            $stmt->bind_param("sss", $propertyCode, $accountNumber, $amenity);
-            $stmt->execute();
-        }
-        $stmt->close();
+if (!empty($selectedAmenities)) {
+    $stmt = $conn->prepare("INSERT INTO property_amenities (property_code, account_number, amenity_name) VALUES (?, ?, ?)");
+    foreach ($selectedAmenities as $amenity) {
+        $stmt->bind_param("sss", $propertyCode, $accountNumber, $amenity);
+        $stmt->execute();
     }
+    $stmt->close();
 
+    $message = "Amenities Saved!";
     echo "<script>
         document.addEventListener('DOMContentLoaded', function() {
             Swal.fire({
+                toast: true,
+                position: 'top-end',
                 icon: 'success',
-                title: 'Amenities Saved!',
-                text: 'Your property amenities have been updated.',
+                title: '$message',
+                showConfirmButton: false,
                 timer: 1500,
-                showConfirmButton: false
+                timerProgressBar: true
             });
+            setTimeout(function() {
+                window.location.href = 'photos.php?an=" . urlencode($accountNumber) . "&pc=" . urlencode($propertyCode) . "';
+            }, 1600);
         });
     </script>";
+} else {
+    echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No amenities selected. Please try again.'
+        });
+    </script>";
+}
+
 }
 
 // Amenity categories with Bootstrap Icons
@@ -60,7 +75,7 @@ $amenityCategories = [
         ["name" => "TV", "icon" => "bi-tv"],
         ["name" => "Kitchen", "icon" => "bi-suit-heart"],
         ["name" => "Washer", "icon" => "bi-droplet"],
-        ["name" => "Free parking on premises", "icon" => "bi-parking"],
+        ["name" => "Free parking on premises", "icon" => "bi-signpost"],
         ["name" => "Paid parking on premises", "icon" => "bi-cash-stack"],
         ["name" => "Air conditioning", "icon" => "bi-snow"],
         ["name" => "Dedicated workspace", "icon" => "bi-laptop"]
@@ -71,7 +86,7 @@ $amenityCategories = [
         ["name" => "Patio", "icon" => "bi-house-door"],
         ["name" => "BBQ grill", "icon" => "bi-fire"],
         ["name" => "Outdoor dining area", "icon" => "bi-cup"],
-        ["name" => "Fire pit", "icon" => "bi-flame"],
+        ["name" => "Fire pit", "icon" => "bi-fire"],
         ["name" => "Pool table", "icon" => "bi-dice-6"],
         ["name" => "Indoor fireplace", "icon" => "bi-house-heart"],
         ["name" => "Piano", "icon" => "bi-music-note"],
@@ -79,7 +94,7 @@ $amenityCategories = [
         ["name" => "Lake access", "icon" => "bi-water"],
         ["name" => "Beach access", "icon" => "bi-sun"],
         ["name" => "Ski-in/Ski-out", "icon" => "bi-snow2"],
-        ["name" => "Outdoor shower", "icon" => "bi-shower"]
+        ["name" => "Outdoor shower", "icon" => "bi-droplet-half"],
     ],
     "Safety Items" => [
         ["name" => "Smoke alarm", "icon" => "bi-exclamation-triangle"],
@@ -99,6 +114,9 @@ $amenityCategories = [
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<!-- Bootstrap Icons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
 <style>
 body { background-color: #faf9f5; font-family: 'Inter', sans-serif; }
 h1 { font-weight: 600; color: #00524e; margin-top: 100px; }

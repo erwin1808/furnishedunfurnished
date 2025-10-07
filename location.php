@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     h4 { color: #00524e; font-weight: 600; }
     #map { height: 400px; border-radius: 1rem; border: 2px solid #ddd; }
     .form-control { border-radius: 0.75rem; padding: 0.75rem; }
-    .step-card { background-color: #fff; border-radius: 1rem; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .step-card { background-color: transparent;}
     footer { background-color: #fff; }
   </style>
 </head>
