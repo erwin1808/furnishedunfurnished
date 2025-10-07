@@ -9,47 +9,59 @@ if (!isset($_GET['an']) || !isset($_GET['pc'])) {
 $accountNumber = $_GET['an'];
 $propertyCode = $_GET['pc'];
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['property_photos'])) {
+// Handle AJAX file upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $uploadDir = 'uploads/';
 
-    $uploadDir = 'uploads/'; // make sure this folder exists and is writable
-    $files = $_FILES['property_photos'];
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 
-    // Loop through each uploaded file
-    for ($i = 0; $i < count($files['name']); $i++) {
-        $tmpName = $files['tmp_name'][$i];
-        $fileName = basename($files['name'][$i]);
-        $targetFile = $uploadDir . time() . '_' . $fileName; // unique filename
+    if (isset($_FILES['property_photos']) && !empty($_FILES['property_photos']['name'][0])) {
+        $files = $_FILES['property_photos'];
+        $uploadSuccess = false;
 
-        if (move_uploaded_file($tmpName, $targetFile)) {
-            // Save to database
-            $stmt = $conn->prepare("INSERT INTO property_images (property_code, image_path) VALUES (?, ?)");
-            $stmt->bind_param("ss", $propertyCode, $targetFile);
-            $stmt->execute();
-            $stmt->close();
+        // Get current max image_order
+        $stmt = $conn->prepare("SELECT MAX(image_order) AS max_order FROM property_images WHERE property_code = ?");
+        $stmt->bind_param("s", $propertyCode);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $maxOrder = $row['max_order'] ?? 0;
+        $stmt->close();
+
+        for ($i = 0; $i < count($files['name']); $i++) {
+            if ($files['error'][$i] !== UPLOAD_ERR_OK) continue;
+
+            $tmpName = $files['tmp_name'][$i];
+            $fileName = basename($files['name'][$i]);
+            $fileExtension = pathinfo($fileName, PATHINFO_EXTENSION);
+            $uniqueFileName = uniqid() . '_' . time() . '.' . $fileExtension;
+            $targetFile = $uploadDir . $uniqueFileName;
+
+            if (getimagesize($tmpName) === false) continue;
+
+            if (move_uploaded_file($tmpName, $targetFile)) {
+                $maxOrder++;
+                $stmt = $conn->prepare("INSERT INTO property_images (property_code, image_path, image_order) VALUES (?, ?, ?)");
+                $stmt->bind_param("ssi", $propertyCode, $targetFile, $maxOrder);
+                if ($stmt->execute()) $uploadSuccess = true;
+                else unlink($targetFile);
+                $stmt->close();
+            }
         }
-    }
 
-    echo "<script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: 'Photos uploaded successfully!',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true
-            });
-            setTimeout(function() {
-                window.location.href = 'photos.php?an=" . urlencode($accountNumber) . "&pc=" . urlencode($propertyCode) . "';
-            }, 1600);
-        });
-    </script>";
+        // Return JSON for AJAX
+        header('Content-Type: application/json');
+        echo json_encode(['success' => $uploadSuccess]);
+        exit;
+    } else {
+        header('Content-Type: application/json');
+        echo json_encode(['success' => false]);
+        exit;
+    }
 }
 
-// Fetch existing images for preview
-$stmt = $conn->prepare("SELECT id, image_path FROM property_images WHERE property_code = ?");
+// Fetch existing images
+$stmt = $conn->prepare("SELECT id, image_path, image_order FROM property_images WHERE property_code = ? ORDER BY image_order ASC");
 $stmt->bind_param("s", $propertyCode);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -67,39 +79,15 @@ $stmt->close();
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <style>
 body { background-color: #faf9f5; font-family: 'Inter', sans-serif; }
-h1 { font-weight: 600; color: #00524e; margin-top: 50px; }
-#preview-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2 columns for regular images */
-    gap: 10px;
-    margin-top: 20px;
-}
-.preview-image {
-    position: relative;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-}
-.preview-image.cover {
-    grid-column: span 2; /* cover spans both columns */
-    height: 250px;
-}
-.preview-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.preview-image .delete-btn {
-    position: absolute;
-    top: 2px; right: 2px;
-    background: rgba(255,0,0,0.7);
-    border: none;
-    color: #fff;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
+h1 { font-weight: 600; color: #00524e; margin-top: 50px; text-align:center; }
+#main-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+.cover-container, #grid-container { min-height: 200px; background-color: #fff; border: 2px dashed #ccc; border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+.cover-image, .grid-image { position: relative; border-radius: 8px; overflow: hidden; }
+.cover-image { width: 100%; max-width: 500px; height: 250px; }
+.grid-image { width: calc(50% - 10px); height: 150px; border: 2px solid #e9ecef; }
+.cover-image img, .grid-image img { width: 100%; height: 100%; object-fit: cover; }
+.delete-btn { position: absolute; top: 5px; right: 5px; background: rgba(220,53,69,0.9); border: none; color: #fff; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 3; }
+.empty-state { text-align:center; color:#6c757d; padding:20px; font-style:italic; width:100%; }
 </style>
 </head>
 <body>
@@ -110,74 +98,151 @@ h1 { font-weight: 600; color: #00524e; margin-top: 50px; }
   </div>
 </header>
 
-<main class="flex-grow-1 container text-center" style="margin-bottom: 120px;">
-<h1>Upload Property Photos</h1>
+<main class="flex-grow-1" style="margin-bottom: 120px;">
+    <div id="main-container">
+        <h1>Upload Property Photos</h1>
 
-<form method="POST" enctype="multipart/form-data" id="photoForm">
-    <input type="file" id="property_photos" name="property_photos[]" multiple accept="image/*" class="form-control mb-3">
-<div id="preview-container">
-    <?php foreach ($existingImages as $i => $img): ?>
-        <div class="preview-image <?= $i === 0 ? 'cover' : '' ?>" data-id="<?= $img['id'] ?>">
-            <img src="<?= htmlspecialchars($img['image_path']) ?>" alt="Property Image">
-            <button type="button" class="delete-btn" onclick="deleteExistingImage(<?= $img['id'] ?>)">×</button>
+        <input type="file" id="property_photos" multiple accept="image/*" class="form-control mb-3">
+        <div class="form-text mb-4">Select multiple photos. First photo becomes cover if no existing cover.</div>
+
+        <div id="cover-section">
+            <span class="cover-label">Cover Photo</span>
+            <div class="cover-container" id="cover-dropzone">
+                <?php if (!empty($existingImages)): ?>
+                    <div class="cover-image" data-id="db_<?= $existingImages[0]['id'] ?>">
+                        <img src="<?= htmlspecialchars($existingImages[0]['image_path']) ?>" alt="Cover Image">
+                        <button type="button" class="delete-btn" onclick="deleteExistingImage('<?= $existingImages[0]['id'] ?>')">×</button>
+                    </div>
+                <?php else: ?>
+                    <div class="empty-state">No cover photo selected</div>
+                <?php endif; ?>
+            </div>
         </div>
-    <?php endforeach; ?>
-</div>
-</form>
+
+        <div id="grid-section">
+            <span class="grid-label">Additional Photos</span>
+            <div id="grid-container">
+                <?php if (!empty($existingImages) && count($existingImages) > 1): ?>
+                    <?php foreach(array_slice($existingImages,1) as $img): ?>
+                        <div class="grid-image" data-id="db_<?= $img['id'] ?>">
+                            <img src="<?= htmlspecialchars($img['image_path']) ?>" alt="Property Image">
+                            <button type="button" class="delete-btn" onclick="deleteExistingImage('<?= $img['id'] ?>')">×</button>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="empty-state">No additional photos</div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 </main>
 
-<footer class="fixed-bottom border-top bg-white">
-  <div class="progress" style="height: 6px;">
-    <div class="progress-bar bg-secondary" style="width: 60%;"></div>
-  </div>
-  <div class="d-flex justify-content-between align-items-center px-4 py-3">
-    <button type="button" class="btn btn-link text-muted" onclick="history.back()">← Back</button>
-    <button type="submit" form="photoForm" class="btn btn-primary px-4" style="background-color:#00524e; border-color:#00524e;">
-        Save Photos
-    </button>
-  </div>
-</footer>
-
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.16.0/Sortable.min.js"></script>
 <script>
 const input = document.getElementById('property_photos');
-const previewContainer = document.getElementById('preview-container');
+const coverDropzone = document.getElementById('cover-dropzone');
+const gridContainer = document.getElementById('grid-container');
 
+// Upload immediately on selection
 input.addEventListener('change', () => {
-    const files = input.files;
-    previewContainer.innerHTML = ''; // clear previous previews
+    if(input.files.length === 0) return;
 
-    Array.from(files).forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = e => {
-            const div = document.createElement('div');
-            div.classList.add('preview-image');
-            if(index === 0) div.classList.add('cover'); // first file is cover
-            div.innerHTML = `
-                <img src="${e.target.result}" alt="Preview">
-                <button type="button" class="delete-btn" onclick="deletePreview(this)">×</button>
-            `;
-            previewContainer.appendChild(div);
-        };
-        reader.readAsDataURL(file);
-    });
+    const formData = new FormData();
+    Array.from(input.files).forEach(file => formData.append('property_photos[]', file));
+
+    fetch(`?an=<?= $accountNumber ?>&pc=<?= $propertyCode ?>`, { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success){
+            Swal.fire({ toast:true, position:'top-end', icon:'success', title:'Photos uploaded!', showConfirmButton:false, timer:1500 })
+            .then(() => location.reload());
+        } else {
+            Swal.fire({ toast:true, position:'top-end', icon:'error', title:'Upload failed!', showConfirmButton:false, timer:1500 });
+        }
+    })
+    .catch(err => console.error(err));
 });
 
-function deletePreview(btn) {
-    btn.parentElement.remove();
+// Delete existing images
+function deleteExistingImage(id){
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "This will permanently delete the image!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if(result.isConfirmed){
+            fetch('functions/delete_property_image.php?id=' + id)
+            .then(res => res.json())
+            .then(data => {
+                if(data.success){
+                    const el = document.querySelector(`[data-id="db_${id}"]`);
+                    if(el) el.remove();
+
+                    // If deleted image was cover, promote first grid image
+                    if(el && el.classList.contains('cover-image')){
+                        const firstGrid = document.querySelector('#grid-container .grid-image');
+                        if(firstGrid){
+                            const gridId = firstGrid.getAttribute('data-id');
+                            const imgSrc = firstGrid.querySelector('img').src;
+
+                            // Remove from grid
+                            firstGrid.remove();
+
+                            // Set as cover
+                            const coverDiv = document.createElement('div');
+                            coverDiv.classList.add('cover-image');
+                            coverDiv.setAttribute('data-id', gridId);
+                            coverDiv.innerHTML = `
+                                <img src="${imgSrc}" alt="Cover Image">
+                                <button type="button" class="delete-btn" onclick="deleteExistingImage('${gridId.replace('db_','')}')">×</button>
+                            `;
+                            const coverDropzone = document.getElementById('cover-dropzone');
+                            coverDropzone.innerHTML = '';
+                            coverDropzone.appendChild(coverDiv);
+                        } else {
+                            // No grid images left, show empty state
+                            document.getElementById('cover-dropzone').innerHTML = '<div class="empty-state">No cover photo selected</div>';
+                        }
+                    }
+
+                    // Show toast
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Image deleted successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    // If grid empty, show empty state
+                    const gridContainer = document.getElementById('grid-container');
+                    if(gridContainer.children.length === 0){
+                        gridContainer.innerHTML = '<div class="empty-state">No additional photos</div>';
+                    }
+                } else {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Failed to delete image!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            });
+        }
+    });
 }
-function deleteExistingImage(id) {
-    if(confirm("Delete this image?")) {
-        fetch('delete_property_image.php?id=' + id)
-        .then(res => res.json())
-        .then(data => {
-            if(data.success) {
-                document.querySelector('.preview-image[data-id=\"'+id+'\"]').remove();
-            }
-        });
-    }
-}
+
+// Initialize Sortable for grid
+new Sortable(gridContainer, { animation:150, ghostClass:'sortable-ghost', chosenClass:'sortable-chosen' });
 </script>
 
 </body>
