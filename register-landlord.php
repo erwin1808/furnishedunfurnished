@@ -164,7 +164,38 @@
       <div class="modal-content">
         <div class="modal-body">
           <div class="loading-spinner"></div>
-          <p>Sending OTP...</p>
+          <p id="loadingMessage">Sending OTP...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Details Modal -->
+  <div class="modal fade" tabindex="-1" id="userDetailsModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Complete Your Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="userDetailsForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" id="phone" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Complete Registration</button>
+          </form>
         </div>
       </div>
     </div>
@@ -174,9 +205,13 @@
   <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
   
-<script>const emailForm = document.getElementById("emailForm");
+<script>
+  const emailForm = document.getElementById("emailForm");
 const otpForm = document.getElementById("otpForm");
+const userDetailsForm = document.getElementById("userDetailsForm");
 const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
+const userDetailsModal = new bootstrap.Modal(document.getElementById('userDetailsModal'));
+const loadingMessage = document.getElementById("loadingMessage");
 
 // Function to show toast notification
 function showToast(icon, title) {
@@ -206,6 +241,7 @@ emailForm.addEventListener("submit", function(e) {
     let email = document.getElementById("email").value;
     
     // Show loading modal
+    loadingMessage.textContent = "Sending OTP...";
     loadingModal.show();
     
     fetch("functions/send_otp.php", {
@@ -219,7 +255,7 @@ emailForm.addEventListener("submit", function(e) {
         loadingModal.hide();
         
         if (data.status === "redirect") {
-            // Immediately redirect without showing any message
+            // User already verified and has complete profile - redirect immediately
             window.location.href = data.redirect;
         } else if (data.status === "success") {
             showToast('success', data.message);
@@ -243,6 +279,7 @@ otpForm.addEventListener("submit", function(e) {
     let email = document.getElementById("email").value;
     
     // Show loading modal
+    loadingMessage.textContent = "Verifying OTP...";
     loadingModal.show();
 
     fetch("functions/verify_otp.php", {
@@ -255,18 +292,65 @@ otpForm.addEventListener("submit", function(e) {
         // Hide loading modal
         loadingModal.hide();
         
-        console.log("OTP Response:", data); // Debug log
+        console.log("OTP Response:", data);
+        
+        if (data.status === "redirect") {
+            // Profile is complete - redirect to structure.php
+            showToast('success', data.message);
+            setTimeout(() => {
+                window.location.href = data.redirect;
+            }, 1500);
+        } else if (data.status === "success") {
+            showToast('success', data.message);
+            
+            // Profile incomplete - show modal to collect details
+            userDetailsModal.show();
+        } else {
+            showToast('error', data.message);
+        }
+    })
+    .catch(error => {
+        // Hide loading modal
+        loadingModal.hide();
+        showToast('error', 'An error occurred. Please try again.');
+        console.error('Error:', error);
+    });
+});
+
+// Handle user details form submission
+userDetailsForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    
+    // Show loading modal
+    loadingMessage.textContent = "Completing registration...";
+    loadingModal.show();
+    
+    // Send user details to server
+    fetch("functions/complete_registration.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: "email=" + encodeURIComponent(email) + 
+              "&first_name=" + encodeURIComponent(firstName) + 
+              "&last_name=" + encodeURIComponent(lastName) + 
+              "&phone=" + encodeURIComponent(phone)
+    })
+    .then(res => res.json())
+    .then(data => {
+        // Hide loading modal
+        loadingModal.hide();
         
         if (data.status === "success") {
             showToast('success', data.message);
-            // Use setTimeout to ensure toast is visible before redirect
+            userDetailsModal.hide();
+            
+            // Redirect to structure.php after completing profile
             setTimeout(() => {
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                } else {
-                    console.error("No redirect URL provided");
-                    showToast('error', 'Redirect URL missing');
-                }
+                window.location.href = data.redirect;
             }, 1500);
         } else {
             showToast('error', data.message);
@@ -278,6 +362,7 @@ otpForm.addEventListener("submit", function(e) {
         showToast('error', 'An error occurred. Please try again.');
         console.error('Error:', error);
     });
-});</script>
+});
+</script>
 </body>
 </html>

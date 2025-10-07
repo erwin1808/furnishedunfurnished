@@ -1,5 +1,5 @@
 <?php
-// functions/send_otp.php
+// furnishedunfurnished/functions/send_otp.php
 require '../assets/PHPMailer/Exception.php';
 require '../assets/PHPMailer/PHPMailer.php';
 require '../assets/PHPMailer/SMTP.php';
@@ -21,53 +21,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     }
 
     try {
-        // ✅ Check if user exists and is already verified
-        $stmtCheck = $conn->prepare("SELECT id, account_number, otp_verified FROM users WHERE email=?");
+        // ✅ Check if user exists and get their profile completion status
+        $stmtCheck = $conn->prepare("SELECT id, account_number, otp_verified, first_name, last_name, phone FROM users WHERE email=?");
         $stmtCheck->bind_param("s", $email);
         $stmtCheck->execute();
         $stmtCheck->store_result();
         
         if ($stmtCheck->num_rows > 0) {
-            // User exists, check verification status
-            $stmtCheck->bind_result($user_id, $account_number, $otp_verified);
+            // User exists, check verification status and profile completion
+            $stmtCheck->bind_result($user_id, $account_number, $otp_verified, $first_name, $last_name, $phone);
             $stmtCheck->fetch();
             $stmtCheck->close();
             
-            // If user is already verified, redirect to step-1 immediately
-            if ($otp_verified == 1) {
+            // If user is already verified AND has complete profile, redirect to structure.php
+            if ($otp_verified == 1 && !empty($first_name) && !empty($last_name) && !empty($phone)) {
                 echo json_encode([
                     "status" => "redirect", 
-                    "redirect" => "structure.php/" . $account_number
+                  "redirect" => "structure.php?an=" . urlencode($account_number)
                 ]);
                 exit;
             }
             
-            // User exists but not verified, use existing user_id
-        }else {
-                // New user - generate account_number
-                $yearPrefix = date("Y");
-                $result = $conn->query("SELECT account_number 
-                                        FROM users 
-                                        WHERE account_number LIKE '{$yearPrefix}%' 
-                                        ORDER BY account_number DESC 
-                                        LIMIT 1");
+            // User exists but not verified OR profile incomplete, use existing user_id
+        } else {
+            // New user - generate account_number
+            $yearPrefix = date("Y");
+            $result = $conn->query("SELECT account_number 
+                                    FROM users 
+                                    WHERE account_number LIKE '{$yearPrefix}%' 
+                                    ORDER BY account_number DESC 
+                                    LIMIT 1");
 
-                if ($result && $result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $lastNumber = (int)substr($row['account_number'], 4);
-                    $nextNumber = str_pad($lastNumber + 1, 4, "0", STR_PAD_LEFT);
-                } else {
-                    $nextNumber = "0001";
-                }
-                $account_number = $yearPrefix . $nextNumber;
-
-                // Insert new user with user_type as "landlord"
-                $stmtInsert = $conn->prepare("INSERT INTO users (email, account_number, user_type, otp_verified) VALUES (?, ?, 'landlord', 0)");
-                $stmtInsert->bind_param("ss", $email, $account_number);
-                $stmtInsert->execute();
-                $user_id = $stmtInsert->insert_id;
-                $stmtInsert->close();
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $lastNumber = (int)substr($row['account_number'], 4);
+                $nextNumber = str_pad($lastNumber + 1, 4, "0", STR_PAD_LEFT);
+            } else {
+                $nextNumber = "0001";
             }
+            $account_number = $yearPrefix . $nextNumber;
+
+            // Insert new user with user_type as "landlord"
+            $stmtInsert = $conn->prepare("INSERT INTO users (email, account_number, user_type, otp_verified) VALUES (?, ?, 'landlord', 0)");
+            $stmtInsert->bind_param("ss", $email, $account_number);
+            $stmtInsert->execute();
+            $user_id = $stmtInsert->insert_id;
+            $stmtInsert->close();
+        }
 
         // ✅ Insert OTP into otp_codes
         $expires_at = date("Y-m-d H:i:s", strtotime("+5 minutes"));

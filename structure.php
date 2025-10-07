@@ -1,8 +1,15 @@
 <?php
+//furnishedunfurnished/structure.php
 include "includes/db.php"; 
 session_start();
 
-if (!isset($_SESSION['account_number'])) {
+
+// Try to get account number from session or URL
+if (isset($_SESSION['account_number'])) {
+    $accountNumber = $_SESSION['account_number'];
+} elseif (isset($_GET['account_number'])) {
+    $accountNumber = $_GET['account_number'];
+} else {
     die("No account number found. Please login first.");
 }
 $accountNumber = $_SESSION['account_number']; // ✅ define it here
@@ -60,17 +67,26 @@ if ($stmtCheck->num_rows > 0) {
 }
 
 // Show toast
+// Show success toast then redirect
 echo "<script>
+document.addEventListener('DOMContentLoaded', function() {
     Swal.fire({
         toast: true,
         position: 'top-end',
         icon: 'success',
         title: '$message',
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true
     });
+
+    // ✅ Redirect to privacy-type.php after toast
+    setTimeout(function() {
+        window.location.href = 'privacy-type.php?an=" . urlencode($accountNumber) . "&pc=" . urlencode($propertyCode) . "';
+    }, 1600);
+});
 </script>";
+
 
 }
 ?>
@@ -84,6 +100,7 @@ echo "<script>
   <title>Listing Setup</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
   <!-- SweetAlert2 CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -164,7 +181,7 @@ echo "<script>
     <div class="container d-flex justify-content-between align-items-center">
       <!-- Logo -->
       <div>
-        <img src="../images/full-logo.png" alt="Logo" height="40">
+        <img src="images/full-logo.png" alt="Logo" height="40">
       </div>
       <!-- Future Button (commented out) -->
       <!-- <button class="btn btn-primary">Save & Exit</button> -->
@@ -192,9 +209,16 @@ echo "<script>
 
   <!-- Main Content -->
   <div class="row justify-content-center text-center">
-    <div class="col-12 mb-4" >
-      <h4 style="text-align: center; font-weight: 600; font-size: 2rem;">Which of these best describes your place?</h4>
-    </div>
+<div class="col-12 mb-4">
+  <h4 style="
+    text-align: center; 
+    font-weight: 600; 
+    font-size: 2rem; 
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  ">
+    Which of these best describes your place?
+  </h4>
+</div>
 
     <div class="col-md-10">
 <form method="POST" id="propertyForm">
@@ -281,123 +305,9 @@ document.getElementById("propertyForm").addEventListener("submit", function(e) {
 </script>
 
 
-
-  <!-- Loading Modal -->
-  <div class="modal loading-modal" tabindex="-1" id="loadingModal">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="loading-spinner"></div>
-          <p>Sending OTP...</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!-- SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
-  
-<script>const emailForm = document.getElementById("emailForm");
-const otpForm = document.getElementById("otpForm");
-const loadingModal = new bootstrap.Modal(document.getElementById('loadingModal'));
 
-// Function to show toast notification
-function showToast(icon, title) {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        customClass: {
-            popup: 'colored-toast'
-        },
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    });
-    
-    Toast.fire({
-        icon: icon,
-        title: title
-    });
-}
-
-emailForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-    let email = document.getElementById("email").value;
-    
-    // Show loading modal
-    loadingModal.show();
-    
-    fetch("functions/send_otp.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "email=" + encodeURIComponent(email)
-    })
-    .then(res => res.json())
-    .then(data => {
-        // Hide loading modal
-        loadingModal.hide();
-        
-        if (data.status === "redirect") {
-            // Immediately redirect without showing any message
-            window.location.href = data.redirect;
-        } else if (data.status === "success") {
-            showToast('success', data.message);
-            emailForm.classList.add("d-none");
-            otpForm.classList.remove("d-none");
-        } else {
-            showToast('error', data.message);
-        }
-    })
-    .catch(error => {
-        // Hide loading modal
-        loadingModal.hide();
-        showToast('error', 'An error occurred. Please try again.');
-        console.error('Error:', error);
-    });
-});
-
-otpForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-    let otp = document.getElementById("otp").value;
-    let email = document.getElementById("email").value;
-    
-    // Show loading modal
-    loadingModal.show();
-
-    fetch("functions/verify_otp.php", {
-        method: "POST",
-        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-        body: "otp=" + encodeURIComponent(otp) + "&email=" + encodeURIComponent(email)
-    })
-    .then(res => res.json())
-    .then(data => {
-        // Hide loading modal
-        loadingModal.hide();
-        
-        console.log("OTP Response:", data); // Debug log
-        
-        if (data.status === "success") {
-            showToast('success', data.message);
-            // Use setTimeout to ensure toast is visible before redirect
-  setTimeout(() => {
-   window.location.href = 'next_step.php'; // change to your next page
-}, 1500);
-
-        } else {
-            showToast('error', data.message);
-        }
-    })
-    .catch(error => {
-        // Hide loading modal
-        loadingModal.hide();
-        showToast('error', 'An error occurred. Please try again.');
-        console.error('Error:', error);
-    });
-});</script>
 </body>
 </html>

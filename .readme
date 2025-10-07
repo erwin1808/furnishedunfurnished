@@ -1,0 +1,18 @@
+font style
+          $profile_complete = (!empty($first_name) && !empty($last_name) && !empty($phone));
+
+            if ($profile_complete) {
+                // Profile is complete - redirect to structure.php with account number
+                echo json_encode([
+                    "status" => "redirect",
+                    "message" => "OTP verified successfully!",
+                    "redirect" => "structure.php?an=" . urlencode($account_number)
+                ]);
+            } else {
+                // Profile incomplete - show modal
+                echo json_encode([
+                    "status" => "success",
+                    "message" => "OTP verified successfully! Please complete your profile.",
+                    "profile_complete" => false
+                ]);
+            }
