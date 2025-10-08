@@ -554,6 +554,89 @@ function getCityCoordinates($city) {
                 height: 400px;
             }
         }
+        /* Make the main container flex and set heights */
+.container-fluid.py-4 {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px); /* Adjust based on your navbar height */
+}
+
+/* Second row with 70/30 split */
+.container-fluid.py-4 .row:nth-child(2) {
+    flex: 1;
+    display: flex;
+    overflow: hidden; /* Prevent entire page scroll */
+}
+
+/* Left column - scrollable */
+.col-lg-8 {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+/* Right column - fixed map */
+.col-lg-4 {
+    height: 100%;
+    position: sticky;
+    top: 0;
+}
+
+/* Map container adjustments */
+.map-container {
+    height: 100%;
+    position: sticky;
+    top: 0;
+}
+
+#map {
+    height: 100% !important;
+    position: sticky;
+    top: 0;
+}
+
+/* Ensure property cards grid doesn't overflow */
+.col-lg-8 .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+/* Optional: Add some spacing between columns */
+.col-lg-8 {
+    padding-right: 20px;
+}
+
+.col-lg-4 {
+    padding-left: 10px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+    .container-fluid.py-4 .row:nth-child(2) {
+        flex-direction: column;
+    }
+    
+    .col-lg-8,
+    .col-lg-4 {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+    
+    .col-lg-8 {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .col-lg-4 {
+        padding-left: 0;
+    }
+    
+    .map-container {
+        height: 400px;
+        position: static;
+    }
+}
     </style>
 </head>
 <body>
@@ -761,9 +844,9 @@ function getCityCoordinates($city) {
         <!-- Right Column (30%) - Map -->
         <div class="col-lg-4">
             <div class="map-container">
-                <button class="fullscreen-toggle" id="fullscreen-toggle">
+                <!--button class="fullscreen-toggle" id="fullscreen-toggle">
                     <i class="fas fa-expand"></i> Full Screen
-                </button>
+                </button-->
                 <div id="map"></div>
             </div>
         </div>

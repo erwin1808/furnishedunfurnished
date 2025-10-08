@@ -164,7 +164,7 @@
 
     </style>
 </head>
-<body>
+<body class="index-page">
 <!-- Always include both -->
 <div class="nav-desktop">
   <?php include 'navbar.php'; ?>

@@ -6,8 +6,43 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
+/* Transparent navbar only on index.php */
+body.index-page .navbar {
+  background: transparent !important;
+}
+
+body.index-page .navbar.scrolled {
+  background: #00524e !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* Solid navbar for all other pages */
+body:not(.index-page) .navbar {
+  background: #00524e !important;
+}
+
+/* Ensure proper z-index for all pages */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Rest of your existing navbar styles remain the same */
+.navbar.scrolled {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+</style>
+<style>
+  
   /* ===== Navbar Styles ===== */
 .navbar {
   position: fixed;
