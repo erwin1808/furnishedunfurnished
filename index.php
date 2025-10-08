@@ -195,45 +195,162 @@
                 <div class="hero-content text-start px-3 px-md-0">
                     <h1 class="hero-title">Furnished Unfurnished</h1>
 
-                    <!-- Filter Section -->
-                    <div class="filter-section">
-                        <div class="filter-card">
-                            <div class="filter-item">
-                                <label>Where are you going?</label>
-                                <input type="text" placeholder="Enter a destination" class="filter-input">
-                            </div>
-                            
-                            <div class="filter-item">
-                                <label for="move-in-date">Move in date</label>
-                                <input type="text" id="move-in-date" class="filter-input datepicker" placeholder="Select move in date">
-                            </div>
+               <!-- Filter Section -->
+<div class="filter-section">
+    <div class="filter-card">
+        <!-- Destination Input -->
+        <div class="filter-item">
+            <label>Where are you going?</label>
 
-                            <div class="filter-item" style="position: relative;">
-                                <label>Monthly budget</label>
-                                <input type="text" id="budget-input" placeholder="Enter budget" class="filter-input">
+            <style>
+            /* Tooltip container (styled like a dropdown tooltip) */
+            .suggestions-tooltip {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                z-index: 9999;
+                display: none;
+                padding: 5px 0;
+            }
 
-                                <div class="popup-overlay" id="popup-overlay"></div>
+            /* Individual suggestion items */
+            .suggestion-item {
+                padding: 8px 12px;
+                cursor: pointer;
+                font-size: 14px;
+                color: #333;
+                transition: background 0.2s;
+            }
 
-                                <div class="popup-card" id="budget-popup">
-                                    <div id="budget-slider"></div>
+            .suggestion-item:hover {
+                background-color: #f0f0f0;
+            }
 
-                                    <div class="price-inputs">
-                                        <input type="text" id="budget-min" placeholder="Min. price">
-                                        <input type="text" id="budget-max" placeholder="No max price set">
-                                    </div>
+            /* Tooltip visible */
+            .suggestions-tooltip.show {
+                display: block;
+            }
+            </style>
 
-                                    <div class="buttons">
-                                        <button class="cancel" id="cancel-budget">Cancel</button>
-                                        <button id="apply-budget">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
+            <div style="position: relative;">
+                <input 
+                    type="text" 
+                    id="destination-input" 
+                    placeholder="Enter a destination" 
+                    class="filter-input" 
+                    autocomplete="off"
+                >
 
-                            <button class="filter-btn" style="background-color: #00524e;">
-                                Search
-                            </button>
-                        </div>
-                    </div>
+                <!-- Tooltip container -->
+                <div id="suggestions" class="suggestions-tooltip"></div>
+            </div>
+
+        </div>
+
+        <!-- Move-in Date -->
+        <div class="filter-item">
+            <label for="move-in-date">Move in date</label>
+            <input type="text" id="move-in-date" class="filter-input datepicker" placeholder="Select move in date">
+        </div>
+
+        <!-- Monthly Budget -->
+        <div class="filter-item" style="position: relative;">
+            <label>Monthly budget</label>
+            <input type="text" id="budget-input" placeholder="Enter budget" class="filter-input">
+
+            <div class="popup-overlay" id="popup-overlay"></div>
+
+            <div class="popup-card" id="budget-popup">
+                <div id="budget-slider"></div>
+
+                <div class="price-inputs">
+                    <input type="text" id="budget-min" placeholder="Min. price">
+                    <input type="text" id="budget-max" placeholder="No max price set">
+                </div>
+
+                <div class="buttons">
+                    <button class="cancel" id="cancel-budget">Cancel</button>
+                    <button id="apply-budget">Apply</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Button -->
+        <button class="filter-btn" style="background-color: #00524e; color: white;">
+            Search
+        </button>
+    </div>
+</div>
+
+<script>
+const destinationInput = document.getElementById("destination-input");
+const suggestionsBox = document.getElementById("suggestions");
+let selectedLocation = ""; // Stores the user's final selection
+
+// Fetch suggestions as user types
+destinationInput.addEventListener("keyup", function() {
+    const query = this.value.trim();
+
+    // Reset the previously selected location on typing
+    selectedLocation = "";
+
+    if (query.length >= 2) {
+        fetch(`fetch_locations.php?query=${encodeURIComponent(query)}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.length > 0) {
+                    suggestionsBox.innerHTML = data.map(loc => 
+                        `<div class="suggestion-item">${loc}</div>`
+                    ).join('');
+                    suggestionsBox.classList.add('show');
+                } else {
+                    suggestionsBox.classList.remove('show');
+                    suggestionsBox.innerHTML = '';
+                }
+
+                document.querySelectorAll('.suggestion-item').forEach(item => {
+                    item.onclick = () => {
+                        destinationInput.value = item.textContent;
+                        selectedLocation = item.textContent; // store new selection
+                        suggestionsBox.classList.remove('show');
+                        suggestionsBox.innerHTML = '';
+                    };
+                });
+            })
+            .catch(() => {
+                suggestionsBox.classList.remove('show');
+            });
+    } else {
+        suggestionsBox.classList.remove('show');
+        suggestionsBox.innerHTML = '';
+    }
+});
+
+// Hide tooltip when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#destination-input')) {
+        suggestionsBox.classList.remove('show');
+    }
+});
+
+// Use the existing Search button for redirect
+document.querySelector(".filter-btn").addEventListener("click", function() {
+    const location = selectedLocation || destinationInput.value.trim();
+
+    if (location) {
+        const encodedLocation = encodeURIComponent(location);
+        window.location.href = `property.php?location=${encodedLocation}`;
+    } else {
+        alert("Please enter or select a location before searching.");
+    }
+});
+</script>
+
                 </div>
 
             </div>

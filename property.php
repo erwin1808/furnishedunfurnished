@@ -666,7 +666,7 @@ function getCityCoordinates($city) {
                                             <?php endif; ?>
                                         <?php else: ?>
                                             <!-- Fallback placeholder image -->
-                                            <img src="images/property-placeholder.jpg" alt="<?php echo htmlspecialchars($property['property_title'] ?: 'Property'); ?>" class="property-image">
+                                            <img src="uploads/default-property.image.jpg" alt="<?php echo htmlspecialchars($property['property_title'] ?: 'Property'); ?>" class="property-image">
                                             <div class="image-counter">No images</div>
                                         <?php endif; ?>
                                     </div>
