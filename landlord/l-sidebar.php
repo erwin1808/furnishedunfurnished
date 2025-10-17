@@ -138,7 +138,7 @@
 
     <!-- Nav Item - Properties -->
     <li class="nav-item">
-        <a class="nav-link" href="properties.php">
+        <a class="nav-link" href="l-properties.php">
             <i class="fas fa-building"></i>
             <span>My Properties</span></a>
     </li>
