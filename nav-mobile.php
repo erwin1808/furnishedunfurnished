@@ -18,7 +18,7 @@
 }
 
 .navmobile.scrolled {
-    background: #2b376a;
+    background: #00524e;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
@@ -66,49 +66,22 @@
     letter-spacing: 1px;
 }
 
-
-
-.navmobile-social a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.navmobile-social a:hover {
-    color: #c9a86d;
-}
-
 /* Mobile Fullscreen Menu */
 .navmobile-menu {
-
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     height: 100vh;
-    background: #2b376a;
+    background: #00524e;
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 25px;
     z-index: 1050;
-    padding: 80px 20px 20px 20px;
+    padding: 80px 20px 40px 20px;
 }
 
 .navmobile-menu.show {
     display: flex;
-}
-
-.navmobile-menu a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: bold;
-    font-size: 22px;
-    text-align: center;
-    transition: color 0.3s ease;
-}
-
-.navmobile-menu a:hover {
-    color: #c9a86d;
 }
 
 .navmobile-menu-header {
@@ -139,28 +112,34 @@
     color: #fff;
 }
 
-/* Mobile dropdown */
-.navmobile-mobile-dropdown {
-    position: relative;
-    text-align: center;
-}
-
-.navmobile-mobile-dropdown-content {
-    display: none;
+/* Horizontal nav links row */
+.navmobile-menu-links {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    margin-top: 10px;
-    padding-left: 20px;
+    gap: 25px;
+    width: 100%;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-.navmobile-mobile-dropdown-content a {
-    font-size: 18px;
-    color: #e0e0e0;
+.navmobile-menu-links a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    transition: color 0.3s ease;
 }
 
-.navmobile-mobile-dropdown.active .navmobile-mobile-dropdown-content {
-    display: flex;
+.navmobile-menu-links a:hover {
+    color: #c9a86d;
+}
+
+/* Dropdown styling */
+.navmobile-mobile-dropdown {
+    width: 100%;
+    text-align: center;
+    position: relative;
 }
 
 .navmobile-mobile-dropdown > a::after {
@@ -175,6 +154,47 @@
     content: '\f106';
 }
 
+.navmobile-mobile-dropdown-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.navmobile-mobile-dropdown-content a {
+    color: #e0e0e0;
+    font-size: 18px;
+}
+
+.navmobile-mobile-dropdown.active .navmobile-mobile-dropdown-content {
+    display: flex;
+}
+/* Auth buttons (Login & Register) */
+.navmobile-auth {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.navmobile-auth a {
+    background: #2b376a;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.navmobile-auth a:hover {
+    background: transparent;
+    border: 1px solid #0B47A8;
+    color: #0B47A8;
+}
+
 /* Responsive */
 @media (max-width: 991px) {
     .navmobile-hamburger {
@@ -184,7 +204,7 @@
 </style>
 
 <body>
-<!-- Desktop Navbar -->
+<!-- Navbar -->
 <div class="navmobile" id="navmobile">
     <div class="navmobile-left">
         <div class="navmobile-logo">
@@ -192,7 +212,6 @@
         </div>
         <button class="btn-submit-property" onclick="window.location.href='submit-property.php'">List Your Property</button>
     </div>
-
     <div class="navmobile-hamburger" id="menuToggle">MENU</div>
 </div>
 
@@ -205,39 +224,25 @@
         <div class="navmobile-menu-close" id="menuClose">CLOSE</div>
     </div>
 
-    <a href="index.php">Home</a>
+    <!-- Nav Links Row -->
+  <div class="navmobile-menu-links">
+    <a href="request-housing.php">Request Housing</a>
 
     <div class="navmobile-mobile-dropdown">
-        <a href="javascript:void(0);">About Us</a>
+        <a href="javascript:void(0);">Resources</a>
         <div class="navmobile-mobile-dropdown-content">
-            <a href="about-us.php">About Us</a>
-            <a href="meet-the-team.php">Meet the Team</a>
+            <a href="media.php">Media</a>
+            <a href="faqs.php">FAQs</a>
+            <a href="blogs.php">Blogs</a>
         </div>
     </div>
 
-    <div class="navmobile-mobile-dropdown">
-        <a href="javascript:void(0);">Properties</a>
-        <div class="navmobile-mobile-dropdown-content">
-            <a href="properties.php?type=united-states">United States</a>
-            <a href="properties.php?type=international">International</a>
-        </div>
-    </div>
+    <a href="about-us.php">About Us</a>
+</div>
 
-    <a href="services.php">Services</a>
-
-    <div class="navmobile-mobile-dropdown">
-        <a href="javascript:void(0);">Submit Property</a>
-        <div class="navmobile-mobile-dropdown-content">
-            <a href="submit-property.php">Submit Property</a>
-            <a href="fema.php">FEMA</a>
-            <a href="usace.php">USACE</a>
-        </div>
-    </div>
-
-    <a href="contact.php">Contact</a>
-
-    <div class="navmobile-social" style="margin-top: 30px; gap: 20px;">
-        <a href="#login">Log in</a>
+    <!-- Auth Buttons -->
+    <div class="navmobile-auth">
+        <a href="#login">Login</a>
         <a href="#signup">Register</a>
     </div>
 </div>

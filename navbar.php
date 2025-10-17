@@ -407,26 +407,21 @@ body:not(.index-page) .navbar {
 
 
     <!-- Properties Dropdown -->
-    <div class="nav-item dropdown">
-      Properties
-      <div class="dropdown-menu">
-        <div class="dropdown-item" onclick="window.location.href='properties-us.php'">United States</div>
-        <div class="dropdown-item" onclick="window.location.href='properties-international.php'">International</div>
-      </div>
+    <div class="nav-item">
+      Request Housing
     </div>
 
 
-<div class="nav-item dropdown-services">
-  Services
-  <div class="dropdown-menu">
-    <div class="dropdown-item" onclick="window.location.href='insurance-relocation.php'">Insurance Relocation</div>
-    <div class="dropdown-item" onclick="window.location.href='midterm-rentals.php'">Midterm Rentals</div>
-    <div class="dropdown-item" onclick="window.location.href='corporate-housing.php'">Corporate Housing</div>
-    <div class="dropdown-item" onclick="window.location.href='government-lodging.php'">Government Lodging</div>
-    <div class="dropdown-item" onclick="window.location.href='emergency-lodging.php'">Emergency Lodging</div>
-    <div class="dropdown-item" onclick="window.location.href='business-travel.php'">Business Travel</div>
-  </div>
-</div>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resources
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
+    <li><a class="dropdown-item" href="media.php">Media</a></li>
+    <li><a class="dropdown-item" href="faqs.php">FAQs</a></li>
+    <li><a class="dropdown-item" href="blogs.php">Blogs</a></li>
+  </ul>
+</li>
 
  
 
@@ -440,7 +435,7 @@ body:not(.index-page) .navbar {
       </div>
     </div>
    
-    <div class="nav-item" onclick="window.location.href='contact.php'">Contact</div>
+    
   </div>
 
 <div class="header-buttons">

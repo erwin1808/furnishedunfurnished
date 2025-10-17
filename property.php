@@ -464,6 +464,7 @@ function getCityCoordinates($city) {
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 1000;
             cursor: pointer;
+            display: none;
         }
         
         .fullscreen-toggle:hover {
@@ -737,7 +738,8 @@ function getCityCoordinates($city) {
                 <?php if ($propertyCount > 0): ?>
                     <?php foreach ($properties as $property): ?>
                         <div class="col-md-6 col-lg-4">
-                            <div class="property-card">
+                           <a href="view_property.php?property_code=<?php echo urlencode($property['property_code']); ?>" class="property-card text-decoration-none text-dark">
+
                                 <div class="property-image-container">
                                     <div class="image-slider" data-property-code="<?php echo $property['property_code']; ?>">
                                         <?php if (!empty($property['images'])): ?>
@@ -811,7 +813,8 @@ function getCityCoordinates($city) {
                                         </div>
                                         <?php endif; ?>
                                     </div>
-                                </div>
+                                </a>
+
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -842,11 +845,11 @@ function getCityCoordinates($city) {
         </div>
         
         <!-- Right Column (30%) - Map -->
-        <div class="col-lg-4">
+             <div class="col-lg-4">
             <div class="map-container">
-                <!--button class="fullscreen-toggle" id="fullscreen-toggle">
+                <button class="fullscreen-toggle" id="fullscreen-toggle">
                     <i class="fas fa-expand"></i> Full Screen
-                </button-->
+                </button>
                 <div id="map"></div>
             </div>
         </div>
@@ -980,25 +983,28 @@ function getCityCoordinates($city) {
     const map = initMap('map');
     
     // Fullscreen map functionality
+    // Fullscreen map functionality
     const fullscreenToggle = document.getElementById('fullscreen-toggle');
     const closeFullscreen = document.getElementById('close-fullscreen');
     const fullscreenMap = document.getElementById('fullscreen-map');
     const fullscreenMapContainer = document.getElementById('fullscreen-map-container');
     
-    fullscreenToggle.addEventListener('click', function() {
-        fullscreenMap.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+    if (fullscreenToggle && closeFullscreen) {
+        fullscreenToggle.addEventListener('click', function() {
+            fullscreenMap.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize the fullscreen map
+            setTimeout(() => {
+                initMap('fullscreen-map-container');
+            }, 100);
+        });
         
-        // Initialize the fullscreen map
-        setTimeout(() => {
-            initMap('fullscreen-map-container');
-        }, 100);
-    });
-    
-    closeFullscreen.addEventListener('click', function() {
-        fullscreenMap.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
+        closeFullscreen.addEventListener('click', function() {
+            fullscreenMap.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    }
     
     // Image slider functionality
     document.querySelectorAll('.image-slider').forEach(slider => {
