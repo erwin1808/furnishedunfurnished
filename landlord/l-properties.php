@@ -4,322 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landlord Dashboard | Furnished/Unfurnished</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- SB Admin 2 CSS -->
     <link href="../assets/css/sb-admin-2.css" rel="stylesheet">
-    
     <!-- Custom Styles -->
     <link href="../assets/css/styles.css" rel="stylesheet">
-    
-    <!-- Font Awesome (assuming you have it) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css">
 </head>
+
 <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
- <?php include 'l-sidebar.php'; ?>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
+<div id="wrapper">
+    <?php include 'l-sidebar.php'; ?>
 
-                    <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
                         </div>
-                    </form>
+                    </div>
+                </form>
 
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- User Info -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">John Landlord</span>
+                            <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="profile.php"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>Profile</a>
+                            <a class="dropdown-item" href="settings.php"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>Logout
                             </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2023</div>
-                                        <span class="font-weight-bold">A new application has been submitted!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2023</div>
-                                        Payment received for Property #123
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2023</div>
-                                        Maintenance request for Apartment 5B
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Topbar -->
 
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there, I would like to schedule a viewing for your property.</div>
-                                        <div class="small text-gray-500">Emily Johnson · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have a question about the lease agreement.</div>
-                                        <div class="small text-gray-500">Jaxon Kumar · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
+            <div class="container-fluid">
+                <!-- Header -->
+                <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-between mb-4 p-3 bg-white shadow-sm rounded-3 border-start border-4 border-success">
+                    <div>
+                        <h1 class="h4 mb-1 text-dark fw-bold">Property Listings Overview</h1>
+                        <p class="text-muted mb-0 small">Manage, review, and update all listed properties efficiently.</p>
+                    </div>
+                    <a href="add_property.php" class="btn btn-primary btn-sm px-4 py-2 mt-3 mt-sm-0 shadow-sm rounded-pill">
+                        <i class="fas fa-plus me-2 text-white-50"></i> Add New Property
+                    </a>
+                </div>
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">John Landlord</span>
-                                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile.php">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="settings.php">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <!-- ROW 1: Page Heading + Add Button -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Property Listings</h1>
-        <a href="add_property.php" class="btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus fa-sm text-white-50"></i> Add New Property
-        </a>
-    </div>
-
-    <!-- ROW 2: Tabs for Active / Draft / Rejected -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <ul class="nav nav-tabs" id="propertyTabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">
-                        <i class="fas fa-check-circle text-success"></i> Active
+                <!-- Tabs -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs" id="propertyTabs" role="tablist">
+                 <li class="nav-item">
+                    <?php
+                    include '../includes/db.php';
+                    $activeCount = 0;
+                    $countQuery = "SELECT COUNT(intake_id) AS active_count FROM property WHERE is_approve = 1";
+                    $countResult = mysqli_query($conn, $countQuery);
+                    if ($countResult) {
+                        $row = mysqli_fetch_assoc($countResult);
+                        $activeCount = (int)$row['active_count'];
+                    }
+                    ?>
+                    <!-- 👇 Add 'active' here -->
+                    <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-selected="true">
+                        <span style="color: #00524e; font-weight: 500;">Active</span>
+                        <span class="badge bg-danger ms-2" id="activeCount"><?= $activeCount ?></span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="draft-tab" data-toggle="tab" href="#draft" role="tab" aria-controls="draft" aria-selected="false">
-                        <i class="fas fa-pencil-alt text-warning"></i> Draft
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab" aria-controls="rejected" aria-selected="false">
-                        <i class="fas fa-times-circle text-danger"></i> Rejected
-                    </a>
-                </li>
-            </ul>
 
-            <div class="tab-content p-3 border border-top-0 rounded-bottom shadow-sm" id="propertyTabsContent">
-                <!-- Active Properties -->
-                <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                        <!-- ROW 3: Property Listing Section -->
-    <div class="row">
-        <div class="col-12">
-            <?php
-            include '../includes/db.php'; // Adjust path if needed
+                            <li class="nav-item">
+                                <?php
+                                include '../includes/db.php';
+                                $pendingCount = 0;
+                                $countQuery = "SELECT COUNT(intake_id) AS pending_count FROM property WHERE is_approve = 0";
+                                $countResult = mysqli_query($conn, $countQuery);
+                                if ($countResult) {
+                                    $row = mysqli_fetch_assoc($countResult);
+                                    $pendingCount = (int)$row['pending_count'];
+                                }
+                                ?>
+                                <a class="nav-link" id="Pending-tab" data-toggle="tab" href="#Pending" role="tab">
+                                    <span style="color:  #00524e; font-weight: 500;">Pending</span>
+                                    <span class="badge bg-danger ms-2" id="pendingCount"><?= $pendingCount ?></span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="rejected-tab" data-toggle="tab" href="#rejected" role="tab">
+                                   <span style="color:  #00524e; font-weight: 500;">Rejected</span>
+                                </a>
+                            </li>
+                        </ul>
 
-            // Fetch property records
-            $query = "SELECT intake_id, property_code, property_title 
-                      FROM property 
-                      ORDER BY date_created DESC";
-            $result = mysqli_query($conn, $query);
-
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-            ?>
-                    <!-- Each Property occupies one full row -->
-                    <div class="card shadow-sm mb-3 border-left-primary">
-                        <div class="card-body d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="text-primary font-weight-bold mb-1">
-                                    <?= htmlspecialchars($row['property_title']) ?>
-                                </h5>
-                                <p class="mb-0"><strong>Property Code:</strong> <?= htmlspecialchars($row['property_code']) ?></p>
+                        <div class="tab-content p-3 border border-top-0 rounded-bottom shadow-sm" id="propertyTabsContent">
+                            <!-- Active Properties -->
+                            <div class="tab-pane fade show active" id="active" role="tabpanel">
+                                <p class="text-muted">List of active properties will appear here.</p>
                             </div>
-                            <div>
-                                <a href="view_property.php?id=<?= $row['intake_id'] ?>" class="btn btn-sm btn-info">
-                                    <i class="fas fa-eye"></i> View
-                                </a>
-                                <a href="edit_property.php?id=<?= $row['intake_id'] ?>" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <button class="btn btn-sm btn-danger delete-btn" data-id="<?= $row['intake_id'] ?>">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
+
+                            <!-- Pending Properties -->
+                            <div class="tab-pane fade" id="Pending" role="tabpanel">
+                                <div class="table-responsive mt-3">
+                                    <table id="pendingTable" class="table table-bordered table-striped table-hover">
+                                        <thead class="table-success">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Property Code</th>
+                                                <th>Property Title</th>
+                                                <th>Type</th>
+                                                <th>Address</th>
+                                                <th>City, State</th>
+                                                <th>Submitted</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $query = "SELECT intake_id, property_code, property_title, property_type, street, city, province, date_created
+                                                      FROM property 
+                                                      WHERE is_approve = 0
+                                                      ORDER BY date_created DESC";
+                                            $result = mysqli_query($conn, $query);
+                                            $counter = 1;
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<tr>";
+                                                    echo "<td>{$counter}</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['street']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
+                                                    echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
+                                                    echo "<td>
+                                                            <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'><i class='fas fa-eye'></i> View</a>
+                                                            <a href='edit_property.php?id={$row['intake_id']}' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i> Edit</a>
+                                                            <button class='btn btn-sm btn-danger delete-btn' data-id='{$row['intake_id']}'><i class='fas fa-trash'></i> Delete</button>
+                                                          </td>";
+                                                    echo "</tr>";
+                                                    $counter++;
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='4' class='text-center text-muted'>No pending properties found.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Rejected Properties -->
+                            <div class="tab-pane fade" id="rejected" role="tabpanel">
+                                <p class="text-muted">List of rejected properties will appear here.</p>
                             </div>
                         </div>
                     </div>
-            <?php
-                }
-            } else {
-                echo '<div class="text-center mt-5"><h5 class="text-gray-500">No properties found.</h5></div>';
-            }
-            ?>
-        </div>
-    </div>
                 </div>
+            </div> <!-- /container-fluid -->
+        </div> <!-- /content -->
+    </div> <!-- /content-wrapper -->
+</div> <!-- /wrapper -->
 
-                <!-- Draft Properties -->
-                <div class="tab-pane fade" id="draft" role="tabpanel" aria-labelledby="draft-tab">
-                    <p class="text-muted">List of draft properties will appear here.</p>
-                </div>
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
-                <!-- Rejected Properties -->
-                <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
-                    <p class="text-muted">List of rejected properties will appear here.</p>
-                </div>
+<!-- Logout Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal"><span>×</span></button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="login.html">Logout</a>
             </div>
         </div>
     </div>
-
-
-
 </div>
 
+<!-- JS Libraries -->
+<script src="../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../assets/js/sb-admin-2.min.js"></script>
 
-            <!-- End of Main Content -->
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Furnished/Unfurnished Property Management 2023</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-        </div>
-        <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+<script>
+$(document).ready(function () {
+    // Initialize DataTable
+    const table = $('#pendingTable').DataTable({
+        "pageLength": 10,
+        "lengthMenu": [5, 10, 20, 50],
+        "order": [[0, "asc"]],
+        "columnDefs": [{ "orderable": false, "targets": 3 }],
+        "language": { "search": "Search Property:" }
+    });
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    // Redraw when switching tabs
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
+        $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust().draw();
+    });
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../assets/vendor/jquery/jquery.min.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    // SweetAlert delete confirmation
+    $('.delete-btn').on('click', function () {
+        const id = $(this).data('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "This property will be deleted.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: 'delete_property.php',
+                    method: 'POST',
+                    data: { id },
+                    success: function () {
+                        Swal.fire('Deleted!', 'Property has been removed.', 'success')
+                            .then(() => location.reload());
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'Unable to delete property.', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="../assets/js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="../assets/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="../assets/js/demo/chart-area-demo.js"></script>
-    <script src="../assets/js/demo/chart-pie-demo.js"></script>
 </body>
 </html>

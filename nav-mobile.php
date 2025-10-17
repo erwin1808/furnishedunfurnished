@@ -23,10 +23,9 @@
 }
 
 .navmobile .navmobile-logo img {
-    transform: translateX(-30px);
-    max-height: 80px;
+    transform: translateX(-10px);
+    max-height: 50px;
     cursor: pointer;
-    filter: brightness(0) invert(1);
 }
 
 .navmobile .navmobile-left {
@@ -95,9 +94,9 @@
 }
 
 .navmobile-menu-logo img {
-    max-height: 60px;
+    max-height: 50px;
     cursor: pointer;
-    filter: brightness(0) invert(1);
+
     transition: transform 0.3s ease;
 }
 
@@ -208,7 +207,7 @@
 <div class="navmobile" id="navmobile">
     <div class="navmobile-left">
         <div class="navmobile-logo">
-            <img src="images/output-onlinepngtools-3-60x40.png" alt="Logo" onclick="window.location.href='index.php';">
+            <img src="images/new-logo2.png" alt="Logo" onclick="window.location.href='index.php';">
         </div>
         <button class="btn-submit-property" onclick="window.location.href='submit-property.php'">List Your Property</button>
     </div>
@@ -219,7 +218,7 @@
 <div class="navmobile-menu" id="mobileMenu">
     <div class="navmobile-menu-header">
         <div class="navmobile-menu-logo">
-            <img src="images/output-onlinepngtools-3-60x40.png" alt="Logo" onclick="window.location.href='index.php';">
+            <img src="images/new-logo2.png" alt="Logo" onclick="window.location.href='index.php';">
         </div>
         <div class="navmobile-menu-close" id="menuClose">CLOSE</div>
     </div>

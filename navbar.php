@@ -394,7 +394,7 @@ body:not(.index-page) .navbar {
 <div class="navbar" id="navbar">
   <!-- Logo -->
   <div class="logo">
-    <img src="images/full-logo.png" alt="Logo" onclick="window.location.href='index.php';">
+    <img src="images/new-logo.png" alt="Logo" onclick="window.location.href='index.php';">
   </div>
 
   <!-- Hamburger for mobile -->
