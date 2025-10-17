@@ -456,23 +456,128 @@ body:not(.index-page) .navbar {
 </div>
 </div>
 <!-- Login Modal -->
-<!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal('loginModal')">&times;</span>
-    <h2>Log In</h2>
-
-    <form id="loginForm">
-      <input type="email" name="email" placeholder="Email" required>
-      <button type="submit">Log In</button>
-    </form>
-
-    <p>Don't have an account? 
-      <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up</a>
-    </p>
+    
+    <!-- Step 1: Email Verification -->
+    <div id="loginStep1">
+      <h2>Log In</h2>
+      <form id="loginEmailForm">
+        <div class="form-group">
+          <input type="email" id="loginEmail" name="email" placeholder=" " required>
+          <label>Email</label>
+        </div>
+        <button type="button" onclick="verifyEmail()">Continue</button>
+      </form>
+      <p>Don't have an account? 
+        <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up</a>
+      </p>
+    </div>
+    
+    <!-- Step 2: Password Entry -->
+    <div id="loginStep2" style="display: none;">
+      <h2>Enter Password</h2>
+      <p>Enter password for: <span id="showEmail" style="font-weight: 600;"></span></p>
+      <form id="loginPasswordForm">
+        <input type="hidden" id="finalEmail" name="email">
+        <div class="form-group">
+          <input type="password" name="password" placeholder=" " required>
+          <label>Password</label>
+        </div>
+        <button type="submit">Log In</button>
+      </form>
+      <button type="button" onclick="backToEmailStep()" style="background: transparent; color: #00524e; margin-top: 10px;">
+        <i class="fas fa-arrow-left"></i> Back
+      </button>
+    </div>
   </div>
 </div>
 
+<script>
+// Email verification step
+function verifyEmail() {
+  const email = document.getElementById("loginEmail").value;
+  if (email.trim() === "") {
+    Toast.fire({ icon: "error", title: "Please enter your email" });
+    return;
+  }
+
+  // Show loading spinner
+  showSpinner();
+
+  // Check if email exists in database
+  fetch("functions/check-email.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "email=" + encodeURIComponent(email)
+  })
+  .then(res => res.json())
+  .then(data => {
+    hideSpinner();
+    
+    if (data.status === "exists") {
+      // Show email on password step
+      document.getElementById("showEmail").textContent = email;
+      document.getElementById("finalEmail").value = email;
+      
+      // Switch steps
+      document.getElementById("loginStep1").style.display = "none";
+      document.getElementById("loginStep2").style.display = "block";
+    } else {
+      Toast.fire({ icon: "error", title: "Email not found. Please sign up first." });
+    }
+  })
+  .catch(error => {
+    hideSpinner();
+    console.error("Error:", error);
+    Toast.fire({ icon: "error", title: "Network error occurred" });
+  });
+}
+
+// Back to email step
+function backToEmailStep() {
+  document.getElementById("loginStep1").style.display = "block";
+  document.getElementById("loginStep2").style.display = "none";
+}
+
+// Password form submission
+document.querySelector("#loginPasswordForm").addEventListener("submit", function(e) {
+  
+
+  e.preventDefault();
+  
+  showSpinner();
+  
+  const formData = new FormData(this);
+  
+  fetch("functions/login.php", {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.json())
+  .then(data => {
+    hideSpinner();
+    
+    if (data.status === "success") {
+      Toast.fire({ icon: "success", title: data.message });
+      setTimeout(() => {
+        closeModal('loginModal');
+        window.location.href = "index.php";
+      }, 1000);
+    } else {
+      Toast.fire({ icon: "error", title: data.message });
+    }
+  })
+  .catch(error => {
+    hideSpinner();
+    console.error("Fetch error:", error);
+    Toast.fire({ icon: "error", title: "Network error occurred" });
+  });
+});
+</script>
 <style>
   .form-group {
     position: relative;
