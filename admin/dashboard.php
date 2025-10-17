@@ -22,14 +22,15 @@
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
- <?php include '../includes/l-sidebar.php'; ?>
+    <?php include ("../includes/sidenav.php");?>
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
                 <!-- Topbar -->
-       <?php include '../includes/l-topbar.php'; ?>
+     
+                <?php include ("../includes/topnav.php");?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->

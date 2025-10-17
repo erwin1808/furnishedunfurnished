@@ -2,30 +2,35 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 
-<style>/* ===== Sidebar Base ===== */
+<style>
+/* =============================
+   MODERNIZED DARK SIDEBAR (002147)
+   ============================= */
 .sidebar {
-    background-color: #ffffff !important;
+    background-color: #002147 !important;
     font-family: 'Lato', sans-serif !important;
-    border-right: 1px solid #e3e6f0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    overflow-x: hidden; /* Prevent overflow */
+    font-size: 1rem !important;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== Brand Logo ===== */
 .sidebar .sidebar-brand img {
-    height: 60px;
+    height: 45px;
     width: auto;
     transition: transform 0.3s ease;
 }
-
+.sidebar .sidebar-brand:hover img {
+    transform: scale(1.05);
+}
 
 /* ===== Headings ===== */
 .sidebar .sidebar-heading {
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
     text-transform: uppercase;
     font-weight: 700;
-    color: #00524e !important;
+    color: #d9e2f1 !important;
     letter-spacing: 0.5px;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
@@ -33,169 +38,191 @@
 
 /* ===== Nav Links ===== */
 .sidebar .nav-link {
-    color: #00524e !important;
-    font-size: 1.1rem;
+    color: #ffffff !important;
+    font-size: 1rem;
     font-weight: 400;
-    padding: 12px 18px; /* adjusted for better fit */
-    border-radius: 10px;
+    padding: 12px 18px;
+    border-radius: 8px 0 0 8px;
     margin: 6px 10px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    box-sizing: border-box; /* keeps shadow inside width */
 }
 .sidebar .nav-link i {
-    font-size: 1.3rem !important;
+    font-size: 1rem !important;
     margin-right: 10px;
-    color: #00524e !important;
+    color: #ffffff !important;
     transition: color 0.3s ease;
 }
 
-/* ===== Hover & Active States ===== */
+/* ===== Hover Effects ===== */
 .sidebar .nav-link:hover {
-    background-color: #e6f5f4 !important;
-    color: #00524e !important;
-    transform: translateX(2px); /* subtle move */
-    box-shadow: 0 2px 6px rgba(0, 82, 78, 0.1);
+    background-color: #003366 !important;
+    color: #ffffff !important;
+    transform: translateX(2px);
 }
 .sidebar .nav-link:hover i {
-    color: #00524e !important;
+    color: #ffffff !important;
 }
 
-/* Active item (current page) */
+/* ===== Active Item ===== */
 .sidebar .nav-item.active .nav-link {
-    background-color: #d8efee !important;
-    color: #00524e !important;
+    background-color: #f8f9fc !important;
+    color: #2c0c64 !important;
     font-weight: 600;
-    box-shadow: inset 4px 0 0 #00524e;
-    margin-right: 10px; /* keeps it inside width */
-    transform: none !important;
+    position: relative;
+}
+.sidebar .nav-item.active .nav-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 20px;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #f8f9fc;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    z-index: -1;
 }
 .sidebar .nav-item.active .nav-link i {
-    color: #00524e !important;
+    color: #2c0c64 !important;
 }
 
 /* ===== Divider ===== */
 .sidebar hr.sidebar-divider {
-    border-top: 1px solid #e3e6f0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
     margin: 1rem 1rem;
 }
 
 /* ===== Sidebar Toggler ===== */
 #sidebarToggle {
-    background-color: #00524e;
-    color: #fff;
+    background-color: #f8f9fc;
+    color: #002147;
     transition: all 0.3s ease;
 }
 #sidebarToggle:hover {
-    background-color: #007b75;
-}/* ===== Hide elements when sidebar is collapsed ===== */
+    background-color: #e2e6ea;
+}
+
+/* ===== Collapsed State ===== */
 .sidebar.toggled .sidebar-brand {
-    display: none !important; /* hides the logo entirely */
+    display: none !important;
 }
-
 .sidebar.toggled .sidebar-heading {
-    display: none !important; /* hides section titles */
+    display: none !important;
 }
-
 .sidebar.toggled .nav-link {
     justify-content: center;
     padding: 12px 0 !important;
     margin-left: 0;
 }
-
 .sidebar.toggled .nav-link i {
     margin-right: 0 !important;
-    font-size: 1.4rem !important;
+    font-size: 1rem !important;
 }
-
 </style>
 
-
 <!-- Sidebar -->
-<ul class="navbar-nav bg-white sidebar sidebar-light accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
-        <img src="../images/full-logo.png" alt="Property Manager Logo" style="height: 60px; width: auto;">
+        <img src="../images/new-logo.png" alt="Property Manager Logo">
     </a>
 
-    <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
+    <!-- Dashboard -->
     <li class="nav-item active">
         <a class="nav-link" href="dashboard.php">
             <i class="fas fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Dashboard</span>
+        </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- Properties -->
     <div class="sidebar-heading">Properties</div>
 
-    <!-- Nav Item - Properties -->
     <li class="nav-item">
         <a class="nav-link" href="l-properties.php">
             <i class="fas fa-building"></i>
-            <span>My Properties</span></a>
+            <span>My Properties</span>
+        </a>
     </li>
 
-    <!-- Nav Item - Add Property -->
     <li class="nav-item">
         <a class="nav-link" href="add-property.php">
             <i class="fas fa-plus-circle"></i>
-            <span>Add Property</span></a>
+            <span>Add Property</span>
+        </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- Tenants -->
     <div class="sidebar-heading">Tenants</div>
 
-    <!-- Nav Item - Tenants -->
     <li class="nav-item">
         <a class="nav-link" href="tenants.php">
             <i class="fas fa-users"></i>
-            <span>Tenants</span></a>
+            <span>Tenants</span>
+        </a>
     </li>
 
-    <!-- Nav Item - Applications -->
     <li class="nav-item">
         <a class="nav-link" href="applications.php">
             <i class="fas fa-file-alt"></i>
-            <span>Applications</span></a>
+            <span>Applications</span>
+        </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
+    <!-- Financial -->
     <div class="sidebar-heading">Financial</div>
 
-    <!-- Nav Item - Payments -->
     <li class="nav-item">
         <a class="nav-link" href="payments.php">
             <i class="fas fa-money-bill-wave"></i>
-            <span>Payments</span></a>
+            <span>Payments</span>
+        </a>
     </li>
 
-    <!-- Nav Item - Reports -->
     <li class="nav-item">
         <a class="nav-link" href="reports.php">
             <i class="fas fa-chart-bar"></i>
-            <span>Reports</span></a>
+            <span>Reports</span>
+        </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
+    <!-- Sidebar Toggler -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 </ul>
-<!-- End of Sidebar -->
+
+<!-- JS -->
+<script>
+$(document).ready(function() {
+    $("#sidebarToggle").on('click', function(e) {
+        e.preventDefault();
+        $("body").toggleClass("sidebar-toggled");
+        $(".sidebar").toggleClass("toggled");
+    });
+
+    function autoCollapse() {
+        if ($(window).width() < 768) {
+            $(".sidebar").addClass("toggled");
+        } else {
+            $(".sidebar").removeClass("toggled");
+        }
+    }
+
+    autoCollapse();
+    $(window).resize(autoCollapse);
+});
+</script>

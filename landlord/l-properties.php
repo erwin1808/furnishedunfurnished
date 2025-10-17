@@ -21,12 +21,12 @@
 <body id="page-top">
 
 <div id="wrapper">
-    <?php include 'l-sidebar.php'; ?>
+    <?php include '../includes/l-sidebar.php'; ?>
 
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <!-- Topbar -->
-    <?php include 'l-topbar.php'; ?>
+    <?php include '../includes/l-topbar.php'; ?>
             <!-- End Topbar -->
 
             <div class="container-fluid">
