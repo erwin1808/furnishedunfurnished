@@ -746,28 +746,6 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 
-// Registration AJAX
-document.querySelector("#signupModal form").addEventListener("submit", function(e) {
-  e.preventDefault();
-  
-  const formData = new FormData(this);
-  fetch("functions/register.php", {
-    method: "POST",
-    body: formData
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "success") {
-      Toast.fire({ icon: "success", title: data.message });
-      setTimeout(() => {
-        closeModal('signupModal');
-        openModal('loginModal'); // Redirect to login modal
-      }, 2000);
-    } else {
-      Toast.fire({ icon: "error", title: data.message });
-    }
-  });
-});
 
 // Login AJAX (without password)
 document.querySelector("#loginForm").addEventListener("submit", function(e) {
@@ -796,4 +774,74 @@ document.querySelector("#loginForm").addEventListener("submit", function(e) {
     Toast.fire({ icon: "error", title: "Network error occurred" });
   });
 });
+</script>
+<!-- ✅ Loading Spinner Styles -->
+<style>
+  #loadingSpinner {
+    display: none; /* hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #loadingSpinner i {
+    font-size: 60px;
+    color: #fff;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<!-- ✅ Spinner HTML -->
+<div id="loadingSpinner">
+  <i class="fas fa-spinner"></i>
+</div>
+
+<script>
+  // Show/Hide Spinner Utility
+  function showSpinner() {
+    document.getElementById("loadingSpinner").style.display = "flex";
+  }
+  function hideSpinner() {
+    document.getElementById("loadingSpinner").style.display = "none";
+  }
+
+  // 🌀 Wrap signup form submission
+  const signupForm = document.querySelector("#signupModal form");
+  signupForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    showSpinner(); // Show spinner when sending OTP / creating account
+
+    const formData = new FormData(this);
+    fetch("functions/register.php", {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      hideSpinner(); // hide spinner after response
+      if (data.status === "success") {
+        Toast.fire({ icon: "success", title: data.message });
+        setTimeout(() => {
+          closeModal('signupModal');
+          openModal('loginModal');
+        }, 2000);
+      } else {
+        Toast.fire({ icon: "error", title: data.message });
+      }
+    })
+    .catch(() => {
+      hideSpinner();
+      Toast.fire({ icon: "error", title: "Network error occurred" });
+    });
+  });
 </script>
