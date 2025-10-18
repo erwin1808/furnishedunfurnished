@@ -1,4 +1,4 @@
-<!--navbar.php-->
+<!-- navbar.php -->
 
 <!-- Meta viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,14 @@ body.index-page .navbar.scrolled {
 /* Solid navbar for all other pages */
 body:not(.index-page) .navbar {
   background: #00524e !important;
+}
+/* Ensure SweetAlert2 Toasts and Modals are on top of everything */
+.swal2-container {
+    z-index: 22000 !important; /* higher than modals (2000) and spinner (9999) */
+}
+
+.swal2-toast {
+    z-index: 22001 !important; /* specifically for toast notifications */
 }
 
 /* Ensure proper z-index for all pages */
@@ -535,7 +543,25 @@ body:not(.index-page) .navbar {
     </div>
   </div>
 
-  <div class="header-buttons">
+
+
+
+<div class="header-buttons">
+<?php if(isset($_SESSION['user_id'])): ?>
+    <!-- User is logged in -->
+    <div class="dropdown">
+        <button class="btn-login-dropdown">
+            <i class="fas fa-user-circle"></i>
+        </button>
+        <div class="dropdown-content">
+            <a href="my-listings.php">My Listings</a>
+            <a href="account-details.php">Account Details</a>
+            <a href="change-password.php">Change Password</a>
+            <a href="logout.php">Log out</a>
+        </div>
+    </div>
+<?php else: ?>
+    <!-- User is NOT logged in -->
     <button class="btn-list-property" onclick="location.href='register-landlord.php'">
       List your property
     </button>
@@ -549,7 +575,8 @@ body:not(.index-page) .navbar {
         <a href="#" onclick="openModal('signupModal')">Create account</a>
       </div>
     </div>
-  </div>
+<?php endif; ?>
+</div>
 </div>
 
 <!-- Login Modal -->
@@ -658,11 +685,10 @@ const Toast = Swal.mixin({
   position: "top-end",
   showConfirmButton: false,
   timer: 2500,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.style.zIndex = '10000';
-  }
+  timerProgressBar: true
 });
+
+
 
 // Show/Hide Spinner Utility
 function showSpinner() {

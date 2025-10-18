@@ -106,6 +106,7 @@ $mutedGray = '#003366';
       grid-template-columns:1fr 1fr; 
       gap:10px; 
       margin-bottom: 2rem;
+      margin-top: 100px;
     }
     .images-left { 
       display:grid; 

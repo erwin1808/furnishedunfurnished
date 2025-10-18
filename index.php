@@ -1,3 +1,7 @@
+<?php
+// VERY FIRST LINE - NO SPACES, NO LINE BREAKS BEFORE THIS
+require_once 'includes/init.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

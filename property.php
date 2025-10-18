@@ -1,5 +1,6 @@
 <?php
 include "includes/db.php";
+require_once 'includes/init.php';
 // Get location from URL parameter
 $location = isset($_GET['location']) ? urldecode($_GET['location']) : '';
 

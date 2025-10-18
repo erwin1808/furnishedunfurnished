@@ -35,9 +35,9 @@ if (isset($_SESSION['email'])) {
 }
 
 // Default image if none exists
-$defaultImage = "../images/default-avatar-icon-of-social-media-user-vector.jpg"; // Change to your default image path
+$defaultImage = "../images/undraw_profile.svg"; // Change to your default image path
 $imageSrc = !empty($user['image']) ? "../images/" . htmlspecialchars($user['image']) : $defaultImage;
-$fullName = $user ? htmlspecialchars(ucwords(strtolower($user['first_name'] . ' ' . $user['last_name']))) : "Guest";
+$fullName = $user ? htmlspecialchars(ucwords(strtolower($user['first_name'] . ' ' . $user['last_name']))) : "Admin User";
 ?>
 
 <style>
@@ -174,11 +174,11 @@ if (basename($_SERVER['PHP_SELF']) === 'client_management.php') {
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                  aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="userprofile.php">
+                <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
-                <a class="dropdown-item" href="changepassword.php">
+                <a class="dropdown-item" href="#">
                    <i class="fas fa-shield-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 
                     Password and Security

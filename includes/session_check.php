@@ -1,4 +1,5 @@
 <?php
+// includes\session_check.php
 ob_start();
 session_start();
 
@@ -9,4 +10,5 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_type'])) {
 
 $userid = $_SESSION['user_id'];
 $user_type = $_SESSION['user_type'];
+
 ?>

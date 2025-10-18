@@ -1,6 +1,7 @@
 <?php
 // functions/login.php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();}
 header('Content-Type: application/json');
 
 // Include database connection
@@ -37,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $redirectUrl = 'admin/dashboard.php';
                     break;
                 case 'tenant':
-                    $redirectUrl = 'tenant/dashboard.php';
+                    $redirectUrl = 'index.php';
                     break;
                 case 'landlord':
                     $redirectUrl = 'landlord/dashboard.php';
