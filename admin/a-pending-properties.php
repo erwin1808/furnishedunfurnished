@@ -170,10 +170,11 @@ if (isset($_SESSION['user_type'])) {
                                                         <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
                                                             <i class='fas fa-eye'></i> View
                                                         </a>
-                                                        <a href='approve_property.php?id={$row['intake_id']}' class='btn btn-sm btn-success'>
+                                                        <a href='javascript:void(0);' class='btn btn-sm btn-success approve-btn' data-id='{$row['intake_id']}'>
                                                             <i class='fas fa-check'></i> Approve
                                                         </a>
                                                     </td>";
+
                                                 echo "</tr>";
                                                 $counter++;
                                             }
@@ -303,9 +304,7 @@ if (isset($_SESSION['user_type'])) {
                                 <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
                                     <i class='fas fa-eye'></i> View
                                 </a>
-                                <a href='approve_property.php?id={$row['intake_id']}' class='btn btn-sm btn-success'>
-                                    <i class='fas fa-check'></i> Approve
-                                </a>
+                      
                               </td>";
                         echo "</tr>";
                         $counter++;
@@ -531,6 +530,57 @@ $(document).ready(function () {
     $('.dataTables_filter input').addClass('form-control form-control-sm');
     $('.dataTables_length select').addClass('form-control form-control-sm');
 });
+
+// Approve property via AJAX
+$('.approve-btn').on('click', function() {
+    const id = $(this).data('id');
+    $.ajax({
+        url: '../functions/approve_property.php',
+        type: 'POST',
+        data: { id },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'success') {
+                // Show toast
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 2000, // shorter timer for faster refresh
+                    timerProgressBar: true,
+                    didClose: () => {
+                        // Refresh page after toast closes
+                        location.reload();
+                    }
+                });
+            } else {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'error',
+                    title: response.message,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
+        },
+        error: function() {
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: 'An error occurred.',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        }
+    });
+});
+
 </script>
 
 </body>
