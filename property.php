@@ -5,7 +5,7 @@ require_once 'includes/init.php';
 $location = isset($_GET['location']) ? urldecode($_GET['location']) : '';
 
 // Prepare SQL query to filter by city or street
-$sql = "SELECT * FROM property WHERE city LIKE ? OR street LIKE ?";
+$sql = "SELECT * FROM property WHERE (city LIKE ? OR street LIKE ?) AND is_approve = 1";
 $stmt = $conn->prepare($sql);
 $searchLocation = "%" . $location . "%";
 $stmt->bind_param("ss", $searchLocation, $searchLocation);

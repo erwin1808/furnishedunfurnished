@@ -1,3 +1,8 @@
+<?php
+// VERY FIRST LINE - NO SPACES, NO LINE BREAKS BEFORE THIS
+require_once '../includes/init.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,16 +51,41 @@
                     <div class="col-12">
                         <ul class="nav nav-tabs" id="propertyTabs" role="tablist">
                  <li class="nav-item">
-                    <?php
+                        <?php
+                    // Start session if not already started
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
+
+                    // Include database connection
                     include '../includes/db.php';
+
+                    // Get logged-in user's account number safely
+                    $account_number = $_SESSION['account_number'] ?? null;
+
+                    // Initialize active count
                     $activeCount = 0;
-                    $countQuery = "SELECT COUNT(intake_id) AS active_count FROM property WHERE is_approve = 1";
-                    $countResult = mysqli_query($conn, $countQuery);
-                    if ($countResult) {
-                        $row = mysqli_fetch_assoc($countResult);
-                        $activeCount = (int)$row['active_count'];
+
+                    // Only query if account number is available
+                    if ($account_number) {
+                        $countQuery = "SELECT COUNT(intake_id) AS active_count 
+                                    FROM property 
+                                    WHERE is_approve = 1 AND account_number = ?";
+                        
+                        $stmt = $conn->prepare($countQuery);
+                        $stmt->bind_param("s", $account_number);
+                        $stmt->execute();
+                        $countResult = $stmt->get_result();
+                        
+                        if ($countResult) {
+                            $row = $countResult->fetch_assoc();
+                            $activeCount = (int)$row['active_count'];
+                        }
+                        
+                        $stmt->close();
                     }
                     ?>
+
                     <!-- 👇 Add 'active' here -->
                     <a class="nav-link active" id="active-tab" data-toggle="tab" href="#active" role="tab" aria-selected="true">
                         <span style="color: #00524e; font-weight: 500;">Active</span>
@@ -64,16 +94,41 @@
                 </li>
 
                             <li class="nav-item">
-                                <?php
-                                include '../includes/db.php';
-                                $pendingCount = 0;
-                                $countQuery = "SELECT COUNT(intake_id) AS pending_count FROM property WHERE is_approve = 0";
-                                $countResult = mysqli_query($conn, $countQuery);
+                          <?php
+                            // Start session if not already started
+                            if (session_status() === PHP_SESSION_NONE) {
+                                session_start();
+                            }
+
+                            // Include database connection
+                            include '../includes/db.php';
+
+                            // Get logged-in user's account number safely
+                            $account_number = $_SESSION['account_number'] ?? null;
+
+                            // Initialize pending count
+                            $pendingCount = 0;
+
+                            // Only query if account number is available
+                            if ($account_number) {
+                                $countQuery = "SELECT COUNT(intake_id) AS pending_count 
+                                            FROM property 
+                                            WHERE is_approve = 0 AND account_number = ?";
+                                
+                                $stmt = $conn->prepare($countQuery);
+                                $stmt->bind_param("s", $account_number);
+                                $stmt->execute();
+                                $countResult = $stmt->get_result();
+                                
                                 if ($countResult) {
-                                    $row = mysqli_fetch_assoc($countResult);
+                                    $row = $countResult->fetch_assoc();
                                     $pendingCount = (int)$row['pending_count'];
                                 }
-                                ?>
+                                
+                                $stmt->close();
+                            }
+                            ?>
+
                                 <a class="nav-link" id="Pending-tab" data-toggle="tab" href="#Pending" role="tab">
                                     <span style="color:  #00524e; font-weight: 500;">Pending</span>
                                     <span class="badge bg-danger ms-2" id="pendingCount"><?= $pendingCount ?></span>
@@ -89,13 +144,8 @@
                         <div class="tab-content p-3 border border-top-0 rounded-bottom shadow-sm" id="propertyTabsContent">
                             <!-- Active Properties -->
                             <div class="tab-pane fade show active" id="active" role="tabpanel">
-                                <p class="text-muted">List of active properties will appear here.</p>
-                            </div>
-
-                            <!-- Pending Properties -->
-                            <div class="tab-pane fade" id="Pending" role="tabpanel">
-                                <div class="table-responsive mt-3">
-                                    <table id="pendingTable" class="table table-bordered table-striped table-hover">
+                                    <div class="table-responsive mt-3">
+                                   <table id="activeTable" class="table table-bordered table-striped table-hover">
                                         <thead class="table-success">
                                             <tr>
                                                 <th>#</th>
@@ -108,40 +158,114 @@
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            $query = "SELECT intake_id, property_code, property_title, property_type, street, city, province, date_created
-                                                      FROM property 
-                                                      WHERE is_approve = 0
-                                                      ORDER BY date_created DESC";
-                                            $result = mysqli_query($conn, $query);
-                                            $counter = 1;
-                                            if (mysqli_num_rows($result) > 0) {
-                                                while ($row = mysqli_fetch_assoc($result)) {
-                                                    echo "<tr>";
-                                                    echo "<td>{$counter}</td>";
-                                                    echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['street']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
-                                                    echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
-                                                    echo "<td>
-                                                            <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'><i class='fas fa-eye'></i> View</a>
-                                                            <a href='edit_property.php?id={$row['intake_id']}' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i> Edit</a>
-                                                            <button class='btn btn-sm btn-danger delete-btn' data-id='{$row['intake_id']}'><i class='fas fa-trash'></i> Delete</button>
-                                                          </td>";
-                                                    echo "</tr>";
-                                                    $counter++;
-                                                }
-                                            } else {
-                                                echo "<tr><td colspan='4' class='text-center text-muted'>No pending properties found.</td></tr>";
-                                            }
-                                            ?>
-                                        </tbody>
+                          <tbody>
+<?php
+$account_number = $_SESSION['account_number']; 
+
+$query = "SELECT intake_id, property_code, property_title, property_type, street, city, province, date_created
+          FROM property 
+          WHERE is_approve = 1 AND account_number = ?
+          ORDER BY date_created DESC";
+
+$stmt = $conn->prepare($query);
+$stmt->bind_param("s", $account_number);
+$stmt->execute();
+$result = $stmt->get_result();
+$counter = 1;
+
+while ($row = $result->fetch_assoc()) {
+    echo "<tr>";
+    echo "<td>{$counter}</td>";
+    echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
+    echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
+    echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
+    echo "<td>" . htmlspecialchars($row['street']) . "</td>";
+    echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
+    echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
+    echo "<td>
+            <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'><i class='fas fa-eye'></i> View</a>
+            <a href='edit_property.php?id={$row['intake_id']}' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i> Edit</a>
+            <button class='btn btn-sm btn-danger delete-btn' data-id='{$row['intake_id']}'><i class='fas fa-trash'></i> Delete</button>
+        </td>";
+    echo "</tr>";
+    $counter++;
+}
+$stmt->close();
+?>
+</tbody>
+
                                     </table>
                                 </div>
                             </div>
+
+                      <!-- Pending Properties -->
+<div class="tab-pane fade" id="Pending" role="tabpanel">
+    <div class="table-responsive mt-3">
+        <table id="pendingTable" class="table table-bordered table-striped table-hover">
+            <thead class="table-success">
+                <tr>
+                    <th>#</th>
+                    <th>Property Code</th>
+                    <th>Property Title</th>
+                    <th>Type</th>
+                    <th>Address</th>
+                    <th>City, State</th>
+                    <th>Submitted</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $account_number = $_SESSION['account_number'];
+                
+                $query = "SELECT intake_id, property_code, property_title, property_type, street, city, province, date_created
+                          FROM property 
+                          WHERE is_approve = 0 AND account_number = ?
+                          ORDER BY date_created DESC";
+                
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("s", $account_number);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $counter = 1;
+                
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>{$counter}</td>";
+                        echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['street']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
+                        echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
+                        echo "<td>
+                                <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'><i class='fas fa-eye'></i> View</a>
+                                <a href='edit_property.php?id={$row['intake_id']}' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i> Edit</a>
+                                <button class='btn btn-sm btn-danger delete-btn' data-id='{$row['intake_id']}'><i class='fas fa-trash'></i> Delete</button>
+                            </td>";
+                        echo "</tr>";
+                        $counter++;
+                    }
+                } else {
+                    // FIX: Create a proper row with all 8 columns instead of using colspan
+                    echo "<tr>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>No pending properties</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                            <td colspan='1' class='text-center text-muted'>-</td>
+                          </tr>";
+                }
+                $stmt->close();
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
                             <!-- Rejected Properties -->
                             <div class="tab-pane fade" id="rejected" role="tabpanel">
@@ -190,14 +314,33 @@
 
 <script>
 $(document).ready(function () {
-    // Initialize DataTable
-    const table = $('#pendingTable').DataTable({
-        "pageLength": 10,
-        "lengthMenu": [5, 10, 20, 50],
-        "order": [[0, "asc"]],
-        "columnDefs": [{ "orderable": false, "targets": 3 }],
-        "language": { "search": "Search Property:" }
-    });
+    // Initialize Active Table if it exists
+    if ($('#activeTable').length) {
+        $('#activeTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 20, 50],
+            "order": [[0, "asc"]],
+            "columnDefs": [{ "orderable": false, "targets": 7 }],
+            "language": { 
+                "search": "Search Property:",
+                "emptyTable": "No active properties found."
+            }
+        });
+    }
+
+    // Initialize Pending Table if it exists
+    if ($('#pendingTable').length) {
+        $('#pendingTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [5, 10, 20, 50],
+            "order": [[0, "asc"]],
+            "columnDefs": [{ "orderable": false, "targets": 7 }], // Fixed: Changed target to 7
+            "language": { 
+                "search": "Search Property:",
+                "emptyTable": "No pending properties found."
+            }
+        });
+    }
 
     // Redraw when switching tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab', function () {
@@ -205,7 +348,7 @@ $(document).ready(function () {
     });
 
     // SweetAlert delete confirmation
-    $('.delete-btn').on('click', function () {
+    $(document).on('click', '.delete-btn', function () {
         const id = $(this).data('id');
         Swal.fire({
             title: 'Are you sure?',
@@ -234,6 +377,5 @@ $(document).ready(function () {
     });
 });
 </script>
-
 </body>
 </html>

@@ -587,7 +587,8 @@ body:not(.index-page) .navbar {
     <!-- Step 1: Email Verification -->
     <div id="loginStep1">
       <h2>Log In</h2>
-      <form id="loginEmailForm">
+     <form id="loginEmailForm" onsubmit="verifyEmail(); return false;">
+
         <div class="form-group">
           <input type="email" id="loginEmail" name="email" placeholder=" " required>
           <label>Email</label>
