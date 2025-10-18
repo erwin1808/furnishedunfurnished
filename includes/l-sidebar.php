@@ -153,7 +153,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="add-property.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-plus-circle"></i>
             <span>Add Property</span>
         </a>
@@ -165,14 +165,14 @@
     <div class="sidebar-heading">Tenants</div>
 
     <li class="nav-item">
-        <a class="nav-link" href="tenants.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-users"></i>
             <span>Tenants</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="applications.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-file-alt"></i>
             <span>Applications</span>
         </a>
@@ -184,14 +184,14 @@
     <div class="sidebar-heading">Financial</div>
 
     <li class="nav-item">
-        <a class="nav-link" href="payments.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-money-bill-wave"></i>
             <span>Payments</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="reports.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-chart-bar"></i>
             <span>Reports</span>
         </a>
