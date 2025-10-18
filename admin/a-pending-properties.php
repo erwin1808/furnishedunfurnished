@@ -165,13 +165,13 @@ if (isset($_SESSION['user_type'])) {
                                                 echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
                                                 echo "<td>" . $landlord_name . "</td>";
                                                 echo "<td>3</td>";
-                                                echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
+                                                echo "<td>" . date('m/d/y', strtotime($row['date_created'])) . "</td>";
                                                 echo "<td>
                                                         <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
-                                                            <i class='fas fa-eye'></i> View
+                                                            <i class='fas fa-eye'></i>
                                                         </a>
                                                         <a href='javascript:void(0);' class='btn btn-sm btn-success approve-btn' data-id='{$row['intake_id']}'>
-                                                            <i class='fas fa-check'></i> Approve
+                                                            <i class='fas fa-check'></i>
                                                         </a>
                                                     </td>";
 
@@ -228,16 +228,16 @@ if (isset($_SESSION['user_type'])) {
                                                     echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
-                                                    echo "<td>" . htmlspecialchars($row['street']) . "</td>";
+                                                    echo "<td >" . htmlspecialchars($row['street']) . "</td>";
                                                     echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
                                                     echo "<td>" . $landlord_name . "</td>";
-                                                    echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
+                                                    echo "<td>" . date('m/d/y', strtotime($row['date_created'])) . "</td>";
                                                     echo "<td>
                                                             <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
-                                                                <i class='fas fa-eye'></i> View
+                                                                <i class='fas fa-eye'></i>
                                                             </a>
                                                             <a href='approve_property.php?id={$row['intake_id']}' class='btn btn-sm btn-success'>
-                                                                <i class='fas fa-check'></i> Approve
+                                                                <i class='fas fa-check'></i>
                                                             </a>
                                                         </td>";
                                                     echo "</tr>";
@@ -256,65 +256,66 @@ if (isset($_SESSION['user_type'])) {
                             <!-- Listed Properties -->
                             <div class="tab-pane fade" id="Listed" role="tabpanel">
                                    <table id="listedPropertiesTable" class="table table-bordered table-striped table-hover">
-            <thead class="table-success">
-                <tr>
-                    <th>#</th>
-                    <th>Property Code</th>
-                    <th>Property Title</th>
-                    <th>Type</th>
-                    <th>Address</th>
-                    <th>City, State</th>
-                    <th>Landlord</th>
-                    <th>Incomplete</th>
-                    <th>Submitted</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $query = "SELECT p.intake_id, p.property_code, p.property_title, p.property_type, p.street, p.city, p.province, p.date_created, p.account_number
-                          FROM property p
-                          WHERE p.is_approve = 1
-                          ORDER BY p.date_created DESC";
-                $result = mysqli_query($conn, $query);
-                $counter = 1;
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // Fetch landlord name
-                        $landlord_name = '';
-                        if (!empty($row['account_number'])) {
-                            $userQuery = "SELECT first_name, last_name FROM users WHERE account_number = '{$row['account_number']}' LIMIT 1";
-                            $userResult = mysqli_query($conn, $userQuery);
-                            if ($userRow = mysqli_fetch_assoc($userResult)) {
-                                $landlord_name = htmlspecialchars($userRow['first_name'] . ' ' . $userRow['last_name']);
-                            }
-                        }
+                                        <thead class="table-success">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Property Code</th>
+                                                <th>Property Title</th>
+                                                <th>Type</th>
+                                                <th>Address</th>
+                                                <th>City, State</th>
+                                                <th>Landlord</th>
+                                                <th>Incomplete</th>
+                                                <th>Submitted</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $query = "SELECT p.intake_id, p.property_code, p.property_title, p.property_type, p.street, p.city, p.province, p.date_created, p.account_number
+                                                    FROM property p
+                                                    WHERE p.is_approve = 1
+                                                    ORDER BY p.date_created DESC";
+                                            $result = mysqli_query($conn, $query);
+                                            $counter = 1;
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    // Fetch landlord name
+                                                    $landlord_name = '';
+                                                    if (!empty($row['account_number'])) {
+                                                        $userQuery = "SELECT first_name, last_name FROM users WHERE account_number = '{$row['account_number']}' LIMIT 1";
+                                                        $userResult = mysqli_query($conn, $userQuery);
+                                                        if ($userRow = mysqli_fetch_assoc($userResult)) {
+                                                            $landlord_name = htmlspecialchars($userRow['first_name'] . ' ' . $userRow['last_name']);
+                                                        }
+                                                    }
 
-                        echo "<tr>";
-                        echo "<td>{$counter}</td>";
-                        echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['street']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
-                        echo "<td>" . $landlord_name . "</td>";
-                        echo "<td>3</td>";
-                        echo "<td>" . date('M d, Y h:i A', strtotime($row['date_created'])) . "</td>";
-                        echo "<td>
-                                <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
-                                    <i class='fas fa-eye'></i> View
-                                </a>
-                      
-                              </td>";
-                        echo "</tr>";
-                        $counter++;
-                    }
-                } else {
-                    echo "<tr><td colspan='10' class='text-center text-muted'>No Approved Properties found.</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+                                                    echo "<tr>";
+                                                    echo "<td>{$counter}</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_code']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_title']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['property_type']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['street']) . "</td>";
+                                                    echo "<td>" . htmlspecialchars($row['city'] . ', ' . $row['province']) . "</td>";
+                                                    echo "<td>" . $landlord_name . "</td>";
+                                                    echo "<td>3</td>";
+                                                    echo "<td>" . date('m/d/y', strtotime($row['date_created'])) . "</td>";
+                                                    echo "<td>
+                                                        <div class='d-flex flex-nowrap gap-1'>
+                                                            <a href='view_property.php?id={$row['intake_id']}' class='btn btn-sm btn-info'>
+                                                                <i class='fas fa-eye'></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>";
+                                                    echo "</tr>";
+                                                    $counter++;
+                                                }
+                                            } else {
+                                                echo "<tr><td colspan='10' class='text-center text-muted'>No Approved Properties found.</td></tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
                             </div>
                         </div>
                     </div>

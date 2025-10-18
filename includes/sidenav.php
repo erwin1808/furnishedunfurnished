@@ -119,25 +119,25 @@ $currentPage = basename($_SERVER['PHP_SELF'], ".php");
 
 <!--Report Tickets-->
 <li class="nav-item <?= ($currentPage == 'repair_tracking') ? 'active' : '' ?>">
-    <a class="nav-link" href="repair_tracking.php">
+    <a class="nav-link" href="#">
       <i class="fas fa-tools"></i> <!-- changed to tools icon -->
       <span>Report Tickets</span>
     </a>
 </li>
 
-<!-- Services -->
+<!-- Services 
 <li class="nav-item <?= ($currentPage == 'services_offered') ? 'active' : '' ?>">
     <a class="nav-link" href="services_offered.php">
       <i class="fas fa-handshake"></i>
       <span>Services</span>
     </a>
 </li>
-
+-->
 
 <!-- User Management (Admin Only) -->
 
     <li class="nav-item <?= ($currentPage == 'user_approval_management' || $currentPage == 'user_management' || $currentPage == 'admin_management') ? 'active' : '' ?>">
-        <a class="nav-link" href="user_management.php">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-users"></i>
             <span> User Management</span>
         </a>
