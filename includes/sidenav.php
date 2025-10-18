@@ -91,7 +91,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], ".php");
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admindb.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard.php">
         <div class="sidebar-brand-icon rotate-n-15"></div>
         <div class="sidebar-brand-text">
             <span>Admin</span>
@@ -101,27 +101,27 @@ $currentPage = basename($_SERVER['PHP_SELF'], ".php");
     <hr class="sidebar-divider my-0">
 
     <!-- Dashboard -->
-    <li class="nav-item <?= ($currentPage == 'admindb') ? 'active' : '' ?>">
-        <a class="nav-link" href="admindb.php">
+    <li class="nav-item <?= ($currentPage == 'dashboard') ? 'active' : '' ?>">
+        <a class="nav-link" href="dashboard.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
 
-<!-- Customer Inquiries -->
+<!-- Pending Properties -->
 <li class="nav-item <?= ($currentPage == 'inquiries' || $currentPage == 'inquiries_user') ? 'active' : '' ?>">
-    <a class="nav-link" href="inquiries_user.php">
+    <a class="nav-link" href="a-pending-properties.php">
       <i class="fas fa-comments"></i> <!-- Changed icon to comments/chat -->
-      <span>Customer Inquiries</span>
+      <span>Pending Properties</span>
     </a>
 </li>
 
 
-<!-- Repair Tracking -->
+<!--Report Tickets-->
 <li class="nav-item <?= ($currentPage == 'repair_tracking') ? 'active' : '' ?>">
     <a class="nav-link" href="repair_tracking.php">
       <i class="fas fa-tools"></i> <!-- changed to tools icon -->
-      <span>Repair Tracking</span>
+      <span>Report Tickets</span>
     </a>
 </li>
 

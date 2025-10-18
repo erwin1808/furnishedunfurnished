@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Check if user exists and verify password
+    // Check if user exists
     $stmt = $conn->prepare("SELECT id, first_name, last_name, email, user_type, password FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
         
-        // Verify password (assuming passwords are hashed)
         if (password_verify($password, $user['password'])) {
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
@@ -32,12 +31,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_name'] = $user['first_name'] . ' ' . $user['last_name'];
             $_SESSION['user_type'] = $user['user_type'];
             
+            // Determine redirect URL based on user_type
+            switch ($user['user_type']) {
+                case 'admin':
+                    $redirectUrl = 'admin/dashboard.php';
+                    break;
+                case 'tenant':
+                    $redirectUrl = 'tenant/dashboard.php';
+                    break;
+                case 'landlord':
+                    $redirectUrl = 'landlord/dashboard.php';
+                    break;
+                default:
+                    $redirectUrl = 'index.php';
+            }
+
             echo json_encode([
-                'status' => 'success', 
+                'status' => 'success',
                 'message' => 'Login successful!',
+                'redirect' => $redirectUrl,
                 'user' => [
                     'id' => $user['id'],
-                    'name' => $user['first_name'] . ' ' . $user['last_name'],
+                    'name' => $_SESSION['user_name'],
                     'email' => $user['email'],
                     'type' => $user['user_type']
                 ]
